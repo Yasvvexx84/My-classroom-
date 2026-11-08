@@ -99,11 +99,11 @@ footer{
     <h3>📢 آخر المستجدات</h3>
     <p>ستظهر هنا آخر أخبار القسم عندما تتم إضافتها.</p>
   </div>
-</section>
-
 <section id="news" class="section">
   <h2>📰 الأخبار</h2>
-  <div class="empty">لا توجد أخبار جديدة حالياً.</div>
+  <div id="news-list">
+    <div class="empty">جارٍ تحميل الأخبار...</div>
+  </div>
 </section>
 
 <section id="exams" class="section">
@@ -128,7 +128,43 @@ footer{
   <br><br>
   Created by Yassine
 </footer>
+async function loadNews() {
+  const list = document.getElementById("news-list");
 
+  try {
+    const response = await fetch("./news.json");
+    if (!response.ok) throw new Error("News file not found");
+
+    const news = await response.json();
+
+    if (!news.length) {
+      list.innerHTML = '<div class="empty">لا توجد أخبار حاليًا.</div>';
+      return;
+    }
+
+    list.innerHTML = news.map(item => `
+      <div class="card">
+        <h3>${escapeHTML(item.title)}</h3>
+        <p class="date">${escapeHTML(item.date || "")}</p>
+        <p>${escapeHTML(item.content)}</p>
+      </div>
+    `).join("");
+  } catch (error) {
+    list.innerHTML = '<div class="empty">تعذر تحميل الأخبار حاليًا.</div>';
+  }
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+loadNews();
 <script>
 function showSection(id,button){
   document.querySelectorAll('.section').forEach(section=>{
