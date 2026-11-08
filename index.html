@@ -1,125 +1,265 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101b35">
 <title>My Classroom</title>
 
 <style>
-* {
-  box-sizing: border-box;
+:root {
+  --bg: #0b1428;
+  --surface: #14213d;
+  --surface2: #1b2c4c;
+  --primary: #62a8ff;
+  --green: #4bd6a0;
+  --text: #f3f6ff;
+  --muted: #a9b8d2;
+  --border: rgba(255,255,255,.09);
 }
-
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f5fa;
-  color: #1b2b45;
+  font-family: Tahoma, Arial, sans-serif;
+  background:
+    radial-gradient(circle at 10% 5%, #203c67 0, transparent 35%),
+    radial-gradient(circle at 90% 40%, #172d4e 0, transparent 35%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
 }
-
 header {
-  background: #173b70;
-  color: white;
+  padding: 25px 18px;
   text-align: center;
-  padding: 28px 15px;
+  background: rgba(16,27,53,.85);
+  border-bottom: 1px solid var(--border);
 }
-
-header h1 {
-  margin: 0 0 8px;
-  font-size: 28px;
+.logo {
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: white;
 }
-
-header p {
-  margin: 0;
-  color: #dce8f8;
+.logo span { color: var(--primary); }
+.subtitle {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 7px;
 }
-
 nav {
   display: flex;
-  overflow-x: auto;
+  justify-content: center;
   gap: 8px;
-  padding: 12px;
-  background: white;
+  flex-wrap: wrap;
+  padding: 13px 8px;
+  background: rgba(10,20,40,.75);
   position: sticky;
   top: 0;
-  z-index: 5;
-  box-shadow: 0 2px 8px #0001;
+  z-index: 10;
+  backdrop-filter: blur(12px);
 }
-
 nav button {
-  border: 0;
-  border-radius: 9px;
-  padding: 12px 17px;
-  background: #edf2f9;
-  color: #173b70;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  padding: 11px 17px;
+  border-radius: 13px;
+  font-size: 13px;
+  cursor: pointer;
   font-weight: bold;
-  white-space: nowrap;
+}
+nav button.active, nav button:hover {
+  background: var(--primary);
+  color: #08162c;
+}
+main {
+  max-width: 850px;
+  margin: auto;
+  padding: 22px 15px 40px;
+}
+.section { display: none; animation: appear .3s ease; }
+.section.active { display: block; }
+@keyframes appear {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero {
+  text-align: center;
+  padding: 35px 20px;
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  background: linear-gradient(145deg, #1c3458, #14213d 65%, #182947);
+  box-shadow: 0 15px 40px rgba(0,0,0,.2);
+  position: relative;
+  overflow: hidden;
+}
+.hero:before {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border: 1px solid rgba(98,168,255,.15);
+  border-radius: 50%;
+  top: -100px;
+  right: -65px;
+}
+.hero h1 { font-size: 27px; margin: 0 0 8px; }
+.hero h1 span { color: var(--primary); }
+.wave {
+  display: inline-block;
+  font-size: 38px;
+  animation: wave 2s infinite;
+}
+@keyframes wave {
+  0%,100% { transform: rotate(0); }
+  25% { transform: rotate(20deg); }
+  50% { transform: rotate(-10deg); }
+}
+.hero h2 { font-size: 19px; margin: 20px 0 10px; }
+.hero p {
+  color: #c1cde0;
+  line-height: 2;
+  font-size: 14px;
+  max-width: 570px;
+  margin: auto;
+}
+.class-badge {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(98,168,255,.5);
+  background: rgba(98,168,255,.12);
+  font-size: 23px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #a9d1ff;
+}
+.year {
+  color: var(--muted);
+  margin-top: 10px;
+  font-size: 14px;
+}
+.clock-card {
+  margin-top: 17px;
+  padding: 18px;
+  border-radius: 20px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.clock {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--green);
+  direction: ltr;
+}
+#today-date { color: var(--muted); font-size: 13px; margin-top: 7px; }
+.section-title {
+  font-size: 22px;
+  margin: 10px 0 18px;
+}
+.section-description {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+.shortcuts {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+.shortcut {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 20px 8px;
+  text-align: center;
+  border-radius: 18px;
+  cursor: pointer;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+}
+.shortcut .emoji { display: block; font-size: 25px; margin-bottom: 9px; }
+.card {
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(145deg,var(--surface2),var(--surface));
+  border: 1px solid var(--border);
+  margin-bottom: 13px;
+}
+.card h3 { margin: 0 0 10px; font-size: 16px; }
+.card p {
+  color: #c0cce0;
+  line-height: 1.8;
+  font-size: 14px;
+  margin: 7px 0;
+}
+.meta { color: var(--muted); font-size: 12px; }
+.subject-card {
+  padding: 21px;
+  background: linear-gradient(130deg,#1c4166,#14213d);
+  border: 1px solid rgba(98,168,255,.3);
+  border-radius: 20px;
+}
+.subject-card h3 { font-size: 20px; margin: 0 0 17px; }
+.lesson-link {
+  display: block;
+  color: var(--text);
+  text-decoration: none;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 14px;
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.lesson-link:hover { background: rgba(98,168,255,.16); }
+.open-label { color: var(--green); display: block; margin-top: 5px; }
+.filter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.filter-row button {
+  padding: 9px 13px;
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 12px;
   cursor: pointer;
 }
-
-nav button.active {
-  background: #173b70;
-  color: white;
+.filter-row button.active {
+  background: var(--primary);
+  color: #08162c;
 }
-
-main {
-  max-width: 750px;
-  margin: auto;
-  padding: 20px;
-}
-
-.section {
-  display: none;
-}
-
-.section.active {
-  display: block;
-}
-
-h2 {
-  color: #173b70;
-}
-
-.card {
-  background: white;
-  padding: 18px;
-  border-radius: 13px;
-  margin: 14px 0;
-  box-shadow: 0 3px 12px #0000000c;
-}
-
-.card h3 {
-  margin-top: 0;
-}
-
-.date {
-  color: #718096;
-  font-size: 13px;
-}
-
 .empty {
-  background: white;
   padding: 25px;
   text-align: center;
-  border-radius: 12px;
-  color: #718096;
+  background: var(--surface);
+  border-radius: 17px;
+  color: var(--muted);
+  line-height: 1.8;
 }
-
-.exam-card {
-  border-right: 4px solid #173b70;
-}
-
-.exam-date {
-  color: #173b70;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
 footer {
   text-align: center;
-  padding: 25px;
-  color: #718096;
-  font-size: 13px;
+  padding: 25px 10px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 2;
+}
+footer strong { color: var(--primary); }
+@media(max-width:450px) {
+  .shortcuts { gap: 7px; }
+  .shortcut { padding: 16px 4px; font-size: 11px; }
+  .hero { padding: 28px 14px; }
+  .hero h1 { font-size: 23px; }
 }
 </style>
 </head>
@@ -127,194 +267,285 @@ footer {
 <body>
 
 <header>
-  <h1>My Classroom</h1>
-  <p>منصتك الدراسية في مكان واحد</p>
+  <div class="logo">MY <span>CLASSROOM</span></div>
+  <div class="subtitle">Your digital school space</div>
 </header>
 
 <nav>
-  <button class="active" data-section="home">الرئيسية</button>
-  <button data-section="news">الأخبار</button>
-  <button data-section="exams">الامتحانات</button>
-  <button data-section="lessons">الدروس</button>
-  <button data-section="announcements">الإعلانات</button>
+  <button class="active" data-section="home">🏠 الرئيسية</button>
+  <button data-section="news">📰 الأخبار</button>
+  <button data-section="exams">📝 الامتحانات</button>
+  <button data-section="lessons">📚 الدروس</button>
 </nav>
 
 <main>
 
 <section id="home" class="section active">
-  <h2>مرحباً بك في My Classroom 👋</h2>
-  <div class="card">
-    <h3>📚 فضاؤك الدراسي</h3>
-    <p>تابع أخبار القسم ومواعيد الامتحانات والدروس والإعلانات من مكان واحد.</p>
+  <div class="hero">
+    <h1>مرحبا بك في تطبيق</h1>
+    <h1><span>MY CLASSROOM</span></h1>
+    <div class="wave">👋</div>
+    <h2>فضاؤك الدراسي الرقمي ✨</h2>
+    <p>
+      هذا التطبيق هو واجهة افتراضية لعالمنا الدراسي،
+      يمكنك من خلاله معرفة آخر الأخبار والدروس ومواعيد
+      الامتحانات مباشرة وبكل سهولة.
+      <br>
+      📚 تعلّم • 📰 تابع الأخبار • 🗓️ نظّم مواعيدك
+      <br>
+      نتمنى لك تجربة دراسية ممتعة وموفقة!
+    </p>
+    <div class="class-badge">1BACSEF1</div>
+    <div class="year">السنة الدراسية 2026 / 2027</div>
+  </div>
+
+  <div class="clock-card">
+    <div class="clock" id="clock">00:00:00</div>
+    <div id="today-date"></div>
+  </div>
+
+  <div class="shortcuts">
+    <div class="shortcut" onclick="showSection('news')">
+      <span class="emoji">📰</span>الأخبار
+    </div>
+    <div class="shortcut" onclick="showSection('exams')">
+      <span class="emoji">📝</span>الامتحانات
+    </div>
+    <div class="shortcut" onclick="showSection('lessons')">
+      <span class="emoji">📚</span>الدروس
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;text-align:center">
+    <h3>🌙 رمضان المبارك</h3>
+    <p>الموعد المتوقع لبداية رمضان 1448 هـ</p>
+    <div id="ramadan-count" style="color:var(--green);font-weight:bold"></div>
+    <p class="meta">الموعد تقديري ويخضع للإعلان الرسمي عن رؤية الهلال في المغرب.</p>
   </div>
 </section>
 
 <section id="news" class="section">
-  <h2>📰 الأخبار</h2>
-  <div id="news-list">
-    <div class="empty">جارٍ تحميل الأخبار...</div>
+  <h2 class="section-title">📰 الأخبار والمناسبات</h2>
+  <p class="section-description">
+    تابع آخر الأخبار والعطل الدينية والمدرسية والوطنية.
+    تختفي الأخبار بعد مرور سبعة أيام من تاريخ نشرها.
+  </p>
+  <div class="filter-row">
+    <button class="active" data-filter="all">الكل</button>
+    <button data-filter="religious">دينية</button>
+    <button data-filter="school">مدرسية</button>
+    <button data-filter="national">وطنية</button>
   </div>
+  <div id="news-list"><div class="empty">جارٍ تحميل الأخبار...</div></div>
 </section>
 
 <section id="exams" class="section">
-  <h2>📝 جدول الامتحانات</h2>
-  <div id="exams-list">
-    <div class="empty">جارٍ تحميل الامتحانات...</div>
-  </div>
+  <h2 class="section-title">📝 مواعيد الامتحانات</h2>
+  <p class="section-description">
+    جدول الامتحانات القادمة. تختفي المواعيد تلقائيًا بعد انتهاء يوم الامتحان.
+  </p>
+  <div id="exams-list"><div class="empty">جارٍ تحميل الامتحانات...</div></div>
 </section>
 
 <section id="lessons" class="section">
-  <h2>📖 الدروس والملفات</h2>
-  <div class="empty">لا توجد دروس مضافة حاليًا.</div>
-</section>
+  <h2 class="section-title">📚 مكتبة الدروس</h2>
+  <p class="section-description">
+    اختر المادة للوصول إلى ملفات الدروس المتاحة.
+  </p>
 
-<section id="announcements" class="section">
-  <h2>📢 الإعلانات</h2>
-  <div class="empty">لا توجد إعلانات حاليًا.</div>
+  <div class="subject-card">
+    <h3>🌍 الاجتماعيات</h3>
+
+    <a class="lesson-link" href="lessons/2%20%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%84%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D9%85%D8%A7%D9%84%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D9%81%D9%83%D8%B1%D9%8A%D8%A9.pdf" target="_blank">
+      📄 التحولات الاقتصادية والمالية والاجتماعية والفكرية
+      <span class="open-label">فتح ملف PDF ↗</span>
+    </a>
+
+    <a class="lesson-link" href="lessons/2%20%D8%A7%D9%84%D9%85%D8%AC%D8%A7%D9%84%20%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8%D9%8A%20%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%B1%D8%AF%20%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%B9%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D8%A8%D8%B4%D8%B1%D9%8A%D8%A9.pdf" target="_blank">
+      📄 المجال المغربي: الموارد الطبيعية والبشرية
+      <span class="open-label">فتح ملف PDF ↗</span>
+    </a>
+
+    <a class="lesson-link" href="lessons/%D8%A7%D9%84%D8%AA%D9%86%D8%A7%D9%81%D8%B3%20%D8%A7%D9%84%D8%A7%D9%85%D8%A8%D8%B1%D9%8A%D8%A7%D9%84%D9%8A.pdf" target="_blank">
+      📄 التنافس الإمبريالي
+      <span class="open-label">فتح ملف PDF ↗</span>
+    </a>
+
+    <a class="lesson-link" href="lessons/%D8%AA%D9%82%D8%AF%D9%8A%D9%85%20%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%84%D8%A7%D8%AA%20%D8%A7%D9%84%D9%83%D8%A8%D8%B1%D9%89%20%D9%84%D9%84%D8%B9%D8%A7%D9%84%D9%85%20%D8%A7%D9%84%D8%B1%D8%A7%D8%B3%D9%85%D8%A7%D9%84%D9%8A.pdf" target="_blank">
+      📄 تقديم التحولات الكبرى للعالم الرأسمالي
+      <span class="open-label">فتح ملف PDF ↗</span>
+    </a>
+
+    <a class="lesson-link" href="lessons/%D9%85%D9%81%D9%87%D9%88%D9%85%20%D8%A7%D9%84%D8%AA%D9%86%D9%85%D9%8A%D8%A9.pdf" target="_blank">
+      📄 مفهوم التنمية
+      <span class="open-label">فتح ملف PDF ↗</span>
+    </a>
+  </div>
 </section>
 
 </main>
 
 <footer>
-  My Classroom © 2026
-  <br><br>
-  Created by Yassine
+  MY CLASSROOM © 2026<br>
+  <strong>Created by Yassine</strong>
 </footer>
 
 <script>
-document.querySelectorAll("nav button").forEach(function(button) {
-  button.addEventListener("click", function() {
-    var sectionId = button.getAttribute("data-section");
+function showSection(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
 
-    document.querySelectorAll(".section").forEach(function(section) {
-      section.classList.remove("active");
+  document.getElementById(id).classList.add("active");
+  const button = document.querySelector('nav button[data-section="' + id + '"]');
+  if(button) button.classList.add("active");
+
+  if(id === "news") loadNews();
+  if(id === "exams") loadExams();
+}
+
+document.querySelectorAll("nav button").forEach(button => {
+  button.addEventListener("click", () => showSection(button.dataset.section));
+});
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById("clock").textContent =
+    now.toLocaleTimeString("ar-MA", {hour12:true});
+  document.getElementById("today-date").textContent =
+    now.toLocaleDateString("ar-MA", {
+      weekday:"long", year:"numeric", month:"long", day:"numeric"
     });
+}
+updateClock();
+setInterval(updateClock, 1000);
 
-    document.querySelectorAll("nav button").forEach(function(item) {
-      item.classList.remove("active");
-    });
+function updateRamadan() {
+  const target = new Date("2027-02-08T00:00:00");
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const days = Math.ceil((target - today) / 86400000);
+  const el = document.getElementById("ramadan-count");
 
-    document.getElementById(sectionId).classList.add("active");
+  if(days > 0) el.textContent = "باقي " + days + " يومًا 🌙";
+  else if(days === 0) el.textContent = "رمضان مبارك 🌙";
+  else el.textContent = "حلّ شهر رمضان، تقبّل الله طاعاتكم";
+}
+updateRamadan();
+
+let currentNewsFilter = "all";
+let newsCache = [];
+
+document.querySelectorAll("[data-filter]").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll("[data-filter]").forEach(b => b.classList.remove("active"));
     button.classList.add("active");
-
-    if (sectionId === "news") {
-      loadNews();
-    }
-
-    if (sectionId === "exams") {
-      loadExams();
-    }
+    currentNewsFilter = button.dataset.filter;
+    renderNews();
   });
 });
 
-function loadNews() {
-  var list = document.getElementById("news-list");
+async function loadNews() {
+  const list = document.getElementById("news-list");
+  try {
+    const response = await fetch("./news.json?v=" + Date.now());
+    if(!response.ok) throw new Error("News unavailable");
 
-  list.textContent = "جارٍ تحميل الأخبار...";
+    const data = await response.json();
+    const today = new Date();
+    today.setHours(0,0,0,0);
 
-  fetch("./news.json?v=" + Date.now())
-    .then(function(response) {
-      if (!response.ok) {
-        throw new Error("Could not load news");
-      }
-      return response.json();
-    })
-    .then(function(news) {
-      list.replaceChildren();
-
-      if (!Array.isArray(news) || news.length === 0) {
-        list.textContent = "لا توجد أخبار حاليًا.";
-        list.className = "empty";
-        return;
-      }
-
-      list.className = "";
-
-      news.forEach(function(item) {
-        var card = document.createElement("div");
-        card.className = "card";
-
-        var title = document.createElement("h3");
-        title.textContent = item.title || "خبر جديد";
-
-        var date = document.createElement("p");
-        date.className = "date";
-        date.textContent = item.date || "";
-
-        var content = document.createElement("p");
-        content.textContent = item.content || "";
-
-        card.append(title, date, content);
-        list.appendChild(card);
-      });
-    })
-    .catch(function() {
-      list.className = "empty";
-      list.textContent = "تعذر تحميل الأخبار. حاول تحديث الصفحة.";
+    newsCache = data.filter(item => {
+      if(!item.date) return false;
+      const date = new Date(item.date + "T00:00:00");
+      const age = (today - date) / 86400000;
+      return age >= 0 && age < 7;
     });
+
+    renderNews();
+  } catch(error) {
+    list.innerHTML = '<div class="empty">تعذر تحميل الأخبار. حاول لاحقًا.</div>';
+  }
 }
 
-function loadExams() {
-  var list = document.getElementById("exams-list");
+function renderNews() {
+  const list = document.getElementById("news-list");
+  let items = newsCache;
 
-  list.textContent = "جارٍ تحميل الامتحانات...";
+  if(currentNewsFilter !== "all") {
+    items = items.filter(item => item.type === currentNewsFilter);
+  }
 
-  fetch("./exams.json?v=" + Date.now())
-    .then(function(response) {
-      if (!response.ok) {
-        throw new Error("Could not load exams");
-      }
-      return response.json();
-    })
-    .then(function(exams) {
-      list.replaceChildren();
+  list.innerHTML = "";
+  if(items.length === 0) {
+    list.innerHTML = '<div class="empty">لا توجد أخبار أو مناسبات في هذا القسم حاليًا.</div>';
+    return;
+  }
 
-      if (!Array.isArray(exams) || exams.length === 0) {
-        list.className = "empty";
-        list.textContent = "لا توجد امتحانات مضافة حاليًا.";
-        return;
-      }
+  items.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
 
-      list.className = "";
+    const title = document.createElement("h3");
+    title.textContent = item.title || "خبر جديد";
 
-      exams.sort(function(a, b) {
-        return new Date(a.exam_date) - new Date(b.exam_date);
-      });
+    const date = document.createElement("div");
+    date.className = "meta";
+    date.textContent = item.date || "";
 
-      exams.forEach(function(item) {
-        var card = document.createElement("div");
-        card.className = "card exam-card";
+    const content = document.createElement("p");
+    content.textContent = item.content || "";
 
-        var title = document.createElement("h3");
-        title.textContent = item.subject || "امتحان";
+    card.append(title, date, content);
+    list.appendChild(card);
+  });
+}
 
-        var date = document.createElement("p");
-        date.className = "exam-date";
+async function loadExams() {
+  const list = document.getElementById("exams-list");
+  try {
+    const response = await fetch("./exams.json?v=" + Date.now());
+    if(!response.ok) throw new Error("Exams unavailable");
 
-        var examDate = new Date(item.exam_date + "T12:00:00");
+    const data = await response.json();
+    const today = new Date();
+    today.setHours(0,0,0,0);
 
-        if (!isNaN(examDate.getTime())) {
-          date.textContent = new Intl.DateTimeFormat("ar-MA", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-          }).format(examDate);
-        } else {
-          date.textContent = item.exam_date || "";
-        }
-
-        var details = document.createElement("p");
-        details.textContent = item.details || "";
-
-        card.append(title, date, details);
-        list.appendChild(card);
-      });
-    })
-    .catch(function() {
-      list.className = "empty";
-      list.textContent = "تعذر تحميل الامتحانات. حاول تحديث الصفحة.";
+    const active = data.filter(exam => {
+      if(!exam.exam_date) return false;
+      const date = new Date(exam.exam_date + "T00:00:00");
+      return date >= today;
     });
+
+    active.sort((a,b) => a.exam_date.localeCompare(b.exam_date));
+    list.innerHTML = "";
+
+    if(active.length === 0) {
+      list.innerHTML = '<div class="empty">لا توجد امتحانات قادمة حاليًا. بالتوفيق! 🎓</div>';
+      return;
+    }
+
+    active.forEach(exam => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const title = document.createElement("h3");
+      title.textContent = "📝 " + (exam.subject || "امتحان");
+
+      const date = document.createElement("p");
+      date.textContent = "📅 " + new Date(exam.exam_date + "T00:00:00")
+        .toLocaleDateString("ar-MA", {
+          weekday:"long", year:"numeric", month:"long", day:"numeric"
+        });
+
+      const details = document.createElement("p");
+      details.textContent = exam.details || "";
+
+      card.append(title,date,details);
+      list.appendChild(card);
+    });
+  } catch(error) {
+    list.innerHTML = '<div class="empty">تعذر تحميل الامتحانات. حاول لاحقًا.</div>';
+  }
 }
 </script>
 
