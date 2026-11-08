@@ -1,553 +1,232 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101b35">
+<meta name="theme-color" content="#16845b">
+<meta name="description" content="My Classroom - منصتك المدرسية لمتابعة الأخبار والامتحانات والدروس.">
 <title>My Classroom</title>
-
 <style>
-:root {
-  --bg: #0b1428;
-  --surface: #14213d;
-  --surface2: #1b2c4c;
-  --primary: #62a8ff;
-  --green: #4bd6a0;
-  --text: #f3f6ff;
-  --muted: #a9b8d2;
-  --border: rgba(255,255,255,.09);
+:root{
+  --green:#16845b;--green-dark:#0d6746;--green-soft:#e9f7f0;
+  --blue:#2878c8;--blue-soft:#eaf3ff;--ink:#172b27;
+  --muted:#71817c;--line:#e7eeea;--surface:#fff;--bg:#f5f9f7;
+  --shadow:0 10px 30px rgba(22,65,48,.07);--radius:20px
 }
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Tahoma, Arial, sans-serif;
-  background:
-    radial-gradient(circle at 10% 5%, #203c67 0, transparent 35%),
-    radial-gradient(circle at 90% 40%, #172d4e 0, transparent 35%),
-    var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-header {
-  padding: 25px 18px;
-  text-align: center;
-  background: rgba(16,27,53,.85);
-  border-bottom: 1px solid var(--border);
-}
-.logo {
-  font-size: 27px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  color: white;
-}
-.logo span { color: var(--primary); }
-.subtitle {
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 7px;
-}
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  padding: 13px 8px;
-  background: rgba(10,20,40,.75);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  backdrop-filter: blur(12px);
-}
-nav button {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--muted);
-  padding: 11px 17px;
-  border-radius: 13px;
-  font-size: 13px;
-  cursor: pointer;
-  font-weight: bold;
-}
-nav button.active, nav button:hover {
-  background: var(--primary);
-  color: #08162c;
-}
-main {
-  max-width: 850px;
-  margin: auto;
-  padding: 22px 15px 40px;
-}
-.section { display: none; animation: appear .3s ease; }
-.section.active { display: block; }
-@keyframes appear {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.hero {
-  text-align: center;
-  padding: 35px 20px;
-  border: 1px solid var(--border);
-  border-radius: 25px;
-  background: linear-gradient(145deg, #1c3458, #14213d 65%, #182947);
-  box-shadow: 0 15px 40px rgba(0,0,0,.2);
-  position: relative;
-  overflow: hidden;
-}
-.hero:before {
-  content: "";
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  border: 1px solid rgba(98,168,255,.15);
-  border-radius: 50%;
-  top: -100px;
-  right: -65px;
-}
-.hero h1 { font-size: 27px; margin: 0 0 8px; }
-.hero h1 span { color: var(--primary); }
-.wave {
-  display: inline-block;
-  font-size: 38px;
-  animation: wave 2s infinite;
-}
-@keyframes wave {
-  0%,100% { transform: rotate(0); }
-  25% { transform: rotate(20deg); }
-  50% { transform: rotate(-10deg); }
-}
-.hero h2 { font-size: 19px; margin: 20px 0 10px; }
-.hero p {
-  color: #c1cde0;
-  line-height: 2;
-  font-size: 14px;
-  max-width: 570px;
-  margin: auto;
-}
-.class-badge {
-  display: inline-block;
-  margin-top: 24px;
-  padding: 12px 30px;
-  border-radius: 16px;
-  border: 1px solid rgba(98,168,255,.5);
-  background: rgba(98,168,255,.12);
-  font-size: 23px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  color: #a9d1ff;
-}
-.year {
-  color: var(--muted);
-  margin-top: 10px;
-  font-size: 14px;
-}
-.clock-card {
-  margin-top: 17px;
-  padding: 18px;
-  border-radius: 20px;
-  text-align: center;
-  background: var(--surface);
-  border: 1px solid var(--border);
-}
-.clock {
-  font-size: 28px;
-  font-weight: bold;
-  color: var(--green);
-  direction: ltr;
-}
-#today-date { color: var(--muted); font-size: 13px; margin-top: 7px; }
-.section-title {
-  font-size: 22px;
-  margin: 10px 0 18px;
-}
-.section-description {
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 20px;
-  line-height: 1.8;
-}
-.shortcuts {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 12px;
-  margin-top: 18px;
-}
-.shortcut {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  padding: 20px 8px;
-  text-align: center;
-  border-radius: 18px;
-  cursor: pointer;
-  color: white;
-  font-size: 13px;
-  font-weight: bold;
-}
-.shortcut .emoji { display: block; font-size: 25px; margin-bottom: 9px; }
-.card {
-  padding: 18px;
-  border-radius: 18px;
-  background: linear-gradient(145deg,var(--surface2),var(--surface));
-  border: 1px solid var(--border);
-  margin-bottom: 13px;
-}
-.card h3 { margin: 0 0 10px; font-size: 16px; }
-.card p {
-  color: #c0cce0;
-  line-height: 1.8;
-  font-size: 14px;
-  margin: 7px 0;
-}
-.meta { color: var(--muted); font-size: 12px; }
-.subject-card {
-  padding: 21px;
-  background: linear-gradient(130deg,#1c4166,#14213d);
-  border: 1px solid rgba(98,168,255,.3);
-  border-radius: 20px;
-}
-.subject-card h3 { font-size: 20px; margin: 0 0 17px; }
-.lesson-link {
-  display: block;
-  color: var(--text);
-  text-decoration: none;
-  background: rgba(255,255,255,.06);
-  border: 1px solid var(--border);
-  border-radius: 13px;
-  padding: 14px;
-  margin-top: 10px;
-  font-size: 13px;
-  line-height: 1.8;
-}
-.lesson-link:hover { background: rgba(98,168,255,.16); }
-.open-label { color: var(--green); display: block; margin-top: 5px; }
-.filter-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 18px;
-}
-.filter-row button {
-  padding: 9px 13px;
-  background: var(--surface);
-  color: var(--muted);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  cursor: pointer;
-}
-.filter-row button.active {
-  background: var(--primary);
-  color: #08162c;
-}
-.empty {
-  padding: 25px;
-  text-align: center;
-  background: var(--surface);
-  border-radius: 17px;
-  color: var(--muted);
-  line-height: 1.8;
-}
-footer {
-  text-align: center;
-  padding: 25px 10px;
-  color: var(--muted);
-  border-top: 1px solid var(--border);
-  font-size: 12px;
-  line-height: 2;
-}
-footer strong { color: var(--primary); }
-@media(max-width:450px) {
-  .shortcuts { gap: 7px; }
-  .shortcut { padding: 16px 4px; font-size: 11px; }
-  .hero { padding: 28px 14px; }
-  .hero h1 { font-size: 23px; }
-}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:1.7}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{max-width:1120px;margin:auto;padding:0 18px 100px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0;gap:12px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;direction:ltr}
+.logo{width:43px;height:43px;border-radius:14px;background:linear-gradient(145deg,var(--green),#27aa78);display:grid;place-items:center;color:white;font-size:22px;box-shadow:0 7px 16px #16845b35}
+.top-actions{display:flex;align-items:center;gap:9px}
+.icon-btn{border:1px solid var(--line);background:white;color:var(--green-dark);width:42px;height:42px;border-radius:14px;display:grid;place-items:center}
+.hero{position:relative;overflow:hidden;background:linear-gradient(115deg,#fff 10%,#eef9f3 65%,#edf5ff);border:1px solid #e1efe7;border-radius:28px;padding:30px;margin:8px 0 22px;box-shadow:var(--shadow)}
+.hero:after{content:"";position:absolute;width:230px;height:230px;border:35px solid #16845b0b;border-radius:50%;left:-70px;top:-110px}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;background:white;color:var(--green-dark);border:1px solid #dcefe4;border-radius:30px;padding:5px 12px;font-size:12px;font-weight:700}
+.hero h1{font-size:clamp(24px,5vw,36px);line-height:1.35;margin:16px 0 8px;max-width:700px}
+.hero h1 span{color:var(--green)}
+.hero p{color:var(--muted);margin:0;max-width:620px}
+.hero-bottom{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-top:25px}
+.class-chip{background:white;border:1px solid #e2eee7;border-radius:15px;padding:10px 15px;display:flex;gap:12px;align-items:center}
+.class-chip strong{color:var(--green-dark);direction:ltr;letter-spacing:.5px}
+.class-chip small{color:var(--muted);display:block;font-size:11px}
+.clock{text-align:left;direction:ltr;color:var(--blue);font-weight:800;font-size:19px}
+.clock small{display:block;color:var(--muted);font-size:11px;font-weight:500}
+.section{margin:28px 0;scroll-margin-top:18px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+.section-title{display:flex;align-items:center;gap:10px;margin:0;font-size:20px}
+.section-icon{width:39px;height:39px;border-radius:13px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-size:19px}
+.section-sub{font-size:12px;color:var(--muted);margin:3px 0 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.shortcut{display:flex;align-items:center;gap:13px;text-decoration:none;color:inherit;transition:.2s}
+.shortcut:active{transform:scale(.985)}
+.shortcut-icon{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;font-size:22px;flex:none}
+.shortcut h3{margin:0;font-size:15px}.shortcut p{margin:3px 0 0;color:var(--muted);font-size:12px}
+.green{background:var(--green-soft);color:var(--green)}.blue{background:var(--blue-soft);color:var(--blue)}
+.white-card{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.list{display:grid;gap:11px}
+.item{border:1px solid var(--line);border-radius:16px;padding:15px;background:#fff}
+.item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.item h3{margin:0 0 4px;font-size:15px}
+.item p{margin:0;color:var(--muted);font-size:13px}
+.date-tag,.status{white-space:nowrap;border-radius:30px;padding:4px 9px;font-size:11px;font-weight:700;background:var(--blue-soft);color:var(--blue)}
+.status{background:var(--green-soft);color:var(--green-dark)}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px}
+.filter{border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:30px;padding:7px 13px;font-size:12px}
+.filter.active{background:var(--green);border-color:var(--green);color:white}
+.search{width:100%;border:1px solid var(--line);background:white;border-radius:14px;padding:12px 14px;outline:none;margin-bottom:13px}
+.search:focus{border-color:var(--green);box-shadow:0 0 0 3px #16845b18}
+.lesson-link{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;padding:13px;border:1px solid var(--line);border-radius:15px;background:white}
+.lesson-link:active{background:var(--green-soft)}
+.pdf{width:42px;height:46px;display:grid;place-items:center;border-radius:11px;background:#fff0ef;color:#d94a43;font-size:11px;font-weight:800}
+.lesson-link strong{display:block;font-size:13px}.lesson-link small{color:var(--muted);font-size:11px}
+.open-arrow{margin-right:auto;color:var(--blue);font-size:18px}
+.empty{padding:25px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #d9e5df;border-radius:16px;font-size:13px}
+.countdown{display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(110deg,#eaf8f1,#edf5ff);border:1px solid #e0eee8;border-radius:18px;padding:16px;margin-top:14px}
+.countdown strong{color:var(--green-dark);font-size:14px}.countdown small{display:block;color:var(--muted);font-size:11px}
+.count-number{font-size:23px;font-weight:900;color:var(--blue);direction:ltr}
+.bottom-nav{position:fixed;z-index:10;bottom:12px;left:50%;transform:translateX(-50%);width:min(500px,calc(100% - 24px));display:flex;justify-content:space-around;gap:5px;padding:9px;background:#fffffff2;backdrop-filter:blur(15px);border:1px solid #e2ebe6;border-radius:20px;box-shadow:0 12px 35px #163d2c20}
+.nav-btn{border:0;background:transparent;color:var(--muted);padding:7px 12px;border-radius:13px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;min-width:65px}
+.nav-btn span:first-child{font-size:19px}.nav-btn.active{background:var(--green-soft);color:var(--green-dark);font-weight:800}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:25px 0 5px}
+footer b{color:var(--green-dark);direction:ltr;display:inline-block}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#173c30;color:white;padding:10px 16px;border-radius:12px;font-size:12px;display:none;z-index:20}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{padding:38px}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
+@media(max-width:480px){.app{padding-inline:13px}.hero{padding:22px}.grid{gap:10px}.card{padding:14px}.shortcut{align-items:flex-start}.shortcut-icon{width:42px;height:42px}.shortcut h3{font-size:13px}.clock{font-size:16px}}
 </style>
 </head>
-
 <body>
-
-<header>
-  <div class="logo">MY <span>CLASSROOM</span></div>
-  <div class="subtitle">Your digital school space</div>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><div class="logo">✦</div><span>MY CLASSROOM</span></div>
+  <div class="top-actions"><button class="icon-btn" aria-label="تحديث المحتوى" onclick="refreshData()">↻</button></div>
 </header>
 
-<nav>
-  <button class="active" data-section="home">🏠 الرئيسية</button>
-  <button data-section="news">📰 الأخبار</button>
-  <button data-section="exams">📝 الامتحانات</button>
-  <button data-section="lessons">📚 الدروس</button>
-</nav>
-
 <main>
-
-<section id="home" class="section active">
-  <div class="hero">
-    <h1>مرحبا بك في تطبيق</h1>
-    <h1><span>MY CLASSROOM</span></h1>
-    <div class="wave">👋</div>
-    <h2>فضاؤك الدراسي الرقمي ✨</h2>
-    <p>
-      هذا التطبيق هو واجهة افتراضية لعالمنا الدراسي،
-      يمكنك من خلاله معرفة آخر الأخبار والدروس ومواعيد
-      الامتحانات مباشرة وبكل سهولة.
-      <br>
-      📚 تعلّم • 📰 تابع الأخبار • 🗓️ نظّم مواعيدك
-      <br>
-      نتمنى لك تجربة دراسية ممتعة وموفقة!
-    </p>
-    <div class="class-badge">1BACSEF1</div>
-    <div class="year">السنة الدراسية 2026 / 2027</div>
+<section class="hero" id="home">
+  <span class="eyebrow">✦ منصتك الدراسية الرقمية</span>
+  <h1>مرحباً بك في <span>MY CLASSROOM</span> 👋</h1>
+  <p>كل ما تحتاجه لتنظيم حياتك الدراسية في مكان واحد؛ تابع الأخبار، واستعد للامتحانات، واطّلع على دروسك بسهولة.</p>
+  <div class="hero-bottom">
+    <div class="class-chip"><div><small>القسم الدراسي</small><strong>1BACSEF1</strong><small>السنة الدراسية 2026/2027</small></div></div>
+    <div class="clock"><span id="clock">--:--:--</span><small id="today">جارٍ تحميل التاريخ...</small></div>
   </div>
-
-  <div class="clock-card">
-    <div class="clock" id="clock">00:00:00</div>
-    <div id="today-date"></div>
+  <div class="countdown">
+    <div><strong>🌙 العد التنازلي لرمضان</strong><small>موعد تقديري، وقد يتغير حسب رؤية الهلال في المغرب</small></div>
+    <div class="count-number" id="ramadan">—</div>
   </div>
+</section>
 
-  <div class="shortcuts">
-    <div class="shortcut" onclick="showSection('news')">
-      <span class="emoji">📰</span>الأخبار
+<section class="section">
+  <div class="section-head"><div><h2 class="section-title">الوصول السريع</h2><p class="section-sub">انتقل مباشرة إلى ما تحتاجه</p></div></div>
+  <div class="grid">
+    <a class="card shortcut" href="#news"><div class="shortcut-icon green">▤</div><div><h3>الأخبار</h3><p>آخر مستجدات القسم</p></div></a>
+    <a class="card shortcut" href="#exams"><div class="shortcut-icon blue">▦</div><div><h3>الامتحانات</h3><p>مواعيد وتنظيم</p></div></a>
+    <a class="card shortcut" href="#lessons"><div class="shortcut-icon blue">▱</div><div><h3>الدروس</h3><p>مكتبة ملفات PDF</p></div></a>
+    <a class="card shortcut" href="#about"><div class="shortcut-icon green">✧</div><div><h3>عن التطبيق</h3><p>My Classroom</p></div></a>
+  </div>
+</section>
+
+<div class="two-col">
+<section class="section" id="news">
+  <div class="section-head"><div><h2 class="section-title"><span class="section-icon">▤</span> الأخبار والمستجدات</h2><p class="section-sub">تُخفى الأخبار بعد مرور 7 أيام من تاريخ نشرها</p></div></div>
+  <div class="filters" id="newsFilters">
+    <button class="filter active" data-type="all">الكل</button>
+    <button class="filter" data-type="school">مدرسية</button>
+    <button class="filter" data-type="religious">دينية</button>
+    <button class="filter" data-type="national">وطنية</button>
+  </div>
+  <div class="list" id="newsList"><div class="empty">جارٍ تحميل الأخبار...</div></div>
+</section>
+
+<section class="section" id="exams">
+  <div class="section-head"><div><h2 class="section-title"><span class="section-icon" style="background:var(--blue-soft);color:var(--blue)">▦</span> جدول الامتحانات</h2><p class="section-sub">تختفي المواعيد بعد مرور يوم الامتحان</p></div></div>
+  <div class="list" id="examList"><div class="empty">جارٍ تحميل جدول الامتحانات...</div></div>
+</section>
+</div>
+
+<section class="section" id="lessons">
+  <div class="section-head"><div><h2 class="section-title"><span class="section-icon">▱</span> مكتبة الدروس</h2><p class="section-sub">ملفاتك الدراسية متاحة للفتح مباشرة</p></div></div>
+  <input class="search" id="lessonSearch" type="search" placeholder="ابحث عن درس..." aria-label="ابحث عن درس">
+  <div class="white-card">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <div class="shortcut-icon green">📚</div><div><strong>الاجتماعيات</strong><div class="section-sub">ملفات PDF الخاصة بالمادة</div></div>
     </div>
-    <div class="shortcut" onclick="showSection('exams')">
-      <span class="emoji">📝</span>الامتحانات
-    </div>
-    <div class="shortcut" onclick="showSection('lessons')">
-      <span class="emoji">📚</span>الدروس
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:18px;text-align:center">
-    <h3>🌙 رمضان المبارك</h3>
-    <p>الموعد المتوقع لبداية رمضان 1448 هـ</p>
-    <div id="ramadan-count" style="color:var(--green);font-weight:bold"></div>
-    <p class="meta">الموعد تقديري ويخضع للإعلان الرسمي عن رؤية الهلال في المغرب.</p>
+    <div class="list" id="lessonList"></div>
   </div>
 </section>
 
-<section id="news" class="section">
-  <h2 class="section-title">📰 الأخبار والمناسبات</h2>
-  <p class="section-description">
-    تابع آخر الأخبار والعطل الدينية والمدرسية والوطنية.
-    تختفي الأخبار بعد مرور سبعة أيام من تاريخ نشرها.
-  </p>
-  <div class="filter-row">
-    <button class="active" data-filter="all">الكل</button>
-    <button data-filter="religious">دينية</button>
-    <button data-filter="school">مدرسية</button>
-    <button data-filter="national">وطنية</button>
-  </div>
-  <div id="news-list"><div class="empty">جارٍ تحميل الأخبار...</div></div>
-</section>
-
-<section id="exams" class="section">
-  <h2 class="section-title">📝 مواعيد الامتحانات</h2>
-  <p class="section-description">
-    جدول الامتحانات القادمة. تختفي المواعيد تلقائيًا بعد انتهاء يوم الامتحان.
-  </p>
-  <div id="exams-list"><div class="empty">جارٍ تحميل الامتحانات...</div></div>
-</section>
-
-<section id="lessons" class="section">
-  <h2 class="section-title">📚 مكتبة الدروس</h2>
-  <p class="section-description">
-    اختر المادة للوصول إلى ملفات الدروس المتاحة.
-  </p>
-
-  <div class="subject-card">
-    <h3>🌍 الاجتماعيات</h3>
-
-    <a class="lesson-link" href="lessons/2%20%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%84%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D9%85%D8%A7%D9%84%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D9%81%D9%83%D8%B1%D9%8A%D8%A9.pdf" target="_blank">
-      📄 التحولات الاقتصادية والمالية والاجتماعية والفكرية
-      <span class="open-label">فتح ملف PDF ↗</span>
-    </a>
-
-    <a class="lesson-link" href="lessons/2%20%D8%A7%D9%84%D9%85%D8%AC%D8%A7%D9%84%20%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8%D9%8A%20%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%B1%D8%AF%20%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%B9%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D8%A8%D8%B4%D8%B1%D9%8A%D8%A9.pdf" target="_blank">
-      📄 المجال المغربي: الموارد الطبيعية والبشرية
-      <span class="open-label">فتح ملف PDF ↗</span>
-    </a>
-
-    <a class="lesson-link" href="lessons/%D8%A7%D9%84%D8%AA%D9%86%D8%A7%D9%81%D8%B3%20%D8%A7%D9%84%D8%A7%D9%85%D8%A8%D8%B1%D9%8A%D8%A7%D9%84%D9%8A.pdf" target="_blank">
-      📄 التنافس الإمبريالي
-      <span class="open-label">فتح ملف PDF ↗</span>
-    </a>
-
-    <a class="lesson-link" href="lessons/%D8%AA%D9%82%D8%AF%D9%8A%D9%85%20%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%84%D8%A7%D8%AA%20%D8%A7%D9%84%D9%83%D8%A8%D8%B1%D9%89%20%D9%84%D9%84%D8%B9%D8%A7%D9%84%D9%85%20%D8%A7%D9%84%D8%B1%D8%A7%D8%B3%D9%85%D8%A7%D9%84%D9%8A.pdf" target="_blank">
-      📄 تقديم التحولات الكبرى للعالم الرأسمالي
-      <span class="open-label">فتح ملف PDF ↗</span>
-    </a>
-
-    <a class="lesson-link" href="lessons/%D9%85%D9%81%D9%87%D9%88%D9%85%20%D8%A7%D9%84%D8%AA%D9%86%D9%85%D9%8A%D8%A9.pdf" target="_blank">
-      📄 مفهوم التنمية
-      <span class="open-label">فتح ملف PDF ↗</span>
-    </a>
+<section class="section" id="about">
+  <div class="white-card" style="text-align:center;background:linear-gradient(120deg,#fff,#f0f8ff)">
+    <div class="logo" style="margin:0 auto 10px">✦</div>
+    <strong>MY CLASSROOM</strong>
+    <p class="section-sub">مساحتك الدراسية، منظمة في مكان واحد.</p>
+    <div class="section-sub">السنة الدراسية 2026/2027 · القسم 1BACSEF1</div>
   </div>
 </section>
-
 </main>
+<footer>صُنع لخدمة رحلتك الدراسية · <b>Created by Yassine</b></footer>
+</div>
 
-<footer>
-  MY CLASSROOM © 2026<br>
-  <strong>Created by Yassine</strong>
-</footer>
+<nav class="bottom-nav" aria-label="التنقل الرئيسي">
+  <button class="nav-btn active" data-target="home"><span>⌂</span><span>الرئيسية</span></button>
+  <button class="nav-btn" data-target="news"><span>▤</span><span>الأخبار</span></button>
+  <button class="nav-btn" data-target="exams"><span>▦</span><span>الامتحانات</span></button>
+  <button class="nav-btn" data-target="lessons"><span>▱</span><span>الدروس</span></button>
+</nav>
+<div class="toast" id="toast" role="status"></div>
 
 <script>
-function showSection(id) {
-  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+const lessonFiles = [
+  "2 التحولات الاقتصادية والمالية والاجتماعية والفكرية.pdf",
+  "2 المجال المغربي الموارد الطبيعية والبشرية.pdf",
+  "التنافس الامبريالي.pdf",
+  "تقديم التحولات الكبرى للعالم الراسمالي.pdf",
+  "مفهوم التنمية.pdf"
+];
 
-  document.getElementById(id).classList.add("active");
-  const button = document.querySelector('nav button[data-section="' + id + '"]');
-  if(button) button.classList.add("active");
-
-  if(id === "news") loadNews();
-  if(id === "exams") loadExams();
+const lessonList = document.getElementById("lessonList");
+function renderLessons(query=""){
+  const filtered=lessonFiles.filter(name=>name.toLowerCase().includes(query.trim().toLowerCase()));
+  lessonList.innerHTML=filtered.length ? filtered.map(name=>{
+    const href="lessons/"+encodeURIComponent(name).replace(/%2F/g,"/");
+    return `<a class="lesson-link" href="${href}" target="_blank" rel="noopener"><span class="pdf">PDF</span><span><strong>${escapeHTML(name.replace(/\.pdf$/i,""))}</strong><small>ملف PDF · الاجتماعيات</small></span><span class="open-arrow">←</span></a>`;
+  }).join("") : '<div class="empty">لم يتم العثور على درس بهذا الاسم.</div>';
 }
+document.getElementById("lessonSearch").addEventListener("input",e=>renderLessons(e.target.value));
+renderLessons();
 
-document.querySelectorAll("nav button").forEach(button => {
-  button.addEventListener("click", () => showSection(button.dataset.section));
-});
-
-function updateClock() {
-  const now = new Date();
-  document.getElementById("clock").textContent =
-    now.toLocaleTimeString("ar-MA", {hour12:true});
-  document.getElementById("today-date").textContent =
-    now.toLocaleDateString("ar-MA", {
-      weekday:"long", year:"numeric", month:"long", day:"numeric"
-    });
+function escapeHTML(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function localDate(s){const p=String(s||"").split("-").map(Number);return p.length===3?new Date(p[0],p[1]-1,p[2]):null;}
+function dateText(s){const d=localDate(s);return d&&!isNaN(d)?d.toLocaleDateString("ar-MA",{year:"numeric",month:"long",day:"numeric"}):escapeHTML(s||"");}
+let allNews=[],activeNewsType="all";
+function renderNews(){
+  const today=new Date();today.setHours(0,0,0,0);
+  const valid=allNews.filter(n=>{const d=localDate(n.date);if(!d)return true;return Math.floor((today-d)/86400000)<7;});
+  const filtered=valid.filter(n=>activeNewsType==="all"||(n.type||"school")===activeNewsType);
+  const el=document.getElementById("newsList");
+  el.innerHTML=filtered.length?filtered.map(n=>`<article class="item"><div class="item-top"><div><h3>${escapeHTML(n.title)}</h3><p>${escapeHTML(n.content||"")}</p></div><span class="date-tag">${dateText(n.date)}</span></div></article>`).join(""):'<div class="empty">لا توجد أخبار في هذا التصنيف حالياً.</div>';
 }
-updateClock();
-setInterval(updateClock, 1000);
-
-function updateRamadan() {
-  const target = new Date("2027-02-08T00:00:00");
-  const today = new Date();
-  today.setHours(0,0,0,0);
-  const days = Math.ceil((target - today) / 86400000);
-  const el = document.getElementById("ramadan-count");
-
-  if(days > 0) el.textContent = "باقي " + days + " يومًا 🌙";
-  else if(days === 0) el.textContent = "رمضان مبارك 🌙";
-  else el.textContent = "حلّ شهر رمضان، تقبّل الله طاعاتكم";
+document.querySelectorAll("#newsFilters .filter").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll("#newsFilters .filter").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");activeNewsType=btn.dataset.type;renderNews();
+}));
+async function loadNews(){
+  try{const r=await fetch("news.json?update="+Date.now());if(!r.ok)throw Error();const data=await r.json();allNews=Array.isArray(data)?data:[];renderNews();}
+  catch{document.getElementById("newsList").innerHTML='<div class="empty">تعذر تحميل الأخبار. تحقق من اتصال الإنترنت.</div>';}
 }
-updateRamadan();
-
-let currentNewsFilter = "all";
-let newsCache = [];
-
-document.querySelectorAll("[data-filter]").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll("[data-filter]").forEach(b => b.classList.remove("active"));
-    button.classList.add("active");
-    currentNewsFilter = button.dataset.filter;
-    renderNews();
-  });
-});
-
-async function loadNews() {
-  const list = document.getElementById("news-list");
-  try {
-    const response = await fetch("./news.json?v=" + Date.now());
-    if(!response.ok) throw new Error("News unavailable");
-
-    const data = await response.json();
-    const today = new Date();
-    today.setHours(0,0,0,0);
-
-    newsCache = data.filter(item => {
-      if(!item.date) return false;
-      const date = new Date(item.date + "T00:00:00");
-      const age = (today - date) / 86400000;
-      return age >= 0 && age < 7;
-    });
-
-    renderNews();
-  } catch(error) {
-    list.innerHTML = '<div class="empty">تعذر تحميل الأخبار. حاول لاحقًا.</div>';
-  }
+async function loadExams(){
+  const el=document.getElementById("examList");
+  try{
+    const r=await fetch("exams.json?update="+Date.now());if(!r.ok)throw Error();
+    const data=await r.json(),today=new Date();today.setHours(0,0,0,0);
+    const upcoming=(Array.isArray(data)?data:[]).filter(x=>{const d=localDate(x.exam_date);return d&&!isNaN(d)&&d>=today;}).sort((a,b)=>localDate(a.exam_date)-localDate(b.exam_date));
+    el.innerHTML=upcoming.length?upcoming.map(x=>`<article class="item"><div class="item-top"><div><h3>${escapeHTML(x.subject)}</h3><p>${escapeHTML(x.details||"موعد الامتحان")}</p></div><span class="status">${dateText(x.exam_date)}</span></div></article>`).join(""):'<div class="empty">لا توجد امتحانات قادمة حالياً. بالتوفيق! ✨</div>';
+  }catch{el.innerHTML='<div class="empty">تعذر تحميل جدول الامتحانات. تحقق من اتصال الإنترنت.</div>';}
 }
-
-function renderNews() {
-  const list = document.getElementById("news-list");
-  let items = newsCache;
-
-  if(currentNewsFilter !== "all") {
-    items = items.filter(item => item.type === currentNewsFilter);
-  }
-
-  list.innerHTML = "";
-  if(items.length === 0) {
-    list.innerHTML = '<div class="empty">لا توجد أخبار أو مناسبات في هذا القسم حاليًا.</div>';
-    return;
-  }
-
-  items.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    const title = document.createElement("h3");
-    title.textContent = item.title || "خبر جديد";
-
-    const date = document.createElement("div");
-    date.className = "meta";
-    date.textContent = item.date || "";
-
-    const content = document.createElement("p");
-    content.textContent = item.content || "";
-
-    card.append(title, date, content);
-    list.appendChild(card);
-  });
+function refreshData(){loadNews();loadExams();showToast("تم تحديث المحتوى");}
+function showToast(message){const t=document.getElementById("toast");t.textContent=message;t.style.display="block";setTimeout(()=>t.style.display="none",1800);}
+function updateClock(){
+  const now=new Date();
+  document.getElementById("clock").textContent=now.toLocaleTimeString("ar-MA",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false});
+  document.getElementById("today").textContent=now.toLocaleDateString("ar-MA",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
 }
-
-async function loadExams() {
-  const list = document.getElementById("exams-list");
-  try {
-    const response = await fetch("./exams.json?v=" + Date.now());
-    if(!response.ok) throw new Error("Exams unavailable");
-
-    const data = await response.json();
-    const today = new Date();
-    today.setHours(0,0,0,0);
-
-    const active = data.filter(exam => {
-      if(!exam.exam_date) return false;
-      const date = new Date(exam.exam_date + "T00:00:00");
-      return date >= today;
-    });
-
-    active.sort((a,b) => a.exam_date.localeCompare(b.exam_date));
-    list.innerHTML = "";
-
-    if(active.length === 0) {
-      list.innerHTML = '<div class="empty">لا توجد امتحانات قادمة حاليًا. بالتوفيق! 🎓</div>';
-      return;
-    }
-
-    active.forEach(exam => {
-      const card = document.createElement("div");
-      card.className = "card";
-
-      const title = document.createElement("h3");
-      title.textContent = "📝 " + (exam.subject || "امتحان");
-
-      const date = document.createElement("p");
-      date.textContent = "📅 " + new Date(exam.exam_date + "T00:00:00")
-        .toLocaleDateString("ar-MA", {
-          weekday:"long", year:"numeric", month:"long", day:"numeric"
-        });
-
-      const details = document.createElement("p");
-      details.textContent = exam.details || "";
-
-      card.append(title,date,details);
-      list.appendChild(card);
-    });
-  } catch(error) {
-    list.innerHTML = '<div class="empty">تعذر تحميل الامتحانات. حاول لاحقًا.</div>';
-  }
+function updateRamadan(){
+  const target=new Date(2027,1,8);target.setHours(0,0,0,0);
+  const now=new Date();now.setHours(0,0,0,0);
+  const days=Math.ceil((target-now)/86400000);
+  document.getElementById("ramadan").textContent=days>0?days+" يوم":days===0?"اليوم":"قريباً";
 }
+document.querySelectorAll(".nav-btn").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");
+  document.getElementById(btn.dataset.target).scrollIntoView({behavior:"smooth",block:"start"});
+}));
+loadNews();loadExams();updateClock();updateRamadan();setInterval(updateClock,1000);
 </script>
-
 </body>
 </html>
