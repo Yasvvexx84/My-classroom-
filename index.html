@@ -4,193 +4,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101d35">
 <title>My Classroom</title>
-
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f6fb;
+  color:#17243a;
 }
-
-body {
-  font-family: Arial, sans-serif;
-  background: #f3f6fb;
-  color: #18263d;
+header{
+  background:#173b70;
+  color:white;
+  padding:25px 18px;
+  text-align:center;
 }
-
-header {
-  background: #101d35;
-  color: white;
-  padding: 27px 20px;
-  border-radius: 0 0 25px 25px;
+header h1{margin:0 0 8px;font-size:27px}
+header p{margin:0;color:#d8e6fa}
+nav{
+  display:flex;
+  overflow-x:auto;
+  background:white;
+  padding:10px;
+  gap:8px;
+  position:sticky;
+  top:0;
+  box-shadow:0 2px 8px #0001;
 }
-
-header small {
-  color: #a9c5e9;
+nav button{
+  border:0;
+  padding:12px 18px;
+  border-radius:9px;
+  background:#edf2f9;
+  color:#173b70;
+  font-weight:bold;
+  white-space:nowrap;
 }
-
-header h1 {
-  margin: 12px 0 6px;
-  font-size: 27px;
+nav button.active{
+  background:#173b70;
+  color:white;
 }
-
-.container {
-  padding: 20px;
-  max-width: 650px;
-  margin: auto;
+main{padding:18px;max-width:750px;margin:auto}
+.section{display:none}
+.section.active{display:block}
+h2{color:#173b70}
+.card{
+  background:white;
+  padding:17px;
+  border-radius:13px;
+  margin:13px 0;
+  box-shadow:0 3px 12px #0000000c;
 }
-
-.welcome {
-  background: white;
-  padding: 20px;
-  border-radius: 17px;
-  margin-bottom: 22px;
-  box-shadow: 0 4px 15px #172c4610;
+.card h3{margin-top:0}
+.date{color:#718096;font-size:13px}
+.empty{
+  background:white;
+  padding:25px;
+  text-align:center;
+  border-radius:12px;
+  color:#718096;
 }
-
-.welcome h2 {
-  font-size: 19px;
-  margin-bottom: 8px;
-}
-
-.welcome p {
-  color: #718096;
-  font-size: 14px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 13px;
-  margin-bottom: 25px;
-}
-
-.card {
-  background: white;
-  padding: 20px 12px;
-  border-radius: 17px;
-  text-align: center;
-  box-shadow: 0 4px 15px #172c4610;
-}
-
-.card .emoji {
-  font-size: 30px;
-  margin-bottom: 10px;
-}
-
-.card h3 {
-  font-size: 15px;
-}
-
-section {
-  background: white;
-  padding: 18px;
-  border-radius: 17px;
-  margin-bottom: 17px;
-}
-
-section h2 {
-  font-size: 18px;
-  margin-bottom: 15px;
-}
-
-.item {
-  padding: 13px 0;
-  border-top: 1px solid #edf0f5;
-  color: #536177;
-  font-size: 14px;
-}
-
-.item strong {
-  display: block;
-  color: #18263d;
-  margin-bottom: 5px;
-}
-
-footer {
-  text-align: center;
-  padding: 25px;
-  color: #8491a3;
-  font-size: 12px;
+footer{
+  text-align:center;
+  padding:25px;
+  color:#718096;
+  font-size:13px;
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <small>منصتنا الدراسية الرقمية</small>
-  <h1>My Classroom 🎓</h1>
-  <p>كل ما يحتاجه فصلنا في مكان واحد.</p>
+  <h1>My Classroom</h1>
+  <p>منصتك الدراسية في مكان واحد</p>
 </header>
 
-<div class="container">
+<nav>
+  <button class="active" onclick="showSection('home',this)">الرئيسية</button>
+  <button onclick="showSection('news',this)">الأخبار</button>
+  <button onclick="showSection('exams',this)">الامتحانات</button>
+  <button onclick="showSection('lessons',this)">الدروس</button>
+  <button onclick="showSection('announcements',this)">الإعلانات</button>
+</nav>
 
-  <div class="welcome">
-    <h2>مرحباً بك 👋</h2>
-    <p>تابع آخر أخبار الفصل ومواعيد الامتحانات والدروس.</p>
+<main>
+
+<section id="home" class="section active">
+  <h2>مرحباً بك في My Classroom 👋</h2>
+  <div class="card">
+    <h3>📚 فضاؤك الدراسي</h3>
+    <p>يمكنك من هنا متابعة الأخبار ومواعيد الامتحانات والدروس والإعلانات.</p>
   </div>
-
-  <div class="grid">
-    <div class="card">
-      <div class="emoji">📅</div>
-      <h3>الامتحانات</h3>
-    </div>
-
-    <div class="card">
-      <div class="emoji">📰</div>
-      <h3>الأخبار</h3>
-    </div>
-
-    <div class="card">
-      <div class="emoji">📚</div>
-      <h3>الدروس</h3>
-    </div>
-
-    <div class="card">
-      <div class="emoji">📢</div>
-      <h3>الإعلانات</h3>
-    </div>
+  <div class="card">
+    <h3>📢 آخر المستجدات</h3>
+    <p>ستظهر هنا آخر أخبار القسم عندما تتم إضافتها.</p>
   </div>
+</section>
 
-  <section id="news">
-    <h2>📰 آخر الأخبار</h2>
-    <div class="item">
-      <strong>مرحباً بكم في My Classroom</strong>
-      هذه منصتنا الجديدة الخاصة بالفصل.
-    </div>
-  </section>
+<section id="news" class="section">
+  <h2>📰 الأخبار</h2>
+  <div class="empty">لا توجد أخبار جديدة حالياً.</div>
+</section>
 
-  <section id="exams">
-    <h2>📅 الامتحانات القادمة</h2>
-    <div class="item">
-      لا توجد مواعيد منشورة حالياً.
-    </div>
-  </section>
+<section id="exams" class="section">
+  <h2>📝 جدول الامتحانات</h2>
+  <div class="empty">لم تتم إضافة مواعيد الامتحانات بعد.</div>
+</section>
 
-  <section id="lessons">
-    <h2>📚 الدروس والملخصات</h2>
-    <div class="item">
-      لا توجد دروس مضافة حالياً.
-    </div>
-  </section>
+<section id="lessons" class="section">
+  <h2>📖 الدروس والملفات</h2>
+  <div class="empty">ستظهر الدروس والملفات هنا.</div>
+</section>
 
-  <section id="announcements">
-    <h2>📢 الإعلانات</h2>
-    <div class="item">
-      سيتم نشر الإعلانات الجديدة هنا.
-    </div>
-  </section>
+<section id="announcements" class="section">
+  <h2>📣 الإعلانات</h2>
+  <div class="empty">لا توجد إعلانات حالياً.</div>
+</section>
 
-</div>
+</main>
 
 <footer>
   My Classroom © 2026
   <br><br>
   Created by Yassine
 </footer>
+
+<script>
+function showSection(id,button){
+  document.querySelectorAll('.section').forEach(section=>{
+    section.classList.remove('active');
+  });
+  document.querySelectorAll('nav button').forEach(btn=>{
+    btn.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+  button.classList.add('active');
+}
+</script>
 
 </body>
 </html>
