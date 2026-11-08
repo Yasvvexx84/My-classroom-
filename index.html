@@ -25,7 +25,17 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("My Classroom is ready"))
+      .catch(error => console.error(error));
+  });
+}
+</script>
+
   margin:0;
   background:var(--bg);
   color:var(--ink);
