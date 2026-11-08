@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101d35">
+<title>My Classroom</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f6fb;
+  color: #18263d;
+}
+
+header {
+  background: #101d35;
+  color: white;
+  padding: 27px 20px;
+  border-radius: 0 0 25px 25px;
+}
+
+header small {
+  color: #a9c5e9;
+}
+
+header h1 {
+  margin: 12px 0 6px;
+  font-size: 27px;
+}
+
+.container {
+  padding: 20px;
+  max-width: 650px;
+  margin: auto;
+}
+
+.welcome {
+  background: white;
+  padding: 20px;
+  border-radius: 17px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 15px #172c4610;
+}
+
+.welcome h2 {
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+
+.welcome p {
+  color: #718096;
+  font-size: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: white;
+  padding: 20px 12px;
+  border-radius: 17px;
+  text-align: center;
+  box-shadow: 0 4px 15px #172c4610;
+}
+
+.card .emoji {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  font-size: 15px;
+}
+
+section {
+  background: white;
+  padding: 18px;
+  border-radius: 17px;
+  margin-bottom: 17px;
+}
+
+section h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.item {
+  padding: 13px 0;
+  border-top: 1px solid #edf0f5;
+  color: #536177;
+  font-size: 14px;
+}
+
+.item strong {
+  display: block;
+  color: #18263d;
+  margin-bottom: 5px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #8491a3;
+  font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <small>منصتنا الدراسية الرقمية</small>
+  <h1>My Classroom 🎓</h1>
+  <p>كل ما يحتاجه فصلنا في مكان واحد.</p>
+</header>
+
+<div class="container">
+
+  <div class="welcome">
+    <h2>مرحباً بك 👋</h2>
+    <p>تابع آخر أخبار الفصل ومواعيد الامتحانات والدروس.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="emoji">📅</div>
+      <h3>الامتحانات</h3>
+    </div>
+
+    <div class="card">
+      <div class="emoji">📰</div>
+      <h3>الأخبار</h3>
+    </div>
+
+    <div class="card">
+      <div class="emoji">📚</div>
+      <h3>الدروس</h3>
+    </div>
+
+    <div class="card">
+      <div class="emoji">📢</div>
+      <h3>الإعلانات</h3>
+    </div>
+  </div>
+
+  <section id="news">
+    <h2>📰 آخر الأخبار</h2>
+    <div class="item">
+      <strong>مرحباً بكم في My Classroom</strong>
+      هذه منصتنا الجديدة الخاصة بالفصل.
+    </div>
+  </section>
+
+  <section id="exams">
+    <h2>📅 الامتحانات القادمة</h2>
+    <div class="item">
+      لا توجد مواعيد منشورة حالياً.
+    </div>
+  </section>
+
+  <section id="lessons">
+    <h2>📚 الدروس والملخصات</h2>
+    <div class="item">
+      لا توجد دروس مضافة حالياً.
+    </div>
+  </section>
+
+  <section id="announcements">
+    <h2>📢 الإعلانات</h2>
+    <div class="item">
+      سيتم نشر الإعلانات الجديدة هنا.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  My Classroom © 2026
+  <br><br>
+  Created by Yassine
+</footer>
+
+</body>
+</html>
