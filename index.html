@@ -5,73 +5,116 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Classroom</title>
+
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f3f6fb;
-  color:#17243a;
+* {
+  box-sizing: border-box;
 }
-header{
-  background:#173b70;
-  color:white;
-  padding:25px 18px;
-  text-align:center;
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f5fa;
+  color: #1b2b45;
 }
-header h1{margin:0 0 8px;font-size:27px}
-header p{margin:0;color:#d8e6fa}
-nav{
-  display:flex;
-  overflow-x:auto;
-  background:white;
-  padding:10px;
-  gap:8px;
-  position:sticky;
-  top:0;
-  box-shadow:0 2px 8px #0001;
+
+header {
+  background: #173b70;
+  color: white;
+  text-align: center;
+  padding: 28px 15px;
 }
-nav button{
-  border:0;
-  padding:12px 18px;
-  border-radius:9px;
-  background:#edf2f9;
-  color:#173b70;
-  font-weight:bold;
-  white-space:nowrap;
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
 }
-nav button.active{
-  background:#173b70;
-  color:white;
+
+header p {
+  margin: 0;
+  color: #dce8f8;
 }
-main{padding:18px;max-width:750px;margin:auto}
-.section{display:none}
-.section.active{display:block}
-h2{color:#173b70}
-.card{
-  background:white;
-  padding:17px;
-  border-radius:13px;
-  margin:13px 0;
-  box-shadow:0 3px 12px #0000000c;
+
+nav {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 12px;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  box-shadow: 0 2px 8px #0001;
 }
-.card h3{margin-top:0}
-.date{color:#718096;font-size:13px}
-.empty{
-  background:white;
-  padding:25px;
-  text-align:center;
-  border-radius:12px;
-  color:#718096;
+
+nav button {
+  border: 0;
+  border-radius: 9px;
+  padding: 12px 17px;
+  background: #edf2f9;
+  color: #173b70;
+  font-weight: bold;
+  white-space: nowrap;
+  cursor: pointer;
 }
-footer{
-  text-align:center;
-  padding:25px;
-  color:#718096;
-  font-size:13px;
+
+nav button.active {
+  background: #173b70;
+  color: white;
+}
+
+main {
+  max-width: 750px;
+  margin: auto;
+  padding: 20px;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+h2 {
+  color: #173b70;
+}
+
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 13px;
+  margin: 14px 0;
+  box-shadow: 0 3px 12px #0000000c;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.date {
+  color: #718096;
+  font-size: 13px;
+}
+
+.empty {
+  background: white;
+  padding: 25px;
+  text-align: center;
+  border-radius: 12px;
+  color: #718096;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #718096;
+  font-size: 13px;
 }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -80,11 +123,11 @@ footer{
 </header>
 
 <nav>
-  <button class="active" onclick="showSection('home',this)">الرئيسية</button>
-  <button onclick="showSection('news',this)">الأخبار</button>
-  <button onclick="showSection('exams',this)">الامتحانات</button>
-  <button onclick="showSection('lessons',this)">الدروس</button>
-  <button onclick="showSection('announcements',this)">الإعلانات</button>
+  <button class="active" data-section="home">الرئيسية</button>
+  <button data-section="news">الأخبار</button>
+  <button data-section="exams">الامتحانات</button>
+  <button data-section="lessons">الدروس</button>
+  <button data-section="announcements">الإعلانات</button>
 </nav>
 
 <main>
@@ -93,12 +136,10 @@ footer{
   <h2>مرحباً بك في My Classroom 👋</h2>
   <div class="card">
     <h3>📚 فضاؤك الدراسي</h3>
-    <p>يمكنك من هنا متابعة الأخبار ومواعيد الامتحانات والدروس والإعلانات.</p>
+    <p>تابع أخبار القسم ومواعيد الامتحانات والدروس والإعلانات من مكان واحد.</p>
   </div>
-  <div class="card">
-    <h3>📢 آخر المستجدات</h3>
-    <p>ستظهر هنا آخر أخبار القسم عندما تتم إضافتها.</p>
-  </div>
+</section>
+
 <section id="news" class="section">
   <h2>📰 الأخبار</h2>
   <div id="news-list">
@@ -108,17 +149,17 @@ footer{
 
 <section id="exams" class="section">
   <h2>📝 جدول الامتحانات</h2>
-  <div class="empty">لم تتم إضافة مواعيد الامتحانات بعد.</div>
+  <div class="empty">لا توجد امتحانات مضافة حاليًا.</div>
 </section>
 
 <section id="lessons" class="section">
   <h2>📖 الدروس والملفات</h2>
-  <div class="empty">ستظهر الدروس والملفات هنا.</div>
+  <div class="empty">لا توجد دروس مضافة حاليًا.</div>
 </section>
 
 <section id="announcements" class="section">
-  <h2>📣 الإعلانات</h2>
-  <div class="empty">لا توجد إعلانات حالياً.</div>
+  <h2>📢 الإعلانات</h2>
+  <div class="empty">لا توجد إعلانات حاليًا.</div>
 </section>
 
 </main>
@@ -128,53 +169,74 @@ footer{
   <br><br>
   Created by Yassine
 </footer>
-async function loadNews() {
-  const list = document.getElementById("news-list");
 
-  try {
-    const response = await fetch("./news.json");
-    if (!response.ok) throw new Error("News file not found");
-
-    const news = await response.json();
-
-    if (!news.length) {
-      list.innerHTML = '<div class="empty">لا توجد أخبار حاليًا.</div>';
-      return;
-    }
-
-    list.innerHTML = news.map(item => `
-      <div class="card">
-        <h3>${escapeHTML(item.title)}</h3>
-        <p class="date">${escapeHTML(item.date || "")}</p>
-        <p>${escapeHTML(item.content)}</p>
-      </div>
-    `).join("");
-  } catch (error) {
-    list.innerHTML = '<div class="empty">تعذر تحميل الأخبار حاليًا.</div>';
-  }
-}
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-}
-
-loadNews();
 <script>
-function showSection(id,button){
-  document.querySelectorAll('.section').forEach(section=>{
-    section.classList.remove('active');
+document.querySelectorAll("nav button").forEach(function(button) {
+  button.addEventListener("click", function() {
+    var sectionId = button.getAttribute("data-section");
+
+    document.querySelectorAll(".section").forEach(function(section) {
+      section.classList.remove("active");
+    });
+
+    document.querySelectorAll("nav button").forEach(function(item) {
+      item.classList.remove("active");
+    });
+
+    document.getElementById(sectionId).classList.add("active");
+    button.classList.add("active");
+
+    if (sectionId === "news") {
+      loadNews();
+    }
   });
-  document.querySelectorAll('nav button').forEach(btn=>{
-    btn.classList.remove('active');
-  });
-  document.getElementById(id).classList.add('active');
-  button.classList.add('active');
+});
+
+function loadNews() {
+  var list = document.getElementById("news-list");
+
+  list.textContent = "جارٍ تحميل الأخبار...";
+
+  fetch("./news.json?v=" + Date.now())
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error("Could not load news");
+      }
+      return response.json();
+    })
+    .then(function(news) {
+      list.replaceChildren();
+
+      if (!Array.isArray(news) || news.length === 0) {
+        list.textContent = "لا توجد أخبار حاليًا.";
+        list.className = "empty";
+        return;
+      }
+
+      list.className = "";
+
+      news.forEach(function(item) {
+        var card = document.createElement("div");
+        card.className = "card";
+
+        var title = document.createElement("h3");
+        title.textContent = item.title || "خبر جديد";
+
+        var date = document.createElement("p");
+        date.className = "date";
+        date.textContent = item.date || "";
+
+        var content = document.createElement("p");
+        content.textContent = item.content || "";
+
+        card.append(title, date, content);
+        list.appendChild(card);
+      });
+    })
+    .catch(function() {
+      list.className = "empty";
+      list.textContent = "تعذر تحميل الأخبار. حاول تحديث الصفحة.";
+    });
 }
 </script>
 
