@@ -1,1063 +1,684 @@
 
 <!DOCTYPE html>
-<html lang="en">
-<link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#2563eb">
-<meta name="mobile-web-app-capable" content="yes"> 
+<html lang="ar" dir="rtl">
+<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#080b14">
-<title>My Classroom | Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#102b54">
+<meta name="description" content="My Classroom - Your classroom, everywhere">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="My Classroom">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png" type="image/png">
+<title>My Classroom</title>
 
 <style>
 :root{
-  --blue:#347cf6;
-  --blue2:#65a1ff;
-  --purple:#9565ed;
-  --orange:#ed9a45;
-  --green:#19b99e;
-  --ink:#17243a;
-  --muted:#8995a8;
-  --bg:#f4f7fc;
-  --white:#fff;
-  --line:#e9eef6;
-  --shadow:0 8px 28px rgba(28,54,95,.055);
+ --blue:#2563eb;--navy:#102b54;--purple:#805ad5;
+ --green:#0d9f91;--orange:#e99438;
+ --bg:#f4f7fc;--card:#fff;--text:#172b4d;
+ --muted:#8290a6;--line:#e9eef6;
+ --shadow:0 8px 28px rgba(24,48,90,.065);
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js")
-      .then(() => console.log("My Classroom is ready"))
-      .catch(error => console.error(error));
-  });
-}
-</script>
-
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:Arial,Helvetica,sans-serif;
-  -webkit-tap-highlight-color:transparent;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ font-family:Arial,sans-serif;background:var(--bg);
+ color:var(--text);min-height:100vh;padding-bottom:95px;
+ transition:background .2s;
 }
 button,input{font:inherit}
 button{cursor:pointer}
-button:focus-visible,a:focus-visible,input:focus-visible{
-  outline:3px solid #9dc1ff;
-  outline-offset:3px;
-}
 #splash{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  background:#080b14;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  transition:opacity .65s ease,visibility .65s ease;
+ position:fixed;inset:0;z-index:10000;background:#05080f;
+ color:white;display:flex;align-items:center;justify-content:center;
+ flex-direction:column;transition:.6s;
 }
 #splash.hide{opacity:0;visibility:hidden}
-.splash-logo{
-  width:112px;height:90px;
-  animation:logoIn 1s ease both;
+.splash-book{font-size:65px}
+.splash-mc{font-size:43px;font-weight:900;letter-spacing:6px;margin-top:8px}
+.splash-name{font-size:15px;letter-spacing:3px;margin-top:8px}
+#language-screen{
+ position:fixed;inset:0;z-index:9000;background:rgba(8,22,48,.78);
+ display:none;align-items:center;justify-content:center;padding:20px;
+ backdrop-filter:blur(8px);
 }
-.splash-mc{
-  font-size:29px;
-  font-weight:900;
-  letter-spacing:9px;
-  margin-top:18px;
-  animation:logoIn 1s .15s both;
+.language-box{
+ width:100%;max-width:390px;background:white;border-radius:25px;
+ padding:25px;box-shadow:0 20px 70px #0003;text-align:center;
 }
-.splash-name{
-  font-size:13px;
-  font-weight:bold;
-  letter-spacing:4px;
-  margin-top:10px;
-  opacity:0;
-  animation:nameIn .8s .75s forwards;
+.language-box h2{font-size:23px;color:var(--navy);margin:10px 0}
+.language-box p{color:var(--muted);font-size:13px;margin-bottom:20px}
+.language-options{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.lang-option{
+ border:1px solid var(--line);background:#f8faff;border-radius:15px;
+ padding:16px 8px;color:var(--text);transition:.2s;
 }
-.splash-line{
-  height:2px;width:80px;
-  background:#4289ff;
-  margin-top:25px;
-  border-radius:5px;
-  animation:lineIn 1.2s ease infinite alternate;
-}
-@keyframes logoIn{
-  from{opacity:0;transform:translateY(15px) scale(.92)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
-@keyframes nameIn{to{opacity:1}}
-@keyframes lineIn{from{width:35px}to{width:110px}}
-
+.lang-option:active{transform:scale(.96)}
+.lang-option .flag{font-size:31px;display:block;margin-bottom:8px}
+.lang-option strong{font-size:14px}
 header{
-  height:67px;
-  background:#fff;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 19px;
-  position:sticky;
-  top:0;
-  z-index:20;
+ background:linear-gradient(135deg,#102b54,#174c9e 65%,#3478ed);
+ color:white;padding:20px 18px 27px;border-radius:0 0 27px 27px;
+ box-shadow:0 8px 25px #173e791c;
 }
-.brand{
-  display:flex;align-items:center;gap:10px;
-  font-size:18px;font-weight:900;
-  color:var(--ink);
-  letter-spacing:-.5px;
+.header-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-weight:900;font-size:20px;letter-spacing:-.4px}
+.header-actions{display:flex;gap:8px}
+.header-btn{
+ width:39px;height:39px;border:1px solid #ffffff35;
+ background:#ffffff18;color:white;border-radius:13px;font-size:18px;
 }
-.brand-icon{
-  width:34px;height:34px;
-  border-radius:11px;
-  display:grid;place-items:center;
-  background:#edf4ff;color:var(--blue);
+.header-welcome{margin-top:25px}
+.header-welcome h1{font-size:25px;margin-bottom:8px}
+.header-welcome p{font-size:13px;opacity:.82}
+.header-meta{display:flex;gap:8px;margin-top:17px;flex-wrap:wrap}
+.meta-pill{
+ background:#ffffff1c;border:1px solid #ffffff25;
+ padding:7px 11px;border-radius:20px;font-size:11px;
 }
-.brand-icon svg{width:25px;height:25px}
-.header-right{
-  text-align:right;
-  display:flex;flex-direction:column;gap:3px;
+main{max-width:720px;margin:auto;padding:18px 15px}
+.page{display:none;animation:fade .25s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.section-heading{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:10px;margin:9px 0 15px;
 }
-.header-right strong{font-size:11px;color:var(--blue)}
-.header-right span{font-size:10px;color:var(--muted)}
-
-main{
-  max-width:900px;
-  margin:auto;
-  padding:19px 15px 110px;
+.section-heading h2{font-size:18px;font-weight:800}
+.section-heading small{font-size:11px;color:var(--muted)}
+.card{
+ background:var(--card);border:1px solid var(--line);
+ border-radius:19px;padding:17px;margin-bottom:13px;
+ box-shadow:var(--shadow);
 }
-.view{display:none}
-.view.active{display:block;animation:viewIn .3s ease}
-@keyframes viewIn{
-  from{opacity:0;transform:translateY(9px)}
-  to{opacity:1;transform:translateY(0)}
+.clock-card{
+ background:linear-gradient(135deg,#eaf2ff,#fff);
+ border-color:#dce8ff;text-align:center;padding:22px;
 }
-.hero{
-  background:linear-gradient(130deg,#1760d4,#438ff8 65%,#77b4ff);
-  border-radius:25px;
-  padding:25px 22px;
-  color:white;
-  position:relative;
-  overflow:hidden;
-  box-shadow:0 12px 28px #347cf626;
-}
-.hero:after{
-  content:"";
-  width:190px;height:190px;
-  border:1px solid #ffffff30;
-  border-radius:50%;
-  position:absolute;
-  right:-75px;top:-85px;
-  box-shadow:0 0 0 22px #ffffff0b,0 0 0 45px #ffffff08;
-}
-.hero-label{
-  font-size:10px;
-  letter-spacing:2px;
-  opacity:.85;
-  font-weight:bold;
-}
-.hero h1{
-  font-size:29px;
-  line-height:1.2;
-  margin:13px 0 9px;
-  max-width:280px;
-}
-.hero p{
-  font-size:13px;line-height:1.7;
-  opacity:.9;max-width:290px;
-  margin:0;
-}
-.hero-bottom{
-  margin-top:23px;
-  display:flex;align-items:end;justify-content:space-between;
-  position:relative;z-index:1;
-}
-.clock{
-  font-size:27px;font-weight:800;
-  letter-spacing:1px;
-}
-.hero-date{font-size:11px;opacity:.85;margin-top:4px}
-.hero-mark{
-  font-size:35px;
-  opacity:.85;
-}
-.section-head{
-  display:flex;align-items:center;
-  justify-content:space-between;
-  margin:25px 1px 13px;
-}
-.section-head h2{
-  font-size:17px;margin:0;font-weight:800;
-}
-.section-head button{
-  border:0;background:none;color:var(--blue);
-  font-size:12px;font-weight:bold;
-}
-.class-card{
-  margin-top:15px;
-  background:white;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:17px;
-  display:flex;align-items:center;
-  justify-content:space-between;
-  box-shadow:var(--shadow);
-}
-.class-card small,.info-card small{
-  color:var(--muted);font-size:10px;
-  letter-spacing:1px;font-weight:bold;
-}
-.class-card strong{
-  display:block;color:var(--blue);
-  font-size:20px;margin-top:6px;
-  letter-spacing:1px;
-}
-.class-icon{
-  background:#edf4ff;
-  color:var(--blue);
-  width:43px;height:43px;
-  display:grid;place-items:center;
-  border-radius:14px;font-size:23px;
-}
-.quick-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:11px;
-}
+#clock{font-size:32px;font-weight:900;color:var(--blue);direction:ltr}
+#today{font-size:12px;color:var(--muted);margin-top:8px}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
 .quick{
-  background:white;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:17px 15px;
-  text-align:left;
-  box-shadow:var(--shadow);
-  transition:transform .2s;
+ background:white;border:1px solid var(--line);border-radius:18px;
+ padding:17px 12px;text-align:start;color:var(--text);
+ box-shadow:var(--shadow);transition:.2s;
 }
 .quick:active{transform:scale(.97)}
-.quick-icon{
-  width:41px;height:41px;
-  border-radius:13px;
-  display:grid;place-items:center;
-  font-size:21px;margin-bottom:13px;
+.quick .symbol{
+ width:42px;height:42px;border-radius:14px;display:grid;
+ place-items:center;font-size:21px;margin-bottom:13px;
 }
-.quick strong{font-size:14px;display:block}
-.quick small{color:var(--muted);font-size:11px;display:block;margin-top:5px}
-.q-news .quick-icon{background:#f2ebff;color:var(--purple)}
-.q-exams .quick-icon{background:#fff2e4;color:var(--orange)}
-.q-lessons .quick-icon{background:#e6faf5;color:var(--green)}
-.q-about .quick-icon{background:#eaf2ff;color:var(--blue)}
-
-.page-title{
-  font-size:27px;
-  margin:7px 0 7px;
-  font-weight:900;
-  letter-spacing:-.7px;
-}
-.page-subtitle{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.6;
-  margin:0 0 21px;
-}
-.page-news .page-title{color:var(--purple)}
-.page-exams .page-title{color:var(--orange)}
-.page-lessons .page-title{color:var(--green)}
-.page-about .page-title{color:var(--blue)}
-
+.quick strong{display:block;font-size:14px}
+.quick small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+.blue-bg{background:#e9f1ff;color:#2865d8}
+.purple-bg{background:#f1eaff;color:#805ad5}
+.orange-bg{background:#fff1df;color:#dc8628}
+.green-bg{background:#e4f7f3;color:#0d9f91}
 .search{
-  width:100%;
-  padding:14px 15px;
-  border:1px solid #e5eaf2;
-  border-radius:14px;
-  background:white;
-  outline:none;
-  color:var(--ink);
-  font-size:13px;
-  margin-bottom:13px;
+ width:100%;border:1px solid var(--line);background:white;
+ border-radius:13px;padding:14px 15px;outline:none;margin-bottom:13px;
+ color:var(--text);
 }
-.search:focus{border-color:var(--blue)}
-.filters{
-  display:flex;gap:8px;
-  overflow-x:auto;
-  padding:0 0 13px;
-  scrollbar-width:none;
-}
-.filters::-webkit-scrollbar{display:none}
+.search:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb12}
+.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:13px}
 .filter{
-  flex-shrink:0;
-  border:1px solid var(--line);
-  background:white;
-  color:#77849a;
-  padding:9px 14px;
-  border-radius:22px;
-  font-size:11px;
+ border:1px solid var(--line);background:white;border-radius:22px;
+ padding:9px 15px;white-space:nowrap;font-size:12px;color:var(--text);
 }
-.filter.selected{
-  background:#f0eaff;
-  border-color:#e6d9ff;
-  color:var(--purple);
-  font-weight:bold;
+.filter.active{background:var(--blue);color:white;border-color:var(--blue)}
+.news-card{border-inline-start:4px solid var(--purple)}
+.news-card h3,.exam-card h3{font-size:15px;margin-bottom:9px}
+.news-meta{font-size:11px;color:var(--muted);margin-bottom:10px}
+.news-content{font-size:13px;line-height:1.9;white-space:pre-wrap}
+.category{
+ display:inline-block;margin-top:10px;background:#f1eaff;
+ color:var(--purple);border-radius:20px;padding:5px 10px;font-size:10px;
 }
-.card{
-  background:white;
-  border:1px solid var(--line);
-  border-radius:17px;
-  padding:17px;
-  margin-bottom:12px;
-  box-shadow:var(--shadow);
-}
-.news-card{border-left:4px solid var(--purple)}
-.exam-card{border-left:4px solid var(--orange)}
-.lesson-card{border-left:4px solid var(--green)}
-.card-title{
-  font-size:15px;
-  font-weight:800;
-  margin:0 0 9px;
-  line-height:1.5;
-}
-.card-content{
-  font-size:13px;
-  color:#66748a;
-  line-height:1.75;
-  margin:0 0 10px;
-  white-space:pre-wrap;
-}
-.meta{
-  font-size:10px;
-  color:var(--muted);
-  display:flex;
-  gap:9px;
-  flex-wrap:wrap;
-}
-.tag{
-  display:inline-block;
-  border-radius:20px;
-  padding:5px 9px;
-  font-size:10px;
-  background:#f2edff;
-  color:var(--purple);
-  margin-bottom:9px;
-}
-.exam-date{
-  font-size:12px;
-  color:var(--orange);
-  font-weight:bold;
-  margin-top:9px;
-}
-.empty{
-  background:white;
-  border:1px solid var(--line);
-  border-radius:17px;
-  padding:28px 15px;
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-}
-.empty-icon{font-size:25px;margin-bottom:9px}
-.lesson-open{
-  display:inline-flex;
-  text-decoration:none;
-  color:#087e70;
-  background:#e7f9f5;
-  padding:10px 13px;
-  border-radius:10px;
-  font-size:11px;
-  font-weight:bold;
-  margin-top:7px;
-}
+.exam-card{border-inline-start:4px solid var(--orange)}
+.exam-date{font-size:12px;color:#c87920;font-weight:bold}
 .ramadan{
-  border-radius:21px;
-  background:linear-gradient(135deg,#102e3c,#17695f);
-  color:white;
-  padding:20px;
-  margin-bottom:18px;
-  overflow:hidden;
-  position:relative;
+ background:linear-gradient(135deg,#102b54,#176d70);
+ color:white;text-align:center;border-radius:20px;padding:23px 15px;
+ margin-top:22px;box-shadow:var(--shadow);
 }
-.ramadan:after{
-  content:"☾";
-  position:absolute;
-  right:20px;top:4px;
-  font-size:76px;
-  opacity:.12;
+.ramadan h3{font-size:17px}
+#ramadan-count{font-size:23px;font-weight:900;margin:15px 0}
+.ramadan small{font-size:10px;opacity:.75}
+.lesson-card{display:flex;align-items:center;gap:13px}
+.pdf-icon{
+ width:46px;height:49px;flex-shrink:0;border-radius:14px;
+ display:grid;place-items:center;background:#e4f7f3;color:var(--green);
+ font-size:22px;
 }
-.ramadan-label{
-  font-size:10px;
-  letter-spacing:1.5px;
-  color:#9ee9d8;
-  font-weight:bold;
-}
-.ramadan h2{font-size:21px;margin:10px 0 6px}
-.ramadan p{font-size:12px;color:#d1e8e3;line-height:1.6;margin:0}
-.ramadan-count{
-  display:flex;gap:9px;
-  margin-top:17px;
-}
-.ramadan-unit{
-  background:#ffffff13;
-  border:1px solid #ffffff1c;
-  border-radius:12px;
-  padding:10px 7px;
-  flex:1;text-align:center;
-}
-.ramadan-unit strong{font-size:21px;display:block}
-.ramadan-unit span{font-size:9px;color:#c7e6df}
-.ramadan-note{font-size:10px!important;margin-top:13px!important;opacity:.75}
-.info-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:11px;
-}
-.info-card{
-  background:white;
-  padding:16px;
-  border-radius:16px;
-  border:1px solid var(--line);
-}
-.info-card strong{
-  display:block;font-size:16px;
-  color:var(--blue);margin-top:8px;
+.lesson-info{flex:1;min-width:0}
+.lesson-info h3{font-size:13px;line-height:1.7;overflow-wrap:anywhere}
+.lesson-info small{color:var(--muted);font-size:10px}
+.download{
+ display:inline-block;margin-top:7px;color:var(--green);
+ font-size:12px;font-weight:bold;text-decoration:none;
 }
 .about-hero{
-  text-align:center;
-  background:linear-gradient(140deg,#eaf2ff,#fff);
-  padding:28px 18px;
-  border-radius:22px;
-  margin-bottom:15px;
+ background:linear-gradient(135deg,#102b54,#2563eb);
+ color:white;text-align:center;border-radius:21px;padding:29px 15px;
+ margin-bottom:17px;
 }
-.about-symbol{
-  width:65px;height:65px;
-  margin:auto;
-  display:grid;place-items:center;
-  border-radius:20px;
-  background:white;color:var(--blue);
-  font-size:32px;
-  box-shadow:var(--shadow);
+.about-hero .logo{font-size:49px}
+.about-hero h2{margin:9px 0}
+.about-hero p{font-size:12px;opacity:.8}
+.info-row{
+ display:flex;justify-content:space-between;gap:10px;
+ padding:13px 0;border-bottom:1px solid var(--line);font-size:13px;
 }
-.about-hero h2{font-size:21px;margin:14px 0 7px}
-.about-hero p{font-size:12px;color:var(--muted);line-height:1.7;margin:0}
-footer{
-  text-align:center;
-  color:#98a3b3;
-  font-size:11px;
-  padding:25px 0 8px;
-}
+.info-row:last-child{border:0}
+.muted{color:var(--muted);font-size:12px;line-height:1.8}
+.empty{text-align:center;color:var(--muted);padding:25px 10px;font-size:13px}
 .bottom-nav{
-  position:fixed;
-  z-index:50;
-  left:0;right:0;bottom:0;
-  display:flex;
-  justify-content:space-around;
-  background:#ffffffed;
-  backdrop-filter:blur(15px);
-  border-top:1px solid #e9eef5;
-  padding:9px 3px calc(9px + env(safe-area-inset-bottom));
+ position:fixed;bottom:0;left:0;right:0;z-index:100;
+ background:#ffffffed;backdrop-filter:blur(15px);
+ border-top:1px solid var(--line);
+ display:grid;grid-template-columns:repeat(5,1fr);
+ padding:9px 3px calc(9px + env(safe-area-inset-bottom));
+ box-shadow:0 -5px 22px #18345a0c;
 }
 .nav-item{
-  flex:1;min-width:0;
-  border:0;background:none;
-  display:flex;flex-direction:column;
-  align-items:center;gap:5px;
-  color:#929daf;
-  font-size:9px;
-  font-weight:600;
-  padding:2px 0;
+ border:0;background:transparent;color:#929db0;
+ display:flex;flex-direction:column;align-items:center;gap:5px;
+ font-size:10px;padding:3px 0;
 }
-.nav-icon{
-  width:27px;height:25px;
-  display:grid;place-items:center;
-  font-size:20px;
+.nav-symbol{
+ width:34px;height:28px;display:grid;place-items:center;
+ border-radius:11px;font-size:19px;transition:.2s;
 }
-.nav-item.active{color:var(--blue)}
-.nav-item.active .nav-icon{
-  background:#edf4ff;
-  border-radius:9px;
-  width:39px;
+.nav-item.active{color:var(--blue);font-weight:800}
+.nav-item.active .nav-symbol{background:#eaf1ff}
+footer{text-align:center;color:var(--muted);font-size:10px;padding:25px 8px}
+body[dir="ltr"] .header-welcome{text-align:left}
+body[dir="ltr"] .quick{text-align:left}
+body[dir="ltr"] .news-card,body[dir="ltr"] .exam-card{
+ border-inline-start:1px solid var(--line);border-left:4px solid var(--purple);
 }
-@media(min-width:650px){
-  main{padding-top:27px}
-  .quick-grid{grid-template-columns:repeat(4,1fr)}
-  .hero{padding:32px}
-  .hero h1{font-size:35px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{
-    animation-duration:.01ms!important;
-    transition-duration:.01ms!important;
-    scroll-behavior:auto!important;
-  }
+body[dir="ltr"] .exam-card{border-left-color:var(--orange)}
+@media(min-width:600px){
+ .quick-grid{grid-template-columns:repeat(4,1fr)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
 <div id="splash">
-  <svg class="splash-logo" viewBox="0 0 180 125" fill="none" aria-label="Open book">
-    <path d="M90 38C68 20 43 23 24 31V91C48 82 70 84 90 103V38Z"
-      stroke="white" stroke-width="4" stroke-linejoin="round"/>
-    <path d="M90 38C112 20 137 23 156 31V91C132 82 110 84 90 103V38Z"
-      stroke="white" stroke-width="4" stroke-linejoin="round"/>
-    <path d="M90 38V103" stroke="white" stroke-width="3"/>
-  </svg>
-  <div class="splash-mc">MC</div>
-  <div class="splash-name">MY CLASSROOM</div>
-  <div class="splash-line"></div>
+ <div class="splash-book">📖</div>
+ <div class="splash-mc">MC</div>
+ <div class="splash-name">MY CLASSROOM</div>
+</div>
+
+<div id="language-screen">
+ <div class="language-box">
+  <div style="font-size:38px">🌍</div>
+  <h2 id="language-title">Choose your language</h2>
+  <p id="language-subtitle">Select your preferred language</p>
+  <div class="language-options">
+   <button class="lang-option" onclick="chooseLanguage('ar')">
+    <span class="flag">🇲🇦</span><strong>العربية</strong>
+   </button>
+   <button class="lang-option" onclick="chooseLanguage('fr')">
+    <span class="flag">🇫🇷</span><strong>Français</strong>
+   </button>
+   <button class="lang-option" onclick="chooseLanguage('en')">
+    <span class="flag">🇬🇧</span><strong>English</strong>
+   </button>
+   <button class="lang-option" onclick="chooseLanguage('it')">
+    <span class="flag">🇮🇹</span><strong>Italiano</strong>
+   </button>
+  </div>
+ </div>
 </div>
 
 <header>
-  <div class="brand">
-    <div class="brand-icon">
-      <svg viewBox="0 0 180 125" fill="none">
-        <path d="M90 38C68 20 43 23 24 31V91C48 82 70 84 90 103V38Z" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/>
-        <path d="M90 38C112 20 137 23 156 31V91C132 82 110 84 90 103V38Z" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/>
-        <path d="M90 38V103" stroke="currentColor" stroke-width="6"/>
-      </svg>
-    </div>
-    <span>My Classroom</span>
+ <div class="header-top">
+  <div class="brand">📘 My Classroom</div>
+  <div class="header-actions">
+   <button class="header-btn" onclick="openLanguage()" aria-label="Change language">🌐</button>
   </div>
-  <div class="header-right">
-    <strong>1BACSEF1</strong>
-    <span>2026 / 2027</span>
-  </div>
+ </div>
+ <div class="header-welcome">
+  <h1 data-i18n="welcome">مرحباً بك 👋</h1>
+  <p data-i18n="welcomeText">مساحتك التعليمية لمتابعة كل جديد</p>
+ </div>
+ <div class="header-meta">
+  <span class="meta-pill">1BACSEF1</span>
+  <span class="meta-pill" data-i18n="year">السنة الدراسية 2026 / 2027</span>
+ </div>
 </header>
 
 <main>
 
-<!-- HOME -->
-<section id="home" class="view active">
-  <div class="hero">
-    <div class="hero-label">YOUR DIGITAL CLASSROOM</div>
-    <h1>Learn. Discover. Achieve.</h1>
-    <p>Everything you need for your school year, all in one place.</p>
-    <div class="hero-bottom">
-      <div>
-        <div class="clock" id="clock">--:--</div>
-        <div class="hero-date" id="today">Loading date...</div>
-      </div>
-      <div class="hero-mark">✦</div>
-    </div>
-  </div>
+<section class="page active" id="home">
+ <div class="card clock-card">
+  <div id="clock">00:00:00</div>
+  <div id="today"></div>
+ </div>
 
-  <div class="class-card">
-    <div>
-      <small>YOUR CLASS CODE</small>
-      <strong>1BACSEF1</strong>
-    </div>
-    <div class="class-icon">🎓</div>
-  </div>
+ <div class="section-heading">
+  <h2 data-i18n="quickAccess">الوصول السريع</h2>
+ </div>
 
-  <div class="section-head">
-    <h2>Explore your classroom</h2>
-  </div>
+ <div class="quick-grid">
+  <button class="quick" onclick="showPage('news')">
+   <span class="symbol purple-bg">▤</span>
+   <strong data-i18n="news">الأخبار</strong>
+   <small data-i18n="newsSmall">آخر مستجدات القسم</small>
+  </button>
+  <button class="quick" onclick="showPage('exams')">
+   <span class="symbol orange-bg">▦</span>
+   <strong data-i18n="exams">الامتحانات</strong>
+   <small data-i18n="examsSmall">المواعيد القادمة</small>
+  </button>
+  <button class="quick" onclick="showPage('lessons')">
+   <span class="symbol green-bg">▣</span>
+   <strong data-i18n="lessons">الدروس</strong>
+   <small data-i18n="lessonsSmall">ملفات PDF</small>
+  </button>
+  <button class="quick" onclick="showPage('about')">
+   <span class="symbol blue-bg">ⓘ</span>
+   <strong data-i18n="about">حول التطبيق</strong>
+   <small data-i18n="aboutSmall">معلومات المنصة</small>
+  </button>
+ </div>
 
-  <div class="quick-grid">
-    <button class="quick q-news" onclick="showView('news')">
-      <span class="quick-icon">▤</span>
-      <strong>News</strong>
-      <small>Latest announcements</small>
-    </button>
-    <button class="quick q-exams" onclick="showView('exams')">
-      <span class="quick-icon">▣</span>
-      <strong>Exams</strong>
-      <small>Examination schedule</small>
-    </button>
-    <button class="quick q-lessons" onclick="showView('lessons')">
-      <span class="quick-icon">▧</span>
-      <strong>Lessons</strong>
-      <small>Study materials</small>
-    </button>
-    <button class="quick q-about" onclick="showView('about')">
-      <span class="quick-icon">ⓘ</span>
-      <strong>About</strong>
-      <small>Our classroom</small>
-    </button>
-  </div>
+ <div class="section-heading">
+  <h2 data-i18n="latestNews">أحدث الأخبار</h2>
+  <small data-i18n="recent">حديثاً</small>
+ </div>
+ <div id="home-news"><div class="empty">...</div></div>
 
-  <div class="section-head">
-    <h2>Upcoming exams</h2>
-    <button onclick="showView('exams')">View all →</button>
-  </div>
-  <div id="home-exams">
-    <div class="empty">Loading exams...</div>
-  </div>
-
-  <div class="section-head">
-    <h2>Latest news</h2>
-    <button onclick="showView('news')">View all →</button>
-  </div>
-  <div id="home-news">
-    <div class="empty">Loading news...</div>
-  </div>
+ <div class="section-heading">
+  <h2 data-i18n="upcomingExams">الامتحانات القادمة</h2>
+ </div>
+ <div id="home-exams"><div class="empty">...</div></div>
 </section>
 
-<!-- NEWS -->
-<section id="news" class="view page-news">
-  <h1 class="page-title">News & Updates</h1>
-  <p class="page-subtitle">Stay connected with everything happening in your classroom.</p>
-
-  <div class="ramadan">
-    <div class="ramadan-label">RELIGIOUS CORNER · RAMADAN</div>
-    <h2 id="ramadan-title">Ramadan Mubarak</h2>
-    <p id="ramadan-description">A special time for reflection, kindness and generosity.</p>
-    <div class="ramadan-count" id="ramadan-count">
-      <div class="ramadan-unit"><strong>--</strong><span>Days</span></div>
-      <div class="ramadan-unit"><strong>--</strong><span>Hours</span></div>
-      <div class="ramadan-unit"><strong>--</strong><span>Minutes</span></div>
-    </div>
-    <p class="ramadan-note">Estimated Ramadan 1448 AH date. Actual beginning depends on the official moon sighting.</p>
-  </div>
-
-  <input class="search" type="search" id="news-search" placeholder="Search announcements...">
-
-  <div class="filters" id="news-filters">
-    <button class="filter selected" data-filter="all">All</button>
-    <button class="filter" data-filter="school">School</button>
-    <button class="filter" data-filter="religious">Religious</button>
-    <button class="filter" data-filter="national">National</button>
-  </div>
-
-  <div id="news-list">
-    <div class="empty">Loading news...</div>
-  </div>
+<section class="page" id="news">
+ <div class="section-heading"><h2 data-i18n="newsTitle">الأخبار والإعلانات</h2></div>
+ <input class="search" id="news-search" placeholder="ابحث عن خبر..." oninput="renderNews()">
+ <div class="filters">
+  <button class="filter active" data-type="all" onclick="setFilter('all',this)" data-i18n="all">الكل</button>
+  <button class="filter" data-type="school" onclick="setFilter('school',this)" data-i18n="school">مدرسي</button>
+  <button class="filter" data-type="religious" onclick="setFilter('religious',this)" data-i18n="religious">ديني</button>
+  <button class="filter" data-type="national" onclick="setFilter('national',this)" data-i18n="national">وطني</button>
+ </div>
+ <div id="news-list"><div class="empty">...</div></div>
+ <div class="ramadan">
+  <h3 data-i18n="ramadan">🌙 العد التنازلي لرمضان</h3>
+  <div id="ramadan-count">...</div>
+  <small data-i18n="ramadanNote">التاريخ تقريبي وقد يتغير حسب رؤية الهلال</small>
+ </div>
 </section>
 
-<!-- EXAMS -->
-<section id="exams" class="view page-exams">
-  <h1 class="page-title">Examination Schedule</h1>
-  <p class="page-subtitle">Stay organized and prepare for your upcoming examinations.</p>
-  <div id="exam-list">
-    <div class="empty">Loading exams...</div>
-  </div>
+<section class="page" id="exams">
+ <div class="section-heading"><h2 data-i18n="examTitle">جدول الامتحانات</h2></div>
+ <p class="muted" data-i18n="examIntro">تابع مواعيد امتحاناتك القادمة واستعد لها.</p>
+ <div id="exams-list" style="margin-top:15px"><div class="empty">...</div></div>
 </section>
 
-<!-- LESSONS -->
-<section id="lessons" class="view page-lessons">
-  <h1 class="page-title">Learning Library</h1>
-  <p class="page-subtitle">Your lessons and study resources in one place.</p>
-  <input class="search" type="search" id="lesson-search" placeholder="Search your lessons...">
-  <div id="lesson-list"></div>
+<section class="page" id="lessons">
+ <div class="section-heading"><h2 data-i18n="lessonTitle">مكتبة الدروس</h2></div>
+ <input class="search" id="lesson-search" placeholder="ابحث عن درس..." oninput="renderLessons()">
+ <div id="lessons-list"></div>
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="view page-about">
-  <h1 class="page-title">About Us</h1>
-  <p class="page-subtitle">A little about your digital classroom.</p>
-
-  <div class="about-hero">
-    <div class="about-symbol">📖</div>
-    <h2>My Classroom</h2>
-    <p>A digital space designed to bring classroom news, exams and learning resources together in one simple experience.</p>
-  </div>
-
-  <div class="info-grid">
-    <div class="info-card">
-      <small>CLASS CODE</small>
-      <strong>1BACSEF1</strong>
-    </div>
-    <div class="info-card">
-      <small>ACADEMIC YEAR</small>
-      <strong>2026 / 2027</strong>
-    </div>
-    <div class="info-card">
-      <small>PLATFORM</small>
-      <strong>My Classroom</strong>
-    </div>
-    <div class="info-card">
-      <small>CREATOR</small>
-      <strong>Yassine</strong>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:14px">
-    <h3 class="card-title">Our purpose</h3>
-    <p class="card-content">To make school information easier to access, help students stay informed, and keep important learning resources organized.</p>
-  </div>
+<section class="page" id="about">
+ <div class="about-hero">
+  <div class="logo">📖</div>
+  <h2>My Classroom</h2>
+  <p>Your classroom, everywhere.</p>
+ </div>
+ <div class="section-heading"><h2 data-i18n="aboutTitle">حول المنصة</h2></div>
+ <div class="card">
+  <p class="muted" data-i18n="aboutDescription">
+   منصة تعليمية تجمع الأخبار والإعلانات والامتحانات والدروس في مكان واحد.
+  </p>
+  <div class="info-row"><span data-i18n="class">القسم</span><strong>1BACSEF1</strong></div>
+  <div class="info-row"><span data-i18n="academicYear">السنة الدراسية</span><strong>2026 / 2027</strong></div>
+  <div class="info-row"><span data-i18n="platform">المنصة</span><strong>My Classroom</strong></div>
+  <div class="info-row"><span data-i18n="language">اللغة</span><button onclick="openLanguage()" style="border:0;background:none;color:var(--blue)" data-i18n="change">تغيير</button></div>
+ </div>
+ <div class="card" style="text-align:center">
+  <p class="muted" data-i18n="createdBy">تم إنشاء هذا المشروع بواسطة</p>
+  <strong style="display:block;margin-top:8px;color:var(--blue)">Yassine</strong>
+ </div>
 </section>
 
-<footer>Created by Yassine · My Classroom © 2026</footer>
+<footer>© 2026 My Classroom · Created by Yassine</footer>
 </main>
 
-<!-- NAVIGATION -->
 <nav class="bottom-nav">
-  <button class="nav-item active" data-view="home">
-    <span class="nav-icon">⌂</span><span>Home</span>
-  </button>
-  <button class="nav-item" data-view="news">
-    <span class="nav-icon">▤</span><span>News</span>
-  </button>
-  <button class="nav-item" data-view="exams">
-    <span class="nav-icon">▣</span><span>Exams</span>
-  </button>
-  <button class="nav-item" data-view="lessons">
-    <span class="nav-icon">▧</span><span>Lessons</span>
-  </button>
-  <button class="nav-item" data-view="about">
-    <span class="nav-icon">ⓘ</span><span>About</span>
-  </button>
+ <button class="nav-item active" data-page="home" onclick="showPage('home',this)">
+  <span class="nav-symbol">⌂</span><span data-i18n="navHome">الرئيسية</span>
+ </button>
+ <button class="nav-item" data-page="news" onclick="showPage('news',this)">
+  <span class="nav-symbol">▤</span><span data-i18n="navNews">الأخبار</span>
+ </button>
+ <button class="nav-item" data-page="exams" onclick="showPage('exams',this)">
+  <span class="nav-symbol">▦</span><span data-i18n="navExams">الامتحانات</span>
+ </button>
+ <button class="nav-item" data-page="lessons" onclick="showPage('lessons',this)">
+  <span class="nav-symbol">▣</span><span data-i18n="navLessons">الدروس</span>
+ </button>
+ <button class="nav-item" data-page="about" onclick="showPage('about',this)">
+  <span class="nav-symbol">ⓘ</span><span data-i18n="navAbout">حول</span>
+ </button>
 </nav>
 
 <script>
-"use strict";
+const $ = id => document.getElementById(id);
 
-/* -----------------------------
-   NAVIGATION
------------------------------ */
-const viewNames=["home","news","exams","lessons","about"];
+const translations = {
+ ar:{
+  welcome:"مرحباً بك 👋",welcomeText:"مساحتك التعليمية لمتابعة كل جديد",
+  year:"السنة الدراسية 2026 / 2027",quickAccess:"الوصول السريع",
+  news:"الأخبار",newsSmall:"آخر مستجدات القسم",exams:"الامتحانات",
+  examsSmall:"المواعيد القادمة",lessons:"الدروس",lessonsSmall:"ملفات PDF",
+  about:"حول التطبيق",aboutSmall:"معلومات المنصة",latestNews:"أحدث الأخبار",
+  recent:"حديثاً",upcomingExams:"الامتحانات القادمة",newsTitle:"الأخبار والإعلانات",
+  all:"الكل",school:"مدرسي",religious:"ديني",national:"وطني",
+  ramadan:"🌙 العد التنازلي لرمضان",ramadanNote:"التاريخ تقريبي وقد يتغير حسب رؤية الهلال",
+  examTitle:"جدول الامتحانات",examIntro:"تابع مواعيد امتحاناتك القادمة واستعد لها.",
+  lessonTitle:"مكتبة الدروس",aboutTitle:"حول المنصة",
+  aboutDescription:"منصة تعليمية تجمع الأخبار والإعلانات والامتحانات والدروس في مكان واحد.",
+  class:"القسم",academicYear:"السنة الدراسية",platform:"المنصة",
+  language:"اللغة",change:"تغيير",createdBy:"تم إنشاء هذا المشروع بواسطة",
+  navHome:"الرئيسية",navNews:"الأخبار",navExams:"الامتحانات",
+  navLessons:"الدروس",navAbout:"حول",searchNews:"ابحث عن خبر...",
+  searchLesson:"ابحث عن درس...",noNews:"لا توجد أخبار حالياً",
+  noExams:"لا توجد امتحانات قادمة",noLessons:"لا توجد دروس مطابقة",
+  download:"فتح الدرس",examDate:"موعد الامتحان",
+  choose:"اختر لغتك",chooseSub:"اختر اللغة التي تفضل استخدامها",
+  loading:"جارٍ التحميل..."
+ },
+ fr:{
+  welcome:"Bienvenue 👋",welcomeText:"Votre espace éducatif pour rester informé",
+  year:"Année scolaire 2026 / 2027",quickAccess:"Accès rapide",
+  news:"Actualités",newsSmall:"Les dernières nouvelles",exams:"Examens",
+  examsSmall:"Dates à venir",lessons:"Cours",lessonsSmall:"Fichiers PDF",
+  about:"À propos",aboutSmall:"Informations",latestNews:"Dernières actualités",
+  recent:"Récent",upcomingExams:"Examens à venir",newsTitle:"Actualités et annonces",
+  all:"Tout",school:"Scolaire",religious:"Religieux",national:"National",
+  ramadan:"🌙 Compte à rebours du Ramadan",ramadanNote:"Date estimée, selon l'observation du croissant",
+  examTitle:"Calendrier des examens",examIntro:"Consultez les prochaines dates d'examen.",
+  lessonTitle:"Bibliothèque des cours",aboutTitle:"À propos de la plateforme",
+  aboutDescription:"Une plateforme éducative regroupant actualités, examens et cours.",
+  class:"Classe",academicYear:"Année scolaire",platform:"Plateforme",
+  language:"Langue",change:"Modifier",createdBy:"Projet créé par",
+  navHome:"Accueil",navNews:"Actualités",navExams:"Examens",
+  navLessons:"Cours",navAbout:"À propos",searchNews:"Rechercher une actualité...",
+  searchLesson:"Rechercher un cours...",noNews:"Aucune actualité disponible",
+  noExams:"Aucun examen à venir",noLessons:"Aucun cours correspondant",
+  download:"Ouvrir le cours",examDate:"Date de l'examen",
+  choose:"Choisissez votre langue",chooseSub:"Sélectionnez votre langue préférée",
+  loading:"Chargement..."
+ },
+ en:{
+  welcome:"Welcome 👋",welcomeText:"Your learning space for all classroom updates",
+  year:"Academic year 2026 / 2027",quickAccess:"Quick access",
+  news:"News",newsSmall:"Latest classroom updates",exams:"Exams",
+  examsSmall:"Upcoming dates",lessons:"Lessons",lessonsSmall:"PDF files",
+  about:"About",aboutSmall:"Platform information",latestNews:"Latest news",
+  recent:"Recent",upcomingExams:"Upcoming exams",newsTitle:"News & Announcements",
+  all:"All",school:"School",religious:"Religious",national:"National",
+  ramadan:"🌙 Ramadan Countdown",ramadanNote:"Estimated date, subject to moon sighting",
+  examTitle:"Exam Schedule",examIntro:"Check your upcoming exams and get prepared.",
+  lessonTitle:"Lesson Library",aboutTitle:"About the Platform",
+  aboutDescription:"An educational platform bringing news, exams and lessons together.",
+  class:"Class",academicYear:"Academic year",platform:"Platform",
+  language:"Language",change:"Change",createdBy:"Created by",
+  navHome:"Home",navNews:"News",navExams:"Exams",
+  navLessons:"Lessons",navAbout:"About",searchNews:"Search news...",
+  searchLesson:"Search lessons...",noNews:"No news available",
+  noExams:"No upcoming exams",noLessons:"No matching lessons",
+  download:"Open lesson",examDate:"Exam date",
+  choose:"Choose your language",chooseSub:"Select your preferred language",
+  loading:"Loading..."
+ },
+ it:{
+  welcome:"Benvenuto 👋",welcomeText:"Il tuo spazio educativo per tutte le novità",
+  year:"Anno scolastico 2026 / 2027",quickAccess:"Accesso rapido",
+  news:"Notizie",newsSmall:"Ultime novità della classe",exams:"Esami",
+  examsSmall:"Date future",lessons:"Lezioni",lessonsSmall:"File PDF",
+  about:"Informazioni",aboutSmall:"Dettagli della piattaforma",
+  latestNews:"Ultime notizie",recent:"Recente",upcomingExams:"Prossimi esami",
+  newsTitle:"Notizie e annunci",all:"Tutti",school:"Scolastico",
+  religious:"Religioso",national:"Nazionale",
+  ramadan:"🌙 Conto alla rovescia per il Ramadan",
+  ramadanNote:"Data stimata, soggetta all'avvistamento della luna",
+  examTitle:"Calendario degli esami",
+  examIntro:"Controlla le prossime date degli esami.",
+  lessonTitle:"Biblioteca delle lezioni",aboutTitle:"Informazioni sulla piattaforma",
+  aboutDescription:"Una piattaforma educativa con notizie, esami e lezioni.",
+  class:"Classe",academicYear:"Anno scolastico",platform:"Piattaforma",
+  language:"Lingua",change:"Modifica",createdBy:"Progetto creato da",
+  navHome:"Home",navNews:"Notizie",navExams:"Esami",
+  navLessons:"Lezioni",navAbout:"Info",searchNews:"Cerca notizie...",
+  searchLesson:"Cerca una lezione...",noNews:"Nessuna notizia disponibile",
+  noExams:"Nessun esame in programma",noLessons:"Nessuna lezione trovata",
+  download:"Apri lezione",examDate:"Data dell'esame",
+  choose:"Scegli la lingua",chooseSub:"Seleziona la lingua preferita",
+  loading:"Caricamento..."
+ }
+};
 
-function showView(name){
-  if(!viewNames.includes(name)) return;
+let language=localStorage.getItem("mc-language") || "";
+let newsData=[],examsData=[],currentFilter="all";
 
-  document.querySelectorAll(".view").forEach(section=>{
-    section.classList.toggle("active",section.id===name);
-  });
+const lessons=[
+ "2 التحولات الاقتصادية والمالية والاجتماعية والفكرية.pdf",
+ "2 المجال المغربي الموارد الطبيعية والبشرية.pdf",
+ "التنافس الامبريالي.pdf",
+ "تقديم التحولات الكبرى للعالم الراسمالي.pdf",
+ "مفهوم التنمية.pdf"
+];
 
-  document.querySelectorAll(".nav-item").forEach(button=>{
-    button.classList.toggle("active",button.dataset.view===name);
-  });
+function t(key){return translations[language]?.[key] || translations.ar[key] || key;}
 
-  window.scrollTo({top:0,behavior:"smooth"});
+function applyLanguage(){
+ const isArabic=language==="ar";
+ document.documentElement.lang=language;
+ document.documentElement.dir=isArabic?"rtl":"ltr";
+ document.body.dir=isArabic?"rtl":"ltr";
+
+ document.querySelectorAll("[data-i18n]").forEach(el=>{
+  const key=el.dataset.i18n;
+  if(translations[language][key]) el.textContent=translations[language][key];
+ });
+
+ $("news-search").placeholder=t("searchNews");
+ $("lesson-search").placeholder=t("searchLesson");
+ $("language-title").textContent=t("choose");
+ $("language-subtitle").textContent=t("chooseSub");
+
+ renderNews();
+ renderExams();
+ renderLessons();
 }
 
-document.querySelectorAll(".nav-item").forEach(button=>{
-  button.addEventListener("click",()=>showView(button.dataset.view));
-});
-
-/* -----------------------------
-   SPLASH SCREEN
------------------------------ */
-window.addEventListener("load",()=>{
-  setTimeout(()=>{
-    document.getElementById("splash").classList.add("hide");
-  },2200);
-});
-
-/* -----------------------------
-   CLOCK AND DATE
------------------------------ */
-function updateClock(){
-  const now=new Date();
-
-  document.getElementById("clock").textContent=
-    now.toLocaleTimeString("en-GB",{
-      hour:"2-digit",minute:"2-digit"
-    });
-
-  document.getElementById("today").textContent=
-    now.toLocaleDateString("en-GB",{
-      weekday:"long",day:"numeric",month:"long"
-    });
+function chooseLanguage(code){
+ language=code;
+ localStorage.setItem("mc-language",code);
+ $("language-screen").style.display="none";
+ applyLanguage();
 }
-updateClock();
-setInterval(updateClock,30000);
 
-/* -----------------------------
-   SAFE TEXT AND DATES
------------------------------ */
+function openLanguage(){
+ $("language-screen").style.display="flex";
+}
+
+function showPage(page){
+ document.querySelectorAll(".page").forEach(el=>el.classList.remove("active"));
+ $(page).classList.add("active");
+ document.querySelectorAll(".nav-item").forEach(el=>el.classList.remove("active"));
+ const nav=document.querySelector('.nav-item[data-page="'+page+'"]');
+ if(nav)nav.classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
 function escapeHTML(value){
-  return String(value??"").replace(/[&<>"']/g,char=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  }[char]));
+ return String(value??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+ })[c]);
 }
 
-function parseDate(value){
-  if(!value || typeof value!=="string") return null;
-  const d=new Date(value+"T00:00:00");
-  return Number.isNaN(d.getTime())?null:d;
+function formatDate(date){
+ const locale={ar:"ar-MA",fr:"fr-FR",en:"en-GB",it:"it-IT"}[language]||"ar-MA";
+ return new Date(date+"T00:00:00").toLocaleDateString(locale,{
+  year:"numeric",month:"long",day:"numeric"
+ });
 }
 
-function formatDate(value){
-  const d=parseDate(value);
-  if(!d) return "Date unavailable";
-  return d.toLocaleDateString("en-GB",{
-    day:"numeric",month:"short",year:"numeric"
-  });
+function validNews(item){
+ if(!item.date)return false;
+ const d=new Date(item.date+"T00:00:00");
+ if(isNaN(d.getTime()))return false;
+ const today=new Date();today.setHours(0,0,0,0);
+ const age=(today-d)/86400000;
+ return age>=0&&age<7;
 }
 
-function todayAtMidnight(){
-  const d=new Date();
-  d.setHours(0,0,0,0);
-  return d;
+function categoryName(type){
+ const names={school:"school",religious:"religious",national:"national"};
+ return t(names[type]||"school");
 }
 
-/* -----------------------------
-   RAMADAN COUNTDOWN
-   Estimated start: 8 February 2027
------------------------------ */
-function updateRamadan(){
-  const target=new Date(2027,1,8,0,0,0);
-  const now=new Date();
-  const diff=target-now;
-
-  const title=document.getElementById("ramadan-title");
-  const description=document.getElementById("ramadan-description");
-  const count=document.getElementById("ramadan-count");
-
-  if(diff<=0){
-    title.textContent="Ramadan Mubarak";
-    description.textContent="May this month bring peace, kindness and blessings.";
-    count.innerHTML=
-      '<div class="ramadan-unit" style="flex:1"><strong>☾</strong><span>Ramadan season</span></div>';
-    return;
-  }
-
-  const days=Math.floor(diff/86400000);
-  const hours=Math.floor((diff%86400000)/3600000);
-  const minutes=Math.floor((diff%3600000)/60000);
-
-  title.textContent="Countdown to Ramadan";
-  description.textContent="Preparing for the blessed month of Ramadan 1448 AH.";
-
-  count.innerHTML=`
-    <div class="ramadan-unit"><strong>${days}</strong><span>Days</span></div>
-    <div class="ramadan-unit"><strong>${hours}</strong><span>Hours</span></div>
-    <div class="ramadan-unit"><strong>${minutes}</strong><span>Minutes</span></div>
-  `;
+function newsHTML(item){
+ return `<article class="card news-card">
+ <h3>${escapeHTML(item.title)}</h3>
+ <div class="news-meta">${formatDate(item.date)}</div>
+ <div class="news-content">${escapeHTML(item.content)}</div>
+ <span class="category">${categoryName(item.type||"school")}</span>
+ </article>`;
 }
-updateRamadan();
-setInterval(updateRamadan,60000);
 
-/* -----------------------------
-   NEWS
-   - Loads news.json
-   - Hides posts older than 7 days
-   - Does not show future posts
-   - Supports category and search
------------------------------ */
-let newsData=[];
-let currentFilter="all";
-
-function validNews(){
-  const today=todayAtMidnight();
-
-  return newsData.filter(item=>{
-    const date=parseDate(item.date);
-    if(!date) return false;
-
-    const age=(today-date)/86400000;
-    return age>=0 && age<7;
-  });
+async function loadNews(){
+ try{
+  const response=await fetch("./news.json",{cache:"no-store"});
+  if(!response.ok)throw new Error("News unavailable");
+  const data=await response.json();
+  newsData=Array.isArray(data)?data.filter(validNews):[];
+ }catch(e){newsData=[];}
+ renderNews();
+ $("home-news").innerHTML=newsData.slice(0,2).map(newsHTML).join("")||
+ `<div class="empty">${t("noNews")}</div>`;
 }
 
 function renderNews(){
-  const query=document.getElementById("news-search").value
-    .trim().toLowerCase();
-
-  const filtered=validNews().filter(item=>{
-    const category=String(item.type||"school").toLowerCase();
-    const matchesCategory=
-      currentFilter==="all" || category===currentFilter;
-
-    const searchable=
-      (item.title||"")+" "+(item.content||"");
-
-    return matchesCategory &&
-      searchable.toLowerCase().includes(query);
-  });
-
-  const html=filtered.map(item=>{
-    const category=String(item.type||"school").toLowerCase();
-
-    return `
-      <article class="card news-card">
-        <span class="tag">${escapeHTML(category)}</span>
-        <h3 class="card-title">${escapeHTML(item.title||"Untitled")}</h3>
-        <p class="card-content">${escapeHTML(item.content||"")}</p>
-        <div class="meta">
-          <span>📅 ${formatDate(item.date)}</span>
-        </div>
-      </article>
-    `;
-  }).join("");
-
-  document.getElementById("news-list").innerHTML=
-    html || `
-      <div class="empty">
-        <div class="empty-icon">📰</div>
-        No recent news available.
-      </div>
-    `;
+ const query=$("news-search").value.trim().toLowerCase();
+ const list=newsData.filter(item=>{
+  const type=item.type||"school";
+  const matchType=currentFilter==="all"||type===currentFilter;
+  const matchText=(item.title+" "+item.content).toLowerCase().includes(query);
+  return matchType&&matchText;
+ });
+ $("news-list").innerHTML=list.map(newsHTML).join("")||
+ `<div class="empty">${t("noNews")}</div>`;
 }
 
-function renderHomeNews(){
-  const recent=validNews().slice().sort((a,b)=>{
-    return parseDate(b.date)-parseDate(a.date);
-  });
-
-  const item=recent[0];
-
-  document.getElementById("home-news").innerHTML=item?`
-    <article class="card news-card">
-      <span class="tag">${escapeHTML(item.type||"school")}</span>
-      <h3 class="card-title">${escapeHTML(item.title||"News")}</h3>
-      <p class="card-content">${escapeHTML(item.content||"")}</p>
-      <div class="meta">${formatDate(item.date)}</div>
-    </article>
-  `:`<div class="empty">No recent news available.</div>`;
-}
-
-document.getElementById("news-search").addEventListener("input",renderNews);
-
-document.querySelectorAll("[data-filter]").forEach(button=>{
-  button.addEventListener("click",()=>{
-    currentFilter=button.dataset.filter;
-
-    document.querySelectorAll("[data-filter]").forEach(b=>{
-      b.classList.toggle("selected",b===button);
-    });
-
-    renderNews();
-  });
-});
-
-/* -----------------------------
-   EXAMS
-   - Loads exams.json
-   - Hides past exams
-   - Sorts upcoming exams
------------------------------ */
-let examData=[];
-
-function upcomingExams(){
-  const today=todayAtMidnight();
-
-  return examData.filter(item=>{
-    const date=parseDate(item.exam_date);
-    return date && date>=today;
-  }).sort((a,b)=>{
-    return parseDate(a.exam_date)-parseDate(b.exam_date);
-  });
-}
-
-function examCard(item){
-  return `
-    <article class="card exam-card">
-      <h3 class="card-title">📝 ${escapeHTML(item.subject||"Exam")}</h3>
-      <p class="card-content">${escapeHTML(item.details||"")}</p>
-      <div class="exam-date">📅 ${formatDate(item.exam_date)}</div>
-    </article>
-  `;
-}
-
-function renderExams(){
-  const exams=upcomingExams();
-  const html=exams.map(examCard).join("");
-
-  document.getElementById("exam-list").innerHTML=html||
-    `<div class="empty">
-      <div class="empty-icon">📝</div>
-      No upcoming exams.
-    </div>`;
-
-  document.getElementById("home-exams").innerHTML=
-    exams.length
-      ?exams.slice(0,2).map(examCard).join("")
-      :'<div class="empty">No upcoming exams.</div>';
-}
-
-/* -----------------------------
-   LESSONS
-   Keep exact filenames and paths
------------------------------ */
-const lessonFiles=[
-  "2 التحولات الاقتصادية والمالية والاجتماعية والفكرية.pdf",
-  "2 المجال المغربي الموارد الطبيعية والبشرية.pdf",
-  "التنافس الامبريالي.pdf",
-  "تقديم التحولات الكبرى للعالم الراسمالي.pdf",
-  "مفهوم التنمية.pdf"
-];
-
-function renderLessons(){
-  const query=document.getElementById("lesson-search")
-    .value.trim().toLowerCase();
-
-  const filtered=lessonFiles.filter(name=>
-    name.toLowerCase().includes(query)
-  );
-
-  const html=filtered.map(name=>{
-    const path="lessons/"+name.split("/").map(encodeURIComponent).join("/");
-
-    return `
-      <article class="card lesson-card">
-        <h3 class="card-title">📄 ${escapeHTML(name.replace(/\.pdf$/i,""))}</h3>
-        <div class="meta">PDF DOCUMENT</div>
-        <a class="lesson-open" href="${path}" target="_blank" rel="noopener">
-          Open lesson ↗
-        </a>
-      </article>
-    `;
-  }).join("");
-
-  document.getElementById("lesson-list").innerHTML=html||
-    `<div class="empty">
-      <div class="empty-icon">📚</div>
-      No lessons found.
-    </div>`;
-}
-
-document.getElementById("lesson-search")
-  .addEventListener("input",renderLessons);
-
-/* -----------------------------
-   LOAD ONLINE DATA
------------------------------ */
-async function loadNews(){
-  try{
-    const response=await fetch("news.json",{cache:"no-store"});
-    if(!response.ok) throw new Error("News file unavailable");
-
-    const data=await response.json();
-    if(!Array.isArray(data)) throw new Error("Invalid news format");
-
-    newsData=data;
-    renderNews();
-    renderHomeNews();
-  }catch(error){
-    document.getElementById("news-list").innerHTML=
-      '<div class="empty">Unable to load news. Please try again later.</div>';
-
-    document.getElementById("home-news").innerHTML=
-      '<div class="empty">News unavailable.</div>';
-  }
+function setFilter(type,button){
+ currentFilter=type;
+ document.querySelectorAll(".filter").forEach(el=>el.classList.remove("active"));
+ button.classList.add("active");
+ renderNews();
 }
 
 async function loadExams(){
-  try{
-    const response=await fetch("exams.json",{cache:"no-store"});
-    if(!response.ok) throw new Error("Exams file unavailable");
-
-    const data=await response.json();
-    if(!Array.isArray(data)) throw new Error("Invalid exam format");
-
-    examData=data;
-    renderExams();
-  }catch(error){
-    document.getElementById("exam-list").innerHTML=
-      '<div class="empty">Unable to load exams.</div>';
-
-    document.getElementById("home-exams").innerHTML=
-      '<div class="empty">Exams unavailable.</div>';
-  }
+ try{
+  const response=await fetch("./exams.json",{cache:"no-store"});
+  if(!response.ok)throw new Error("Exams unavailable");
+  const data=await response.json();
+  const today=new Date();today.setHours(0,0,0,0);
+  examsData=(Array.isArray(data)?data:[])
+   .filter(item=>{
+    const d=new Date(item.exam_date+"T00:00:00");
+    return !isNaN(d.getTime())&&d>=today;
+   })
+   .sort((a,b)=>a.exam_date.localeCompare(b.exam_date));
+ }catch(e){examsData=[];}
+ renderExams();
+ $("home-exams").innerHTML=examsData.slice(0,2).map(examHTML).join("")||
+ `<div class="empty">${t("noExams")}</div>`;
 }
 
-/* -----------------------------
-   START
------------------------------ */
-renderLessons();
-loadNews();
-loadExams();
+function examHTML(item){
+ return `<article class="card exam-card">
+ <h3>${escapeHTML(item.subject)}</h3>
+ <div class="exam-date">${t("examDate")}: ${formatDate(item.exam_date)}</div>
+ <p class="muted" style="margin-top:8px">${escapeHTML(item.details||"")}</p>
+ </article>`;
+}
 
+function renderExams(){
+ $("exams-list").innerHTML=examsData.map(examHTML).join("")||
+ `<div class="empty">${t("noExams")}</div>`;
+}
+
+function renderLessons(){
+ const query=$("lesson-search").value.trim().toLowerCase();
+ const filtered=lessons.filter(name=>name.toLowerCase().includes(query));
+ $("lessons-list").innerHTML=filtered.map(name=>{
+  const url="./lessons/"+name.split("/").map(encodeURIComponent).join("/");
+  return `<article class="card lesson-card">
+   <div class="pdf-icon">▤</div>
+   <div class="lesson-info">
+    <h3>${escapeHTML(name.replace(".pdf",""))}</h3>
+    <a class="download" href="${url}" target="_blank" rel="noopener">${t("download")} ↗</a>
+   </div>
+  </article>`;
+ }).join("")||`<div class="empty">${t("noLessons")}</div>`;
+}
+
+function updateClock(){
+ const now=new Date();
+ $("clock").textContent=now.toLocaleTimeString(
+  {ar:"ar-MA",fr:"fr-FR",en:"en-GB",it:"it-IT"}[language]||"ar-MA"
+ );
+ $("today").textContent=now.toLocaleDateString(
+  {ar:"ar-MA",fr:"fr-FR",en:"en-GB",it:"it-IT"}[language]||"ar-MA",
+  {weekday:"long",year:"numeric",month:"long",day:"numeric"}
+ );
+}
+
+function updateRamadan(){
+ // Approximate start date; lunar calendar may vary.
+ const target=new Date("2027-02-08T00:00:00");
+ const now=new Date();
+ const days=Math.max(0,Math.ceil((target-now)/86400000));
+ const labels={
+  ar:`متبقي ${days} يوماً`,
+  fr:`Encore ${days} jours`,
+  en:`${days} days remaining`,
+  it:`Mancano ${days} giorni`
+ };
+ $("ramadan-count").textContent=labels[language]||labels.ar;
+}
+
+function startApp(){
+ if(!language){
+  $("language-screen").style.display="flex";
+ }else{
+  applyLanguage();
+ }
+ setTimeout(()=>$("splash").classList.add("hide"),1500);
+ updateClock();updateRamadan();
+ loadNews();loadExams();renderLessons();
+ setInterval(updateClock,1000);
+ setInterval(updateRamadan,3600000);
+}
+
+window.addEventListener("load",startApp);
+
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("./sw.js").catch(console.error);
+ });
+}
 </script>
 </body>
 </html>
