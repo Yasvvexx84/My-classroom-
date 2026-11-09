@@ -3,613 +3,551 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#2563eb">
-<meta name="description" content="My Classroom - Your classroom, everywhere">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="My Classroom">
 <link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icons/icon-192.png" type="image/png">
-<title>My Classroom</title>
-
+<title>My Classroom | Final Edition V3</title>
 <style>
-:root{
- --accent:#3478f6;--accent2:#75a8ff;--soft:#edf4ff;
- --bg:#f5f7fc;--card:#fff;--text:#17243b;--muted:#8793a7;
- --line:#e9edf5;--shadow:0 12px 35px rgba(30,55,95,.07);
- --radius:25px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
- font-family:Arial,sans-serif;background:var(--bg);color:var(--text);
- min-height:100vh;padding-bottom:100px;
- transition:background .7s,color .4s;
-}
-button,input{font:inherit}
+:root{--blue:#2563eb;--bg:#f3f6fc;--card:#fff;--text:#17243a;--muted:#8190a5;--line:#e6ebf2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,system-ui,sans-serif;padding-bottom:80px;transition:.25s}
+body.dark{--bg:#101827;--card:#1b2940;--text:#f1f5ff;--muted:#a6b2c5;--line:#34435a}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-#splash{
- position:fixed;inset:0;z-index:10000;background:#07111f;color:white;
- display:flex;align-items:center;justify-content:center;flex-direction:column;
- overflow:hidden;transition:opacity .9s,visibility .9s;
-}
-#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
-.splash-glow{
- position:absolute;width:280px;height:280px;border-radius:50%;
- background:radial-gradient(circle,#1d5caa55,transparent 70%);
- animation:glow 3s ease-in-out infinite alternate;
-}
-.splash-content{position:relative;text-align:center;animation:splashIn 1.2s cubic-bezier(.2,.8,.2,1) both}
-.splash-logo{
- width:100px;height:100px;border:1px solid #ffffff35;border-radius:32px;
- display:grid;place-items:center;margin:auto;
- background:linear-gradient(145deg,#ffffff20,#ffffff05);
- box-shadow:0 15px 55px #0007;
- animation:float 3s ease-in-out infinite;
-}
-.splash-logo svg{width:57px;height:57px;stroke:white;stroke-width:1.35}
-.splash-mc{font-size:48px;font-weight:900;letter-spacing:8px;margin-top:22px}
-.splash-name{font-size:13px;letter-spacing:5px;margin-top:8px;color:#b9cce8}
-.splash-line{height:2px;width:80px;margin:20px auto 0;background:linear-gradient(90deg,transparent,#7db4ff,transparent);animation:line 2s ease-in-out infinite}
-@keyframes splashIn{from{opacity:0;transform:translateY(25px) scale(.94)}to{opacity:1;transform:none}}
-@keyframes float{50%{transform:translateY(-9px)}}
-@keyframes glow{to{transform:scale(1.3);opacity:.55}}
-@keyframes line{50%{width:145px;opacity:.55}}
-#language-screen{
- position:fixed;inset:0;z-index:9000;background:#071629bb;
- display:none;align-items:center;justify-content:center;padding:20px;
- backdrop-filter:blur(12px);
-}
-.language-box{
- width:100%;max-width:390px;background:white;border-radius:30px;
- padding:27px;box-shadow:0 25px 80px #0004;text-align:center;
- animation:pop .45s ease both;
-}
-@keyframes pop{from{opacity:0;transform:scale(.93) translateY(15px)}to{opacity:1;transform:none}}
-.language-box h2{font-size:23px;color:#152b4c;margin:12px 0 8px}
-.language-box p{color:#8994a7;font-size:13px;margin-bottom:22px}
-.language-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.lang-option{
- border:1px solid #e9edf5;background:#f8faff;border-radius:19px;
- padding:16px 8px;color:#17243b;transition:.25s;
-}
-.lang-option:active{transform:scale(.96)}
-.lang-option:hover{border-color:var(--accent);background:var(--soft)}
-.lang-option .flag{font-size:30px;display:block;margin-bottom:8px}
-.lang-option strong{font-size:14px}
-header{
- color:white;padding:19px 18px 25px;border-radius:0 0 30px 30px;
- background:linear-gradient(125deg,#102b54,var(--accent) 75%,var(--accent2));
- box-shadow:0 10px 30px #173e791b;
- transition:background .7s;
-}
-.header-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;letter-spacing:-.4px}
-.brand-mark{
- width:39px;height:39px;border:1px solid #ffffff45;border-radius:14px;
- display:grid;place-items:center;background:#ffffff19;
-}
-.brand-mark svg{width:24px;height:24px}
-.header-btn{
- width:42px;height:42px;border:1px solid #ffffff40;
- background:#ffffff19;color:white;border-radius:15px;
- display:grid;place-items:center;transition:.25s;
-}
-.header-btn:active{transform:scale(.92)}
-.header-welcome{margin-top:22px}
-.header-welcome h1{font-size:23px;margin-bottom:7px}
-.header-welcome p{font-size:13px;opacity:.82}
-.header-meta{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
-.meta-pill{background:#ffffff1b;border:1px solid #ffffff30;padding:7px 12px;border-radius:30px;font-size:11px}
-main{max-width:740px;margin:auto;padding:20px 15px}
-.page{display:none}
-.page.active{display:block;animation:pageIn .5s cubic-bezier(.2,.8,.2,1)}
-@keyframes pageIn{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:none}}
-.section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 15px}
-.section-heading h2{font-size:18px;font-weight:850}
-.section-heading small{font-size:11px;color:var(--muted)}
-.card{
- background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
- padding:18px;margin-bottom:14px;box-shadow:var(--shadow);
- transition:transform .25s,box-shadow .25s,border-color .3s;
-}
-.card:active{transform:scale(.99)}
-.home-hero{
- position:relative;overflow:hidden;text-align:center;padding:34px 20px 29px;
- border-radius:30px;background:linear-gradient(145deg,#fff,var(--soft));
- border:1px solid var(--line);box-shadow:var(--shadow);
-}
-.home-hero:before,.home-hero:after{
- content:"";position:absolute;border-radius:50%;pointer-events:none;
- background:var(--accent);opacity:.07;
-}
-.home-hero:before{width:180px;height:180px;top:-100px;right:-70px}
-.home-hero:after{width:130px;height:130px;bottom:-80px;left:-45px}
-.hero-logo{
- width:82px;height:82px;margin:0 auto 19px;border-radius:27px;
- display:grid;place-items:center;color:white;
- background:linear-gradient(145deg,var(--accent),var(--accent2));
- box-shadow:0 12px 27px color-mix(in srgb,var(--accent) 25%,transparent);
- animation:float 4s ease-in-out infinite;
-}
-.hero-logo svg{width:43px;height:43px;stroke:white;stroke-width:1.5}
-.home-hero h2{font-size:25px;font-weight:900;letter-spacing:.2px}
-.home-hero .tagline{color:var(--accent);font-size:13px;font-weight:700;margin-top:9px}
-.home-hero .description{max-width:390px;margin:15px auto 0;color:var(--muted);font-size:13px;line-height:2}
-.home-contact{
- margin-top:17px;padding:16px 17px;border-radius:22px;
- background:var(--card);border:1px solid var(--line);
- display:flex;align-items:center;gap:13px;box-shadow:var(--shadow);
-}
-.contact-icon{
- flex-shrink:0;width:43px;height:43px;border-radius:16px;
- display:grid;place-items:center;color:var(--accent);background:var(--soft);
-}
-.home-contact p{font-size:12px;line-height:1.9;color:var(--muted)}
-.home-contact strong{display:block;color:var(--text);font-size:13px;margin-bottom:2px}
-.search{
- width:100%;border:1px solid var(--line);background:var(--card);
- border-radius:18px;padding:14px 16px;outline:none;margin-bottom:13px;color:var(--text);
- transition:.25s;
-}
-.search:focus{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 10%,transparent)}
-.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:13px}
-.filter{
- border:1px solid var(--line);background:var(--card);border-radius:30px;
- padding:9px 16px;white-space:nowrap;font-size:12px;color:var(--text);transition:.25s;
-}
-.filter.active{background:var(--accent);color:white;border-color:var(--accent)}
-.news-card{border-inline-start:4px solid #9168e8}
-.news-card h3,.exam-card h3{font-size:15px;margin-bottom:9px}
-.news-meta{font-size:11px;color:var(--muted);margin-bottom:10px}
-.news-content{font-size:13px;line-height:1.9;white-space:pre-wrap}
-.category{display:inline-block;margin-top:10px;background:#f1eaff;color:#805ad5;border-radius:30px;padding:6px 11px;font-size:10px}
-.exam-card{border-inline-start:4px solid #e99438}
-.exam-date{font-size:12px;color:#c87920;font-weight:bold}
-.ramadan{
- background:linear-gradient(135deg,#102b54,#176d70);color:white;text-align:center;
- border-radius:26px;padding:23px 15px;margin-top:22px;box-shadow:var(--shadow);
-}
-.ramadan h3{font-size:17px}
-#ramadan-count{font-size:23px;font-weight:900;margin:15px 0}
-.ramadan small{font-size:10px;opacity:.75}
-.lesson-card{display:flex;align-items:center;gap:13px}
-.pdf-icon{
- width:48px;height:48px;flex-shrink:0;border-radius:17px;
- display:grid;place-items:center;background:#e4f7f3;color:#0d9f91;
-}
-.lesson-info{flex:1;min-width:0}
-.lesson-info h3{font-size:13px;line-height:1.7;overflow-wrap:anywhere}
-.lesson-info small{color:var(--muted);font-size:10px}
-.download{display:inline-block;margin-top:7px;color:var(--accent);font-size:12px;font-weight:bold;text-decoration:none}
-.about-hero{
- background:linear-gradient(135deg,#102b54,var(--accent));
- color:white;text-align:center;border-radius:28px;padding:29px 15px;margin-bottom:17px;
-}
-.about-hero .logo{width:68px;height:68px;margin:auto;border-radius:23px;background:#ffffff20;display:grid;place-items:center}
-.about-hero .logo svg{width:37px;height:37px}
-.about-hero h2{margin:12px 0 7px}
-.about-hero p{font-size:12px;opacity:.8}
-.info-row{display:flex;justify-content:space-between;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);font-size:13px}
-.info-row:last-child{border:0}
+header{background:linear-gradient(130deg,#10264b,var(--blue));color:white;padding:20px;border-radius:0 0 27px 27px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:20px;font-weight:bold}
+header h1{font-size:23px;margin:25px 0 5px}
+header p{font-size:12px;opacity:.8}
+main{max-width:760px;margin:auto;padding:14px}
+.page{display:none;animation:show .25s}
+.page.active{display:block}
+@keyframes show{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:19px;padding:15px;margin-bottom:12px}
+.hero{text-align:center;padding:27px 15px}
+.logo{width:65px;height:65px;margin:auto auto 12px;background:var(--blue);color:white;border-radius:19px;display:grid;place-items:center;font-size:32px}
+h2{font-size:19px;margin:10px 0}
+h3{font-size:15px;margin:0 0 7px}
 .muted{color:var(--muted);font-size:12px;line-height:1.8}
-.empty{text-align:center;color:var(--muted);padding:25px 10px;font-size:13px}
-.bottom-nav{
- position:fixed;bottom:0;left:0;right:0;z-index:100;
- background:#ffffffed;backdrop-filter:blur(18px);
- border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);
- padding:9px 3px calc(9px + env(safe-area-inset-bottom));
- box-shadow:0 -7px 25px #18345a0c;
-}
-.nav-item{
- border:0;background:transparent;color:#929db0;display:flex;flex-direction:column;
- align-items:center;gap:5px;font-size:10px;padding:3px 0;transition:.25s;
-}
-.nav-symbol{
- width:39px;height:32px;display:grid;place-items:center;
- border-radius:14px;transition:.3s;
-}
-.nav-symbol svg{width:21px;height:21px}
-.nav-item.active{color:var(--accent);font-weight:800}
-.nav-item.active .nav-symbol{background:var(--soft);transform:translateY(-3px)}
-footer{text-align:center;color:var(--muted);font-size:10px;padding:25px 8px}
-footer strong{color:var(--accent)}
-body[dir="ltr"] .header-welcome{text-align:left}
-body[dir="ltr"] .home-contact{text-align:left}
-@media(min-width:600px){main{padding-top:25px}.home-hero{padding:48px 25px}.home-hero h2{font-size:30px}}
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:15px;text-align:right;color:var(--text);min-height:85px}
+.tile span{display:block;font-size:23px;color:var(--blue);margin-bottom:7px}
+.tile b{font-size:13px}
+button.primary{background:var(--blue);color:white;border:0;border-radius:12px;padding:11px 15px}
+button.secondary{background:#eaf0ff;color:var(--blue);border:0;border-radius:12px;padding:10px}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);margin:6px 0 12px}
+textarea{min-height:130px}
+.row{display:flex;align-items:center;gap:10px}
+.grow{flex:1}
+.item{padding:13px;background:var(--card);border:1px solid var(--line);border-radius:15px;margin-bottom:9px}
+.item a{color:var(--blue);font-size:13px;font-weight:bold}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 2px;z-index:10}
+.nav{border:0;background:none;color:var(--muted);font-size:10px}
+.nav span{display:block;font-size:20px;margin-bottom:3px}
+.nav.active{color:var(--blue);font-weight:bold}
+.progress{height:9px;background:var(--line);border-radius:20px;overflow:hidden}
+.progress div{height:100%;background:var(--blue);width:0}
+.levels{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:10px}
+.task{display:flex;gap:9px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+.task input{width:18px;margin:0}
+.filters{display:flex;gap:7px;overflow:auto;margin-bottom:12px}
+.filter{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:20px;padding:7px 12px;white-space:nowrap;font-size:11px}
+.filter.active{background:var(--blue);color:white}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:4px}
+.calendar div{padding:8px 0;font-size:11px;border-radius:8px}
+.calendar .today{background:var(--blue);color:white}
+.calendar .holiday{outline:1px solid orange}
+.badge{font-size:10px;color:var(--muted)}
 </style>
 </head>
-
 <body>
 
-<div id="splash">
- <div class="splash-glow"></div>
- <div class="splash-content">
-  <div class="splash-logo">
-   <svg viewBox="0 0 24 24"><path d="M3 5.5C6.5 4.2 9.5 5 12 7v13c-2.5-2-5.5-2.8-9-1.5z"/><path d="M21 5.5C17.5 4.2 14.5 5 12 7v13c2.5-2 5.5-2.8 9-1.5z"/><path d="M12 7v13"/></svg>
-  </div>
-  <div class="splash-mc">MC</div>
-  <div class="splash-name">MY CLASSROOM</div>
-  <div class="splash-line"></div>
- </div>
-</div>
-
-<div id="language-screen">
- <div class="language-box">
-  <div style="font-size:36px">🌐</div>
-  <h2 id="language-title">Choose your language</h2>
-  <p id="language-subtitle">Select your preferred language</p>
-  <div class="language-options">
-   <button class="lang-option" onclick="chooseLanguage('ar')"><span class="flag">🇲🇦</span><strong>العربية</strong></button>
-   <button class="lang-option" onclick="chooseLanguage('fr')"><span class="flag">🇫🇷</span><strong>Français</strong></button>
-   <button class="lang-option" onclick="chooseLanguage('en')"><span class="flag">🇬🇧</span><strong>English</strong></button>
-   <button class="lang-option" onclick="chooseLanguage('it')"><span class="flag">🇮🇹</span><strong>Italiano</strong></button>
-  </div>
- </div>
-</div>
-
 <header>
- <div class="header-top">
-  <div class="brand">
-   <span class="brand-mark">
-    <svg viewBox="0 0 24 24"><path d="M3 5.5C6.5 4.2 9.5 5 12 7v13c-2.5-2-5.5-2.8-9-1.5z"/><path d="M21 5.5C17.5 4.2 14.5 5 12 7v13c2.5-2 5.5-2.8 9-1.5z"/></svg>
-   </span>
-   My Classroom
-  </div>
-  <button class="header-btn" onclick="openLanguage()" aria-label="Change language">
-   <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
-  </button>
- </div>
- <div class="header-welcome">
-  <h1 data-i18n="welcome">مرحباً بك</h1>
-  <p data-i18n="welcomeText">مساحتك التعليمية، أينما كنت.</p>
- </div>
- <div class="header-meta">
-  <span class="meta-pill">1BACSEF1</span>
-  <span class="meta-pill" data-i18n="year">السنة الدراسية 2026 / 2027</span>
- </div>
+<div class="top">
+<div class="brand">▤ MY CLASSROOM</div>
+<button class="secondary" onclick="openPage('settings')">⚙</button>
+</div>
+<h1 id="welcome">مرحباً بك في My Classroom</h1>
+<p>1BACSEF1 · السنة الدراسية 2026/2027</p>
 </header>
 
 <main>
-<section class="page active" id="home">
- <div class="home-hero">
-  <div class="hero-logo">
-   <svg viewBox="0 0 24 24"><path d="M3 5.5C6.5 4.2 9.5 5 12 7v13c-2.5-2-5.5-2.8-9-1.5z"/><path d="M21 5.5C17.5 4.2 14.5 5 12 7v13c2.5-2 5.5-2.8 9-1.5z"/><path d="M12 7v13"/></svg>
-  </div>
-  <h2>MY CLASSROOM</h2>
-  <div class="tagline" data-i18n="tagline">فصلك الدراسي، أينما كنت.</div>
-  <p class="description" data-i18n="homeDescription">منصتك التعليمية المصممة لتجمع عالمك الدراسي في تجربة بسيطة ومنظمة، وتمنحك وصولاً سهلاً إلى أهم مواردك التعليمية.</p>
- </div>
 
- <div class="home-contact">
-  <div class="contact-icon">
-   <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></svg>
-  </div>
-  <p><strong data-i18n="contactTitle">رأيك يهمنا</strong><span data-i18n="contactText">للمزيد من الآراء والاقتراحات، يُرجى التواصل مع المطوّر.</span></p>
- </div>
+<section class="page active" id="home">
+<div class="card hero">
+<div class="logo">▤</div>
+<h2>MY CLASSROOM</h2>
+<p class="muted">منصة دراسية متكاملة لتلاميذ الأولى باكالوريا.</p>
+</div>
+
+<div class="card">
+<div class="row">
+<div class="grow">
+<b id="studentName">طالب 1BAC</b>
+<p class="muted">ملفك الدراسي</p>
+</div>
+<button class="secondary" onclick="openPage('profile')">ملفي</button>
+</div>
+</div>
+
+<h2>ملخص اليوم</h2>
+<div class="card">
+<b id="today"></b>
+<div id="todaySubjects"></div>
+<hr>
+<b>مهام اليوم</b>
+<div id="tasks"></div>
+</div>
+
+<h2>مساحة الدراسة</h2>
+<div class="grid">
+<button class="tile" onclick="openPage('news')"><span>▣</span><b>الأخبار</b></button>
+<button class="tile" onclick="openPage('exams')"><span>▦</span><b>الامتحانات</b></button>
+<button class="tile" onclick="openPage('lessons')"><span>▤</span><b>الدروس</b></button>
+<button class="tile" onclick="openPage('prof')"><span>▶</span><b>الأساتذة</b></button>
+<button class="tile" onclick="openPage('practice')"><span>✓</span><b>الاختبارات والتمارين</b></button>
+<button class="tile" onclick="openPage('calendar')"><span>▦</span><b>التقويم والأعياد</b></button>
+<button class="tile" onclick="openPage('notes')"><span>✎</span><b>دفتر الملاحظات</b></button>
+<button class="tile" onclick="openPage('planner')"><span>◷</span><b>الجدول الأسبوعي</b></button>
+</div>
+
+<h2>تقدمك الدراسي</h2>
+<div class="card">
+<div class="row"><b id="rank">البرونزي</b><span class="grow"></span><b id="xp">0 XP</b></div>
+<div class="progress"><div id="progressBar"></div></div>
+<div class="levels"><span>برونزي</span><span>فضي</span><span>ذهبي</span><span>ماسي</span><span>بلاتيني</span></div>
+</div>
+
+<div class="card">
+<h3>🏃 الرياضة والتحفيز</h3>
+<p id="motivation" class="muted">الاستمرارية أهم من السرعة. ابدأ اليوم بخطوة صغيرة.</p>
+<label class="task"><input type="checkbox" id="sport" onchange="saveSport(this.checked)"> أنجزت نشاطي الرياضي اليوم</label>
+</div>
+
+<div class="card">
+<b>للمزيد من الآراء والاقتراحات، يُرجى التواصل مع المطوّر.</b>
+<p class="muted">Created by Yassine</p>
+</div>
 </section>
 
 <section class="page" id="news">
- <div class="section-heading"><h2 data-i18n="newsTitle">الأخبار والإعلانات</h2></div>
- <input class="search" id="news-search" placeholder="ابحث عن خبر..." oninput="renderNews()">
- <div class="filters">
-  <button class="filter active" onclick="setFilter('all',this)" data-i18n="all">الكل</button>
-  <button class="filter" onclick="setFilter('school',this)" data-i18n="school">مدرسي</button>
-  <button class="filter" onclick="setFilter('religious',this)" data-i18n="religious">ديني</button>
-  <button class="filter" onclick="setFilter('national',this)" data-i18n="national">وطني</button>
- </div>
- <div id="news-list"><div class="empty">...</div></div>
- <div class="ramadan">
-  <h3 data-i18n="ramadan">العد التنازلي لرمضان</h3>
-  <div id="ramadan-count">...</div>
-  <small data-i18n="ramadanNote">التاريخ تقريبي وقد يتغير حسب رؤية الهلال</small>
- </div>
+<h2>الأخبار والمناسبات</h2>
+<input id="newsSearch" placeholder="ابحث في الأخبار..." oninput="renderNews()">
+<div class="filters">
+<button class="filter active" onclick="setFilter('all',this)">الكل</button>
+<button class="filter" onclick="setFilter('school',this)">مدرسي</button>
+<button class="filter" onclick="setFilter('religious',this)">ديني</button>
+<button class="filter" onclick="setFilter('national',this)">وطني</button>
+</div>
+<div id="newsList"></div>
+<div class="card">
+<h3>رمضان 1448 هـ</h3>
+<p id="ramadan" class="muted"></p>
+<p class="muted">التاريخ المتوقع، ويُعتمد الموعد النهائي بعد إعلان ثبوت الهلال في المغرب.</p>
+</div>
 </section>
 
 <section class="page" id="exams">
- <div class="section-heading"><h2 data-i18n="examTitle">جدول الامتحانات</h2></div>
- <p class="muted" data-i18n="examIntro">تابع مواعيد امتحاناتك القادمة واستعد لها.</p>
- <div id="exams-list" style="margin-top:15px"><div class="empty">...</div></div>
+<h2>الامتحانات والفروض</h2>
+<div id="examList"></div>
 </section>
 
 <section class="page" id="lessons">
- <div class="section-heading"><h2 data-i18n="lessonTitle">مكتبة الدروس</h2></div>
- <input class="search" id="lesson-search" placeholder="ابحث عن درس..." oninput="renderLessons()">
- <div id="lessons-list"></div>
+<h2>مكتبة الدروس</h2>
+<input id="lessonSearch" placeholder="ابحث عن درس..." oninput="renderLessons()">
+<div id="lessonList"></div>
 </section>
 
-<section class="page" id="about">
- <div class="about-hero">
-  <div class="logo">
-   <svg viewBox="0 0 24 24"><path d="M3 5.5C6.5 4.2 9.5 5 12 7v13c-2.5-2-5.5-2.8-9-1.5z"/><path d="M21 5.5C17.5 4.2 14.5 5 12 7v13c2.5-2 5.5-2.8 9-1.5z"/></svg>
-  </div>
-  <h2>My Classroom</h2>
-  <p>Your classroom, everywhere.</p>
- </div>
- <div class="section-heading"><h2 data-i18n="aboutTitle">حول المنصة</h2></div>
- <div class="card">
-  <p class="muted" data-i18n="aboutDescription">منصة تعليمية تجمع الأخبار والإعلانات والامتحانات والدروس في مكان واحد.</p>
-  <div class="info-row"><span data-i18n="class">القسم</span><strong>1BACSEF1</strong></div>
-  <div class="info-row"><span data-i18n="academicYear">السنة الدراسية</span><strong>2026 / 2027</strong></div>
-  <div class="info-row"><span data-i18n="platform">المنصة</span><strong>My Classroom</strong></div>
-  <div class="info-row"><span data-i18n="language">اللغة</span><button onclick="openLanguage()" style="border:0;background:none;color:var(--accent)" data-i18n="change">تغيير</button></div>
- </div>
- <div class="card" style="text-align:center">
-  <p class="muted" data-i18n="createdBy">تم إنشاء هذا المشروع بواسطة</p>
-  <strong style="display:block;margin-top:8px;color:var(--accent)">Yassine</strong>
- </div>
+<section class="page" id="prof">
+<h2>الأساتذة والقنوات التعليمية</h2>
+<div id="profList"></div>
 </section>
 
-<footer>© 2026 My Classroom · <strong>Created by Yassine</strong></footer>
+<section class="page" id="practice">
+<h2>الاختبارات والتمارين</h2>
+<p class="muted">تدريبات أولية مناسبة لمستوى الأولى باكالوريا.</p>
+<div class="card">
+<select id="subject" onchange="renderQuiz()"></select>
+<div id="quiz"></div>
+</div>
+<div class="card">
+<b>نتائجك</b>
+<p class="muted" id="score">لم تبدأ أي اختبار بعد.</p>
+</div>
+</section>
+
+<section class="page" id="planner">
+<h2>الجدول الأسبوعي</h2>
+<div id="week"></div>
+</section>
+
+<section class="page" id="calendar">
+<h2>تقويم السنة</h2>
+<div class="card">
+<div class="row">
+<button class="secondary" onclick="changeMonth(-1)">‹</button>
+<b class="grow" id="monthTitle" style="text-align:center"></b>
+<button class="secondary" onclick="changeMonth(1)">›</button>
+</div>
+<div class="calendar" id="calendarGrid"></div>
+</div>
+<div class="card">
+<h3>الأعياد والمناسبات المغربية</h3>
+<div id="holidays"></div>
+<p class="muted">تواريخ المناسبات الهجرية تقديرية، وقد تتغير وفق الإعلان الرسمي المغربي.</p>
+</div>
+</section>
+
+<section class="page" id="notes">
+<h2>دفتر الملاحظات</h2>
+<div class="card">
+<textarea id="note" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+<button class="primary" onclick="saveNote()">حفظ الملاحظات</button>
+</div>
+</section>
+
+<section class="page" id="profile">
+<h2>الملف الشخصي</h2>
+<div class="card">
+<label>اسمك</label>
+<input id="profileName" placeholder="اسم الطالب">
+<label>صورتك الشخصية</label>
+<input id="profilePhoto" type="file" accept="image/*">
+<button class="primary" onclick="saveProfile()">حفظ الملف</button>
+</div>
+</section>
+
+<section class="page" id="settings">
+<h2>الإعدادات</h2>
+<div class="card">
+<label>اللغة</label>
+<select id="language" onchange="changeLanguage(this.value)">
+<option value="ar">العربية</option>
+<option value="fr">Français</option>
+<option value="en">English</option>
+<option value="it">Italiano</option>
+<option value="es">Español</option>
+<option value="ru">Русский</option>
+<option value="zh">中文</option>
+</select>
+<label>المظهر</label>
+<select id="theme" onchange="changeTheme(this.value)">
+<option value="auto">لون متغير كل دقيقة</option>
+<option value="light">أبيض</option>
+<option value="dark">داكن</option>
+</select>
+<hr>
+<button class="primary" onclick="enableNotifications()">تفعيل الإشعارات</button>
+<p class="muted" id="notificationInfo">الإشعارات أثناء إغلاق التطبيق تحتاج إلى دعم إضافي من Android أو خدمة خلفية.</p>
+</div>
+<div class="card">
+<b>رمز القسم: 1BACSEF1</b>
+<p class="muted">My Classroom · Final Edition V3</p>
+</div>
+</section>
+
 </main>
 
-<nav class="bottom-nav">
- <button class="nav-item active" data-page="home" onclick="showPage('home',this)">
-  <span class="nav-symbol"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg></span><span data-i18n="navHome">الرئيسية</span>
- </button>
- <button class="nav-item" data-page="news" onclick="showPage('news',this)">
-  <span class="nav-symbol"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span data-i18n="navNews">الأخبار</span>
- </button>
- <button class="nav-item" data-page="exams" onclick="showPage('exams',this)">
-  <span class="nav-symbol"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4M17 3v4M3 10h18M8 14h3M8 17h7"/></svg></span><span data-i18n="navExams">الامتحانات</span>
- </button>
- <button class="nav-item" data-page="lessons" onclick="showPage('lessons',this)">
-  <span class="nav-symbol"><svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h4M8 13h8M8 17h8"/></svg></span><span data-i18n="navLessons">الدروس</span>
- </button>
- <button class="nav-item" data-page="about" onclick="showPage('about',this)">
-  <span class="nav-symbol"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7h.01"/></svg></span><span data-i18n="navAbout">حول</span>
- </button>
+<nav class="bottom">
+<button class="nav active" onclick="openPage('home',this)"><span>⌂</span>الرئيسية</button>
+<button class="nav" onclick="openPage('news',this)"><span>▣</span>الأخبار</button>
+<button class="nav" onclick="openPage('exams',this)"><span>▦</span>الامتحانات</button>
+<button class="nav" onclick="openPage('lessons',this)"><span>▤</span>الدروس</button>
+<button class="nav" onclick="openPage('settings',this)"><span>⚙</span>المزيد</button>
 </nav>
+
+<div id="login" style="display:none;position:fixed;inset:0;background:#071629dd;z-index:30;align-items:center;justify-content:center;padding:20px">
+<div class="card" style="width:100%;max-width:350px">
+<h2>مرحباً بك</h2>
+<p class="muted">أدخل رمز القسم للدخول لأول مرة.</p>
+<input id="code" placeholder="رمز الدخول">
+<button class="primary" style="width:100%" onclick="unlock()">دخول</button>
+<p id="loginError" class="muted"></p>
+</div>
+</div>
 
 <script>
 const $=id=>document.getElementById(id);
 
-const translations={
- ar:{
-  welcome:"مرحباً بك",welcomeText:"مساحتك التعليمية، أينما كنت.",
-  year:"السنة الدراسية 2026 / 2027",tagline:"فصلك الدراسي، أينما كنت.",
-  homeDescription:"منصتك التعليمية المصممة لتجمع عالمك الدراسي في تجربة بسيطة ومنظمة، وتمنحك وصولاً سهلاً إلى أهم مواردك التعليمية.",
-  contactTitle:"رأيك يهمنا",contactText:"للمزيد من الآراء والاقتراحات، يُرجى التواصل مع المطوّر.",
-  newsTitle:"الأخبار والإعلانات",all:"الكل",school:"مدرسي",religious:"ديني",national:"وطني",
-  ramadan:"العد التنازلي لرمضان",ramadanNote:"التاريخ تقريبي وقد يتغير حسب رؤية الهلال",
-  examTitle:"جدول الامتحانات",examIntro:"تابع مواعيد امتحاناتك القادمة واستعد لها.",
-  lessonTitle:"مكتبة الدروس",aboutTitle:"حول المنصة",
-  aboutDescription:"منصة تعليمية تجمع الأخبار والإعلانات والامتحانات والدروس في مكان واحد.",
-  class:"القسم",academicYear:"السنة الدراسية",platform:"المنصة",language:"اللغة",
-  change:"تغيير",createdBy:"تم إنشاء هذا المشروع بواسطة",
-  navHome:"الرئيسية",navNews:"الأخبار",navExams:"الامتحانات",navLessons:"الدروس",navAbout:"حول",
-  searchNews:"ابحث عن خبر...",searchLesson:"ابحث عن درس...",noNews:"لا توجد أخبار حالياً",
-  noExams:"لا توجد امتحانات قادمة",noLessons:"لا توجد دروس مطابقة",
-  download:"فتح الدرس",examDate:"موعد الامتحان",choose:"اختر لغتك",
-  chooseSub:"اختر اللغة التي تفضل استخدامها"
- },
- fr:{
-  welcome:"Bienvenue",welcomeText:"Votre espace éducatif, où que vous soyez.",
-  year:"Année scolaire 2026 / 2027",tagline:"Votre classe, partout avec vous.",
-  homeDescription:"Votre plateforme éducative rassemble votre univers scolaire dans une expérience simple et organisée, avec un accès facile à vos ressources.",
-  contactTitle:"Votre avis compte",contactText:"Pour partager vos avis et suggestions, veuillez contacter le développeur.",
-  newsTitle:"Actualités et annonces",all:"Tout",school:"Scolaire",religious:"Religieux",national:"National",
-  ramadan:"Compte à rebours du Ramadan",ramadanNote:"Date estimée, selon l'observation du croissant",
-  examTitle:"Calendrier des examens",examIntro:"Consultez les prochaines dates d'examen.",
-  lessonTitle:"Bibliothèque des cours",aboutTitle:"À propos de la plateforme",
-  aboutDescription:"Une plateforme éducative regroupant actualités, examens et cours.",
-  class:"Classe",academicYear:"Année scolaire",platform:"Plateforme",language:"Langue",
-  change:"Modifier",createdBy:"Projet créé par",
-  navHome:"Accueil",navNews:"Actualités",navExams:"Examens",navLessons:"Cours",navAbout:"À propos",
-  searchNews:"Rechercher une actualité...",searchLesson:"Rechercher un cours...",
-  noNews:"Aucune actualité disponible",noExams:"Aucun examen à venir",
-  noLessons:"Aucun cours correspondant",download:"Ouvrir le cours",examDate:"Date de l'examen",
-  choose:"Choisissez votre langue",chooseSub:"Sélectionnez votre langue préférée"
- },
- en:{
-  welcome:"Welcome",welcomeText:"Your learning space, wherever you are.",
-  year:"Academic year 2026 / 2027",tagline:"Your classroom, everywhere.",
-  homeDescription:"Your educational platform brings your classroom world together in a simple, organized experience, giving you easy access to essential learning resources.",
-  contactTitle:"Your feedback matters",contactText:"For more feedback and suggestions, please contact the developer.",
-  newsTitle:"News & Announcements",all:"All",school:"School",religious:"Religious",national:"National",
-  ramadan:"Ramadan Countdown",ramadanNote:"Estimated date, subject to moon sighting",
-  examTitle:"Exam Schedule",examIntro:"Check your upcoming exams and get prepared.",
-  lessonTitle:"Lesson Library",aboutTitle:"About the Platform",
-  aboutDescription:"An educational platform bringing news, exams and lessons together.",
-  class:"Class",academicYear:"Academic year",platform:"Platform",language:"Language",
-  change:"Change",createdBy:"Created by",
-  navHome:"Home",navNews:"News",navExams:"Exams",navLessons:"Lessons",navAbout:"About",
-  searchNews:"Search news...",searchLesson:"Search lessons...",
-  noNews:"No news available",noExams:"No upcoming exams",noLessons:"No matching lessons",
-  download:"Open lesson",examDate:"Exam date",choose:"Choose your language",
-  chooseSub:"Select your preferred language"
- },
- it:{
-  welcome:"Benvenuto",welcomeText:"Il tuo spazio educativo, ovunque tu sia.",
-  year:"Anno scolastico 2026 / 2027",tagline:"La tua classe, ovunque con te.",
-  homeDescription:"La tua piattaforma educativa riunisce il mondo scolastico in un'esperienza semplice e organizzata, con accesso facile alle risorse didattiche.",
-  contactTitle:"La tua opinione conta",contactText:"Per ulteriori opinioni e suggerimenti, contatta lo sviluppatore.",
-  newsTitle:"Notizie e annunci",all:"Tutti",school:"Scolastico",religious:"Religioso",national:"Nazionale",
-  ramadan:"Conto alla rovescia per il Ramadan",ramadanNote:"Data stimata, soggetta all'avvistamento della luna",
-  examTitle:"Calendario degli esami",examIntro:"Controlla le prossime date degli esami.",
-  lessonTitle:"Biblioteca delle lezioni",aboutTitle:"Informazioni sulla piattaforma",
-  aboutDescription:"Una piattaforma educativa con notizie, esami e lezioni.",
-  class:"Classe",academicYear:"Anno scolastico",platform:"Piattaforma",language:"Lingua",
-  change:"Modifica",createdBy:"Progetto creato da",
-  navHome:"Home",navNews:"Notizie",navExams:"Esami",navLessons:"Lezioni",navAbout:"Info",
-  searchNews:"Cerca notizie...",searchLesson:"Cerca una lezione...",
-  noNews:"Nessuna notizia disponibile",noExams:"Nessun esame in programma",
-  noLessons:"Nessuna lezione trovata",download:"Apri lezione",examDate:"Data dell'esame",
-  choose:"Scegli la lingua",chooseSub:"Seleziona la lingua preferita"
- }
+const weekly={
+"الأحد":["مراجعة حرة"],
+"الاثنين":["اللغة الفرنسية"],
+"الثلاثاء":["اللغة الإنجليزية","الرياضيات"],
+"الأربعاء":["التربية الإسلامية","اللغة العربية"],
+"الخميس":["الفيزياء","علوم الحياة والأرض"],
+"الجمعة":["الفلسفة"],
+"السبت":["الاجتماعيات"]
 };
 
-let language=localStorage.getItem("mc-language")||"";
-let newsData=[],examsData=[],currentFilter="all";
-
 const lessons=[
- "2 التحولات الاقتصادية والمالية والاجتماعية والفكرية.pdf",
- "2 المجال المغربي الموارد الطبيعية والبشرية.pdf",
- "التنافس الامبريالي.pdf",
- "تقديم التحولات الكبرى للعالم الراسمالي.pdf",
- "مفهوم التنمية.pdf"
+["2التحولات الاقتصادية والمالية والاجتماعية والفكرية.pdf","التحولات الاقتصادية والمالية والاجتماعية والفكرية"],
+["2المجال المغربي  الموارد الطبيعية والبشرية.pdf","المجال المغربي: الموارد الطبيعية والبشرية"],
+["التنافس الامبريالي.pdf","التنافس الإمبريالي"],
+["تقديم التحولات الكبرى للعالم الراسمالي.pdf","تقديم التحولات الكبرى للعالم الرأسمالي"],
+["مفهوم التنمية.pdf","مفهوم التنمية"]
 ];
 
-function t(key){return translations[language]?.[key]||translations.ar[key]||key}
+const teachers=[
+["الرياضيات","Rabie Ghazouani","https://youtube.com/@rabieghazouani22?si=rRHqZzmPGguJFjFg"],
+["الفيزياء","Driss Dotcom","https://youtube.com/@driss.dotcom?si=KZGpPRqzKtwiCMtg"],
+["الفلسفة","Mohamed Elmasrioui","https://youtube.com/@elmasriouimohamed?si=pTQc26LgbTVGzrtm"],
+["اللغة الفرنسية","Maître Mohssine","https://youtube.com/@maitremohssine?si=e1k2Fm9zu4VspIYw"],
+["اللغة العربية","Driss Dotcom","https://youtube.com/@driss.dotcom?si=tL8J7KY299bdfYVt"],
+["اللغة الإنجليزية","Sara English","https://youtube.com/@saraenglish1?si=qHOZvtanvc3CmV0b"],
+["الاجتماعيات","Adil Mouakiti","https://youtube.com/@prof_adil_mouakiti?si=XD-ubnkl8QXGrivr"],
+["علوم الحياة والأرض","Driss Dotcom","https://youtube.com/@driss.dotcom?si=pU6m6JM_Zmz6wqvf"]
+];
 
-function applyLanguage(){
- const ar=language==="ar";
- document.documentElement.lang=language;
- document.documentElement.dir=ar?"rtl":"ltr";
- document.body.dir=ar?"rtl":"ltr";
- document.querySelectorAll("[data-i18n]").forEach(el=>{
-  const value=translations[language][el.dataset.i18n];
-  if(value)el.textContent=value;
- });
- $("news-search").placeholder=t("searchNews");
- $("lesson-search").placeholder=t("searchLesson");
- $("language-title").textContent=t("choose");
- $("language-subtitle").textContent=t("chooseSub");
- renderNews();renderExams();renderLessons();updateRamadan();
+const holidays=[
+["رأس السنة الميلادية","2027-01-01"],
+["ذكرى تقديم وثيقة الاستقلال","2027-01-11"],
+["رأس السنة الأمازيغية","2027-01-14"],
+["بداية رمضان 1448 هـ (تقديري)","2027-02-08"],
+["عيد الفطر (تقديري)","2027-03-10"],
+["عيد الشغل","2027-05-01"],
+["عيد الأضحى (تقديري)","2027-05-17"],
+["رأس السنة الهجرية 1449 (تقديري)","2027-06-06"],
+["عيد العرش","2027-07-30"],
+["ذكرى استرجاع وادي الذهب","2027-08-14"],
+["ذكرى ثورة الملك والشعب","2027-08-20"],
+["عيد الشباب","2027-08-21"],
+["المولد النبوي (تقديري)","2027-08-14"],
+["عيد الوحدة","2026-10-31"],
+["ذكرى المسيرة الخضراء","2026-11-06"],
+["عيد الاستقلال","2026-11-18"]
+];
+
+const quizData={
+"الرياضيات":[
+["إذا كان f(x)=2x+3 فما f(2)؟",["5","7","8","9"],1],
+["حل المعادلة 3x=12.",["3","4","6","9"],1]
+],
+"الفيزياء":[
+["ما وحدة شدة التيار الكهربائي؟",["الفولت","الأوم","الأمبير","الواط"],2],
+["ما رمز المقاومة الكهربائية؟",["U","R","I","P"],1]
+],
+"اللغة الإنجليزية":[
+["She ___ to school every day.",["go","goes","going","gone"],1]
+],
+"اللغة الفرنسية":[
+["Les filles sont…",["arrivé","arrivées","arriver","arrivée"],1]
+],
+"الفلسفة":[
+["ما وظيفة الحجاج في النص الفلسفي؟",["تزيين النص","دعم موقف بالأدلة","سرد الأحداث","إلغاء السؤال"],1]
+],
+"اللغة العربية":[
+["«لا تهمل واجبك» أسلوب:",["استفهام","نهي","تعجب","نداء"],1]
+],
+"الاجتماعيات":[
+["الكثافة السكانية تعني:",["عدد السكان بالنسبة للمساحة","عدد المدن","مساحة الدولة","معدل الأمية"],0]
+],
+"علوم الحياة والأرض":[
+["ما الوحدة الأساسية للكائنات الحية؟",["النسيج","العضو","الخلية","الجهاز"],2]
+]
+};
+
+let allNews=[],allExams=[],filter="all",xp=0,month=new Date(2026,10,1),attempts=0,score=0;
+
+function openPage(id,button){
+document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
+if(button)button.classList.add("active");
+window.scrollTo({top:0,behavior:"smooth"});
+if(id==="calendar")renderCalendar();
 }
 
-function chooseLanguage(code){
- language=code;localStorage.setItem("mc-language",code);
- $("language-screen").style.display="none";applyLanguage();
-}
-function openLanguage(){$("language-screen").style.display="flex"}
-
-function showPage(page,button){
- document.querySelectorAll(".page").forEach(el=>el.classList.remove("active"));
- $(page).classList.add("active");
- document.querySelectorAll(".nav-item").forEach(el=>el.classList.remove("active"));
- const nav=document.querySelector('.nav-item[data-page="'+page+'"]');
- if(nav)nav.classList.add("active");
- window.scrollTo({top:0,behavior:"smooth"});
+function safe(s){
+return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
 
-function escapeHTML(value){
- return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+function dateText(d){
+return new Date(d+"T00:00:00").toLocaleDateString("ar-MA",{year:"numeric",month:"long",day:"numeric"});
 }
-function formatDate(date){
- const locale={ar:"ar-MA",fr:"fr-FR",en:"en-GB",it:"it-IT"}[language]||"ar-MA";
- return new Date(date+"T00:00:00").toLocaleDateString(locale,{year:"numeric",month:"long",day:"numeric"});
+
+function daily(){
+let d=new Date(),day=d.toLocaleDateString("ar-MA",{weekday:"long"});
+$("today").textContent=day;
+let subjects=weekly[day]||["مراجعة وتنظيم"];
+$("todaySubjects").innerHTML=subjects.map(x=>`<div class="task">📘 ${x}</div>`).join("");
+let tasks=["مراجعة درس اليوم","حل تمرين","قراءة 20 دقيقة","نشاط رياضي"];
+let key="mc-tasks-"+d.toDateString();
+let saved=JSON.parse(localStorage.getItem(key)||"{}");
+$("tasks").innerHTML=tasks.map((x,i)=>`<label class="task"><input type="checkbox" ${saved[i]?"checked":""} onchange="taskDone(${i},this.checked)">${x}</label>`).join("");
 }
-function validNews(item){
- if(!item.date)return false;
- const d=new Date(item.date+"T00:00:00");
- if(isNaN(d.getTime()))return false;
- const today=new Date();today.setHours(0,0,0,0);
- const age=(today-d)/86400000;
- return age>=0&&age<7;
+
+function taskDone(i,v){
+let key="mc-tasks-"+new Date().toDateString();
+let saved=JSON.parse(localStorage.getItem(key)||"{}");
+saved[i]=v;localStorage.setItem(key,JSON.stringify(saved));
+if(v)addXP(5);
 }
-function categoryName(type){
- return t(({school:"school",religious:"religious",national:"national"})[type]||"school");
+
+function addXP(n){
+xp+=n;localStorage.setItem("mc-xp",xp);renderProgress();
 }
-function newsHTML(item){
- return `<article class="card news-card">
- <h3>${escapeHTML(item.title)}</h3>
- <div class="news-meta">${formatDate(item.date)}</div>
- <div class="news-content">${escapeHTML(item.content)}</div>
- <span class="category">${categoryName(item.type||"school")}</span>
- </article>`;
+
+function renderProgress(){
+let names=["البرونزي","الفضي","الذهبي","الماسي","البلاتيني"];
+let limits=[0,100,250,500,900],rank=0;
+limits.forEach((x,i)=>{if(xp>=x)rank=i});
+let percent=rank===4?100:Math.round((xp-limits[rank])/(limits[rank+1]-limits[rank])*100);
+$("rank").textContent=names[rank];
+$("xp").textContent=xp+" XP";
+$("progressBar").style.width=percent+"%";
 }
-async function loadNews(){
- try{
-  const r=await fetch("./news.json",{cache:"no-store"});
-  if(!r.ok)throw Error("News unavailable");
-  const data=await r.json();newsData=Array.isArray(data)?data.filter(validNews):[];
- }catch(e){newsData=[]}
- renderNews();
+
+function saveSport(v){
+if(v){addXP(5);localStorage.setItem("mc-sport-date",new Date().toDateString())}
 }
+
+async function loadData(){
+try{let r=await fetch("./news.json");if(r.ok)allNews=await r.json()}catch(e){}
+try{let r=await fetch("./exams.json");if(r.ok)allExams=await r.json()}catch(e){}
+renderNews();renderExams();
+}
+
 function renderNews(){
- const input=$("news-search");if(!input)return;
- const q=input.value.trim().toLowerCase();
- const list=newsData.filter(item=>{
-  const type=item.type||"school";
-  return(currentFilter==="all"||type===currentFilter)&&
-   (String(item.title||"")+" "+String(item.content||"")).toLowerCase().includes(q);
- });
- $("news-list").innerHTML=list.map(newsHTML).join("")||`<div class="empty">${t("noNews")}</div>`;
+let q=($("newsSearch").value||"").toLowerCase();
+let list=allNews.filter(n=>(filter==="all"||(n.type||"school")===filter)&&((n.title||"")+" "+(n.content||"")).toLowerCase().includes(q));
+$("newsList").innerHTML=list.map(n=>`<div class="item"><h3>${safe(n.title)}</h3><p class="muted">${n.date?dateText(n.date):""}</p><p>${safe(n.content)}</p></div>`).join("")||"<p class='muted'>لا توجد أخبار حالياً.</p>";
 }
-function setFilter(type,button){
- currentFilter=type;
- document.querySelectorAll(".filter").forEach(el=>el.classList.remove("active"));
- button.classList.add("active");renderNews();
+
+function setFilter(f,b){
+filter=f;
+document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));
+b.classList.add("active");renderNews();
 }
-async function loadExams(){
- try{
-  const r=await fetch("./exams.json",{cache:"no-store"});
-  if(!r.ok)throw Error("Exams unavailable");
-  const data=await r.json();const today=new Date();today.setHours(0,0,0,0);
-  examsData=(Array.isArray(data)?data:[]).filter(item=>{
-   const d=new Date(item.exam_date+"T00:00:00");
-   return!isNaN(d.getTime())&&d>=today;
-  }).sort((a,b)=>a.exam_date.localeCompare(b.exam_date));
- }catch(e){examsData=[]}
- renderExams();
-}
-function examHTML(item){
- return `<article class="card exam-card">
- <h3>${escapeHTML(item.subject)}</h3>
- <div class="exam-date">${t("examDate")}: ${formatDate(item.exam_date)}</div>
- <p class="muted" style="margin-top:8px">${escapeHTML(item.details||"")}</p>
- </article>`;
-}
+
 function renderExams(){
- $("exams-list").innerHTML=examsData.map(examHTML).join("")||`<div class="empty">${t("noExams")}</div>`;
+let list=allExams.filter(x=>x.exam_date).sort((a,b)=>a.exam_date.localeCompare(b.exam_date));
+$("examList").innerHTML=list.map(x=>`<div class="item"><h3>${safe(x.subject)}</h3><b>${dateText(x.exam_date)}</b><p class="muted">${safe(x.details||"")}</p></div>`).join("")||"<p class='muted'>لا توجد امتحانات مسجلة.</p>";
 }
+
 function renderLessons(){
- const input=$("lesson-search");if(!input)return;
- const q=input.value.trim().toLowerCase();
- const filtered=lessons.filter(name=>name.toLowerCase().includes(q));
- $("lessons-list").innerHTML=filtered.map(name=>{
-  const url="./lessons/"+name.split("/").map(encodeURIComponent).join("/");
-  return `<article class="card lesson-card">
-   <div class="pdf-icon"><svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h4M8 13h8M8 17h8"/></svg></div>
-   <div class="lesson-info"><h3>${escapeHTML(name.replace(".pdf",""))}</h3>
-   <a class="download" href="${url}" target="_blank" rel="noopener">${t("download")} ↗</a></div>
-  </article>`;
- }).join("")||`<div class="empty">${t("noLessons")}</div>`;
-}
-function updateRamadan(){
- const target=new Date("2027-02-08T00:00:00");
- const days=Math.max(0,Math.ceil((target-new Date())/86400000));
- const labels={ar:`متبقي ${days} يوماً`,fr:`Encore ${days} jours`,en:`${days} days remaining`,it:`Mancano ${days} giorni`};
- $("ramadan-count").textContent=labels[language]||labels.ar;
+let q=($("lessonSearch").value||"").toLowerCase();
+$("lessonList").innerHTML=lessons.filter(x=>x[1].toLowerCase().includes(q)).map(x=>`
+<div class="item">
+<div class="row"><b class="grow">${x[1]}</b><span>PDF</span></div>
+<a href="./lessons/${encodeURIComponent(x[0])}" target="_blank" rel="noopener">فتح الدرس ↗</a>
+</div>`).join("");
 }
 
-/* Color theme rotates every minute */
-const themes=[
- {a:"#3478f6",b:"#75a8ff",soft:"#edf4ff",meta:"#2563eb"},
- {a:"#079b79",b:"#63c9a8",soft:"#e8f8f1",meta:"#087e65"},
- {a:"#d99a16",b:"#f2ca61",soft:"#fff7df",meta:"#a97408"}
-];
+function renderTeachers(){
+$("profList").innerHTML=teachers.map(t=>`
+<a class="item row" href="${t[2]}" target="_blank" rel="noopener">
+<span style="font-size:24px;color:#e11d48">▶</span>
+<span class="grow"><b>${t[0]}</b><div class="muted">${t[1]}</div></span>
+</a>`).join("");
+}
+
+function renderWeek(){
+$("week").innerHTML=Object.entries(weekly).map(([day,subjects])=>`
+<div class="item"><b>${day}</b><p class="muted">${subjects.join(" · ")}</p></div>`).join("");
+}
+
+function renderQuiz(){
+let s=$("subject").value;
+let qs=quizData[s]||[];
+$("quiz").innerHTML=qs.map((q,i)=>`
+<div class="item"><b>${q[0]}</b>
+${q[1].map((a,j)=>`<label class="task"><input type="radio" name="q${i}" value="${j}">${a}</label>`).join("")}
+<button class="secondary" onclick="checkAnswer(${i})">تحقق</button>
+<p class="muted" id="feedback${i}"></p></div>`).join("");
+}
+
+function checkAnswer(i){
+let q=quizData[$("subject").value][i];
+let answer=document.querySelector(`input[name="q${i}"]:checked`);
+if(!answer){$("feedback"+i).textContent="اختر إجابة أولاً";return}
+let correct=Number(answer.value)===q[2];
+$("feedback"+i).textContent=correct?"إجابة صحيحة! أحسنت.":"إجابة غير صحيحة، راجع الدرس وحاول مجدداً.";
+attempts++;if(correct){score+=100;addXP(10)}
+$("score").textContent="المحاولات: "+attempts+" · متوسط النتائج: "+Math.round(score/attempts)+"%";
+}
+
+function renderCalendar(){
+let y=month.getFullYear(),m=month.getMonth(),first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();
+$("monthTitle").textContent=month.toLocaleDateString("ar-MA",{month:"long",year:"numeric"});
+let html=["ح","ن","ث","ر","خ","ج","س"].map(x=>`<div>${x}</div>`).join("");
+for(let i=0;i<first;i++)html+="<div></div>";
+for(let d=1;d<=last;d++){
+let today=new Date(),isToday=d===today.getDate()&&m===today.getMonth()&&y===today.getFullYear();
+html+=`<div class="${isToday?"today":""}">${d}</div>`;
+}
+$("calendarGrid").innerHTML=html;
+$("holidays").innerHTML=holidays.sort((a,b)=>a[1].localeCompare(b[1])).map(h=>`
+<div class="item row"><span class="grow">${h[0]}</span><b class="badge">${dateText(h[1])}</b></div>`).join("");
+}
+
+function changeMonth(n){month.setMonth(month.getMonth()+n);renderCalendar()}
+
+function saveNote(){localStorage.setItem("mc-note",$("note").value);alert("تم حفظ الملاحظات")}
+
+function saveProfile(){
+let n=$("profileName").value.trim()||"طالب 1BAC";
+localStorage.setItem("mc-name",n);$("studentName").textContent=n;
+alert("تم حفظ الملف الشخصي");
+}
+
+$("profilePhoto").addEventListener("change",e=>{
+let f=e.target.files[0];if(!f)return;
+let reader=new FileReader();
+reader.onload=()=>localStorage.setItem("mc-photo",reader.result);
+reader.readAsDataURL(f);
+});
+
+function changeTheme(v){
+localStorage.setItem("mc-theme",v);applyTheme();
+}
+
 function applyTheme(){
- const minute=new Date().getMinutes();
- const theme=themes[Math.floor(minute/1)%themes.length];
- const root=document.documentElement;
- root.style.setProperty("--accent",theme.a);
- root.style.setProperty("--accent2",theme.b);
- root.style.setProperty("--soft",theme.soft);
- root.style.setProperty("--theme-color",theme.meta);
- document.querySelector('meta[name="theme-color"]').content=theme.a;
+let v=localStorage.getItem("mc-theme")||"auto";
+document.body.classList.toggle("dark",v==="dark");
+if(v==="auto"){
+let colors=["#2563eb","#07896d","#9b6b14","#7655c8","#d45d83"];
+document.documentElement.style.setProperty("--blue",colors[new Date().getMinutes()%colors.length]);
+}else document.documentElement.style.setProperty("--blue",v==="dark"?"#5689dc":"#2563eb");
 }
-function startApp(){
- if(!language){$("language-screen").style.display="flex"}
- else applyLanguage();
- applyTheme();
- setTimeout(()=>$("splash").classList.add("hide"),2300);
- loadNews();loadExams();renderLessons();updateRamadan();
- setInterval(applyTheme,10000);
- setInterval(updateRamadan,3600000);
-}
-window.addEventListener("load",startApp);
 
-if("serviceWorker"in navigator){
- window.addEventListener("load",()=>{
-  navigator.serviceWorker.register("./sw.js").catch(console.error);
- });
+function changeLanguage(v){
+localStorage.setItem("mc-language",v);
+let greetings={ar:"مرحباً بك في My Classroom",en:"Welcome to My Classroom",fr:"Bienvenue sur My Classroom",it:"Benvenuto in My Classroom",es:"Bienvenido a My Classroom",ru:"Добро пожаловать",zh:"欢迎来到 My Classroom"};
+$("welcome").textContent=greetings[v]||greetings.en;
+alert("تم حفظ اختيار اللغة. ترجمة جميع الأقسام تحتاج إضافة ملفات ترجمة.");
 }
+
+async function enableNotifications(){
+if(!("Notification"in window)){alert("الإشعارات غير مدعومة");return}
+let permission=await Notification.requestPermission();
+$("notificationInfo").textContent=permission==="granted"?"تم السماح بالإشعارات أثناء تشغيل الصفحة.":"لم يتم السماح بالإشعارات.";
+if(permission==="granted")new Notification("My Classroom",{body:"تم تفعيل الإشعارات التجريبية."});
+}
+
+function unlock(){
+if($("code").value==="1BACSEF1"){
+localStorage.setItem("mc-unlocked","yes");$("login").style.display="none";
+}else $("loginError").textContent="رمز الدخول غير صحيح";
+}
+
+function init(){
+daily();renderWeek();renderTeachers();renderLessons();loadData();
+$("subject").innerHTML=Object.keys(quizData).map(x=>`<option>${x}</option>`).join("");
+renderQuiz();
+$("note").value=localStorage.getItem("mc-note")||"";
+$("profileName").value=localStorage.getItem("mc-name")||"";
+$("studentName").textContent=localStorage.getItem("mc-name")||"طالب 1BAC";
+xp=Number(localStorage.getItem("mc-xp")||0);renderProgress();
+$("theme").value=localStorage.getItem("mc-theme")||"auto";
+$("language").value=localStorage.getItem("mc-language")||"ar";
+applyTheme();setInterval(applyTheme,60000);
+let ramadan=new Date("2027-02-08T00:00:00+01:00");
+let daysLeft=Math.ceil((ramadan-new Date())/86400000);
+$("ramadan").textContent=daysLeft>0?"الموعد المتوقع بعد "+daysLeft+" يوماً":"موعد رمضان المتوقع قد حلّ.";
+if(!localStorage.getItem("mc-unlocked"))$("login").style.display="flex";
+}
+
+window.addEventListener("load",init);
+if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
 </script>
 </body>
 </html>
