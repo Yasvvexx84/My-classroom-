@@ -1,0 +1,553 @@
+
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173b91">
+<link rel="manifest" href="manifest.json">
+<title>My Classroom</title>
+
+<style>
+:root {
+  --blue:#173b91;
+  --olive:#687b42;
+  --sun:#e8d98a;
+  --bg:#fff;
+  --card:#f7f8fb;
+  --text:#17233d;
+  --muted:#718096;
+  --line:#e8edf5;
+}
+[data-theme=dark] {
+  --bg:#101522;
+  --card:#1c2639;
+  --text:#f3f6fc;
+  --muted:#aab5c8;
+  --line:#2b3850;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:15px system-ui;
+}
+header {
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+}
+.logo {
+  background:var(--blue);
+  color:white;
+  border-radius:14px;
+  padding:12px;
+  font-size:22px;
+}
+.app {
+  max-width:850px;
+  margin:auto;
+  padding-bottom:90px;
+}
+main {padding:10px 18px}
+.page {display:none}
+.page.active {display:block}
+.hero {
+  padding:24px;
+  border-radius:24px;
+  background:linear-gradient(130deg,var(--blue),#3564c8);
+  color:white;
+}
+.hero p {color:#dce6ff}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin:14px 0;
+}
+.card,.item {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:15px;
+}
+.metric {font-size:25px;font-weight:800}
+.muted,small {color:var(--muted)}
+.item {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:9px 0;
+  gap:10px;
+}
+.item a {color:var(--blue)}
+button,select,input,textarea {font:inherit}
+button {
+  border:0;
+  border-radius:13px;
+  padding:10px 13px;
+  background:var(--blue);
+  color:white;
+}
+nav {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  max-width:850px;
+  margin:auto;
+  background:var(--blue);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  padding:9px 5px calc(9px + env(safe-area-inset-bottom));
+  border-radius:18px 18px 0 0;
+}
+nav button {
+  background:transparent;
+  color:#e7edff;
+  font-size:11px;
+  padding:8px 2px;
+}
+nav button.active {
+  color:var(--sun);
+  background:#ffffff18;
+}
+.field {
+  width:100%;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg);
+  color:var(--text);
+  margin:5px 0;
+}
+.progress {
+  height:8px;
+  background:var(--line);
+  border-radius:10px;
+}
+.progress span {
+  display:block;
+  height:8px;
+  background:var(--olive);
+  border-radius:10px;
+}
+#splash {
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#173b91,#3564c8);
+  color:white;
+  z-index:5;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  transition:.4s;
+}
+#splash.hide {
+  opacity:0;
+  visibility:hidden;
+}
+.splashmark {
+  font-size:58px;
+  background:#ffffff20;
+  border:1px solid #ffffff55;
+  border-radius:28px;
+  padding:20px;
+}
+h1 {font-size:27px}
+h2 {font-size:19px}
+.pill {
+  background:#edf1e5;
+  color:var(--olive);
+  border-radius:20px;
+  padding:5px 9px;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="splash">
+  <div>
+    <div class="splashmark">▱</div>
+    <h1>My Classroom</h1>
+    <p>1BACSEF1 · 2026/2027</p>
+    <small style="color:#dce6ff">Learn · Grow · Achieve</small>
+  </div>
+</div>
+
+<div class="app">
+
+<header>
+  <div class="brand">
+    <span class="logo">▱</span>
+    <span>
+      My Classroom<br>
+      <small>1BACSEF1 · 2026/2027</small>
+    </span>
+  </div>
+  <button id="theme">☾</button>
+</header>
+
+<main>
+
+<section id="home" class="page active">
+  <div class="hero">
+    <small style="color:#e8d98a">YOUR LEARNING SPACE</small>
+    <h1 data-t="welcome">Welcome back!</h1>
+    <p>A new day, a new opportunity to grow.</p>
+    <span id="today"></span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <small data-t="rank">Your rank</small>
+      <div class="metric" id="rank">Bronze</div>
+      <small id="level">LVL 1 · 0 XP</small>
+    </div>
+    <div class="card">
+      <small data-t="progress">Learning progress</small>
+      <div class="metric" id="xp">0 XP</div>
+      <div class="progress">
+        <span id="bar" style="width:0%"></span>
+      </div>
+    </div>
+  </div>
+
+  <h2 data-t="todayProgram">Today's program</h2>
+  <div id="todayList"></div>
+
+  <h2>Quick access</h2>
+  <div class="grid">
+    <button data-go="learn">Lessons</button>
+    <button data-go="exams">Exams</button>
+    <button data-go="planner">Calendar</button>
+    <button data-go="more">More</button>
+  </div>
+</section>
+
+<section id="learn" class="page">
+  <h1 data-t="learn">Learn</h1>
+  <h2>Lessons</h2>
+  <div id="lessons"></div>
+  <h2>Teachers</h2>
+  <div id="teachers"></div>
+</section>
+
+<section id="planner" class="page">
+  <h1 data-t="planner">Planner</h1>
+  <h2>Weekly program</h2>
+  <div id="program"></div>
+  <small>Sample timetable: replace program.json with your real class schedule.</small>
+
+  <h2>Moroccan holidays & breaks</h2>
+  <div id="holidays"></div>
+  <p class="muted">Religious dates are estimates; verify official announcements.</p>
+
+  <h2>Tasks</h2>
+  <form id="taskForm">
+    <input id="task" class="field" placeholder="Add a task" required>
+    <button>Add</button>
+  </form>
+  <div id="tasks"></div>
+</section>
+
+<section id="exams" class="page">
+  <h1 data-t="exams">Exams</h1>
+  <div id="examList"></div>
+</section>
+
+<section id="more" class="page">
+  <h1>More</h1>
+  <div id="moreList"></div>
+</section>
+
+<section id="sub" class="page">
+  <button id="back">← Back</button>
+  <div id="subContent"></div>
+</section>
+
+</main>
+
+<nav>
+  <button class="active" data-page="home">⌂<br><span data-t="home">Home</span></button>
+  <button data-page="learn">▤<br><span data-t="learn">Learn</span></button>
+  <button data-page="planner">▦<br><span data-t="planner">Planner</span></button>
+  <button data-page="exams">✎<br><span data-t="exams">Exams</span></button>
+  <button data-page="more">⋯<br><span data-t="more">More</span></button>
+</nav>
+
+</div>
+
+<script>
+const T={
+en:{
+welcome:"Welcome back!",rank:"Your rank",
+progress:"Learning progress",todayProgram:"Today's program",
+home:"Home",learn:"Learn",planner:"Planner",
+exams:"Exams",more:"More"
+},
+fr:{
+welcome:"Bon retour !",rank:"Votre rang",
+progress:"Progression",todayProgram:"Programme du jour",
+home:"Accueil",learn:"Cours",planner:"Planning",
+exams:"Examens",more:"Plus"
+},
+ar:{
+welcome:"مرحباً بعودتك!",rank:"رتبتك",
+progress:"تقدمك الدراسي",todayProgram:"برنامج اليوم",
+home:"الرئيسية",learn:"التعلم",planner:"المخطط",
+exams:"الامتحانات",more:"المزيد"
+}
+};
+
+const teachers=[
+["Mathematics","Rabie Ghazouani","https://youtube.com/@rabieghazouani22?si=rRHqZzmPGguJFjFg"],
+["Physics","Driss","https://youtube.com/@driss.dotcom?si=KZGpPRqzKtwiCMtg"],
+["Philosophy","Mohamed El Masrioui","https://youtube.com/@elmasriouimohamed?si=pTQc26LgbTVGzrtm"],
+["French","Maitre Mohssine","https://youtube.com/@maitremohssine?si=e1k2Fm9zu4VspIYw"],
+["Arabic","Driss","https://youtube.com/@driss.dotcom?si=tL8J7KY299bdfYVt"],
+["English","Sara English","https://youtube.com/@saraenglish1?si=qHOZvtanvc3CmV0b"],
+["Social Studies","Adil Mouakiti","https://youtube.com/@prof_adil_mouakiti?si=XD-ubnkl8QXGrivr"],
+["Life & Earth Sciences","Driss","https://youtube.com/@driss.dotcom?si=pU6m6JM_Zmz6wqvf"]
+];
+
+const pdfs=[
+"2 التحولات الاقتصادية والمالية والاجتماعية والفكرية.pdf",
+"2 المجال المغربي الموارد الطبيعية والبشرية.pdf",
+"التنافس الامبريالي.pdf",
+"تقديم التحولات الكبرى للعالم الراسمالي.pdf",
+"مفهوم التنمية.pdf"
+];
+
+const holidays=[
+["2026-11-18","عيد الاستقلال","Independence Day","Fête de l'Indépendance"],
+["2026-11-06","ذكرى المسيرة الخضراء","Green March Day","Marche Verte"],
+["2027-01-01","رأس السنة الميلادية","New Year's Day","Nouvel An"],
+["2027-01-11","ذكرى تقديم وثيقة الاستقلال","Independence Manifesto Day","Manifeste de l'Indépendance"],
+["2027-05-01","عيد الشغل","Labour Day","Fête du Travail"],
+["2027-07-30","عيد العرش","Throne Day","Fête du Trône"],
+["2027-08-14","ذكرى استرجاع وادي الذهب","Oued Ed-Dahab Day","Oued Ed-Dahab"],
+["2027-08-20","ثورة الملك والشعب","King and People Revolution","Révolution du Roi et du Peuple"],
+["2027-08-21","عيد الشباب","Youth Day","Fête de la Jeunesse"],
+["2027-01-10","عيد الفطر (تقديري)","Eid al-Fitr (estimated)","Aïd al-Fitr (estimé)"],
+["2027-03-17","عيد الأضحى (تقديري)","Eid al-Adha (estimated)","Aïd al-Adha (estimé)"]
+];
+
+let lang=localStorage.lang||"en";
+let theme=localStorage.theme||"light";
+let xp=+(localStorage.xp||0);
+let tasks=JSON.parse(localStorage.tasks||"[]");
+
+let program=JSON.parse(localStorage.program||"null")||[
+["Monday","Mathematics","08:00"],
+["Monday","Physics","10:00"],
+["Tuesday","French","08:00"],
+["Wednesday","Life & Earth Sciences","08:00"],
+["Thursday","English","09:00"],
+["Friday","Philosophy","08:00"]
+];
+
+const $=s=>document.querySelector(s);
+
+function item(a,b="",url=""){
+  return `<div class="item">
+    <div><b>${a}</b><br><small>${b}</small></div>
+    ${url?`<a href="${url}" target="_blank">Open ↗</a>`:""}
+  </div>`;
+}
+
+function go(id){
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  $("#"+id).classList.add("active");
+  document.querySelectorAll("nav button").forEach(x=>
+    x.classList.toggle("active",x.dataset.page===id)
+  );
+}
+
+document.querySelectorAll("nav button").forEach(b=>
+  b.onclick=()=>go(b.dataset.page)
+);
+
+document.querySelectorAll("[data-go]").forEach(b=>
+  b.onclick=()=>go(b.dataset.go)
+);
+
+function render(){
+  document.documentElement.dataset.theme=theme;
+  document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+  document.documentElement.lang=lang;
+
+  document.querySelectorAll("[data-t]").forEach(e=>
+    e.textContent=T[lang][e.dataset.t]||e.textContent
+  );
+
+  $("#theme").textContent=theme==="dark"?"☀":"☾";
+
+  let tier=["Bronze","Silver","Gold","Diamond","Platinum"][
+    Math.min(4,Math.floor(xp/1000))
+  ];
+
+  $("#rank").textContent=tier;
+  $("#level").textContent=`LVL ${Math.min(10,Math.floor(xp%1000/100)+1)} · ${xp} XP`;
+  $("#xp").textContent=xp+" XP";
+  $("#bar").style.width=(xp%1000/10)+"%";
+
+  $("#today").textContent=new Date().toLocaleDateString(
+    lang==="ar"?"ar-MA":lang==="fr"?"fr-FR":"en-US",
+    {dateStyle:"full"}
+  );
+
+  $("#teachers").innerHTML=teachers.map(x=>
+    item(x[0],x[1],x[2])
+  ).join("");
+
+  $("#lessons").innerHTML=pdfs.map(x=>
+    item(x,"PDF · lessons/"+x,"lessons/"+encodeURIComponent(x))
+  ).join("");
+
+  $("#program").innerHTML=program.map(x=>
+    item(x[0]+" · "+x[1],x[2])
+  ).join("");
+
+  $("#todayList").innerHTML=program.filter(x=>
+    x[0]===new Date().toLocaleDateString("en-US",{weekday:"long"})
+  ).map(x=>item(x[1],x[2])).join("")||
+  '<div class="card">No classes scheduled in the sample data.</div>';
+
+  $("#holidays").innerHTML=holidays.sort((a,b)=>
+    a[0].localeCompare(b[0])
+  ).map(x=>item(x[lang==="ar"?1:lang==="fr"?3:2],x[0])).join("");
+
+  $("#moreList").innerHTML=["News","Notes","Profile","Info","Settings"].map(x=>
+    `<div class="item" data-sub="${x}"><b>${x}</b>　›</div>`
+  ).join("");
+
+  document.querySelectorAll("[data-sub]").forEach(x=>
+    x.onclick=()=>openSub(x.dataset.sub)
+  );
+
+  renderTasks();
+
+  fetch("exams.json")
+    .then(r=>r.json())
+    .then(a=>$("#examList").innerHTML=a.map(x=>
+      item(x.subject,x.exam_date+" · "+x.details)
+    ).join(""))
+    .catch(()=>$("#examList").textContent="No exam data.");
+}
+
+function renderTasks(){
+  $("#tasks").innerHTML=tasks.map((x,i)=>
+    `<div class="item">
+      <label>
+        <input type="checkbox" ${x.done?"checked":""}
+        onchange="tasks[${i}].done=this.checked;localStorage.tasks=JSON.stringify(tasks)">
+        ${x.text}
+      </label>
+      <button onclick="tasks.splice(${i},1);localStorage.tasks=JSON.stringify(tasks);renderTasks()">×</button>
+    </div>`
+  ).join("");
+}
+
+$("#taskForm").onsubmit=e=>{
+  e.preventDefault();
+  tasks.push({text:$("#task").value,done:false});
+  localStorage.tasks=JSON.stringify(tasks);
+  $("#task").value="";
+  renderTasks();
+};
+
+function openSub(x){
+  go("sub");
+  let c=$("#subContent");
+
+  if(x==="Settings"){
+    c.innerHTML=`
+      <h1>Settings</h1>
+      <label>Language</label>
+      <select id="lang" class="field">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="ar">العربية</option>
+      </select>
+      <label>Theme</label>
+      <select id="th" class="field">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+      <button id="save">Save</button>`;
+  }
+  else if(x==="Info"){
+    c.innerHTML="<h1>Info</h1><div class=card>Created by Yassine<br>Class: 1BACSEF1<br>School year: 2026/2027<br>My Classroom</div>";
+  }
+  else if(x==="Profile"){
+    c.innerHTML="<h1>Profile</h1><div class=card>Student · "+xp+" XP</div>";
+  }
+  else if(x==="Notes"){
+    c.innerHTML="<h1>Notes</h1><textarea id=note class=field rows=5 placeholder='Write a note'></textarea><button id=saveNote>Save note</button><div id=noteList></div>";
+  }
+  else if(x==="News"){
+    c.innerHTML="<h1>News</h1><div id=newsList>Loading…</div>";
+  }
+
+  if($("#lang")){
+    $("#lang").value=lang;
+    $("#th").value=theme;
+
+    $("#save").onclick=()=>{
+      lang=$("#lang").value;
+      theme=$("#th").value;
+      localStorage.lang=lang;
+      localStorage.theme=theme;
+      render();
+      openSub("Settings");
+    };
+  }
+
+  if($("#saveNote")){
+    $("#saveNote").onclick=()=>{
+      let a=JSON.parse(localStorage.notes||"[]");
+      a.push($("#note").value);
+      localStorage.notes=JSON.stringify(a);
+      $("#noteList").textContent=a.join(" · ");
+    };
+  }
+
+  if($("#newsList")){
+    fetch("news.json").then(r=>r.json()).then(a=>
+      $("#newsList").innerHTML=a
+        .filter(n=>(Date.now()-new Date(n.date))<604800000)
+        .map(n=>item(n.title,n.date+" · "+n.content))
+        .join("")||"No recent news."
+    );
+  }
+}
+
+$("#back").onclick=()=>go("more");
+
+$("#theme").onclick=()=>{
+  theme=theme==="dark"?"light":"dark";
+  localStorage.theme=theme;
+  render();
+};
+
+render();
+
+setTimeout(()=>$("#splash").classList.add("hide"),1300);
+
+if("serviceWorker"in navigator&&location.protocol.startsWith("http")){
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+</body>
+</html>
