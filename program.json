@@ -1,1 +1,30 @@
+[
+  {"day":"Monday","subject":"French (L3)","time":"08:00-10:00"},
+  {"day":"Monday","subject":"English (S6)","time":"10:00-11:00"},
+  {"day":"Monday","subject":"Physical Education","time":"11:00-12:00"},
+  {"day":"Monday","subject":"Arabic (S11)","time":"12:00-14:00"},
+  {"day":"Monday","subject":"Islamic Education (S6)","time":"14:00-15:00"},
+  {"day":"Monday","subject":"Physics and Chemistry (L4)","time":"15:00-17:00"},
 
+  {"day":"Tuesday","subject":"Physics and Chemistry (L1)","time":"08:00-10:00"},
+  {"day":"Tuesday","subject":"Mathematics (S1)","time":"15:00-18:00"},
+
+  {"day":"Wednesday","subject":"Philosophy (S8)","time":"08:00-10:00"},
+  {"day":"Wednesday","subject":"English (S6)","time":"10:00-11:00"},
+  {"day":"Wednesday","subject":"French (L2)","time":"12:00-14:00"},
+  {"day":"Wednesday","subject":"Islamic Education (S6)","time":"16:00-17:00"},
+
+  {"day":"Thursday","subject":"French (L2)","time":"09:00-10:00"},
+  {"day":"Thursday","subject":"English (S6)","time":"10:00-11:00"},
+  {"day":"Thursday","subject":"Social Studies (S10)","time":"11:00-12:00"},
+  {"day":"Thursday","subject":"Life and Earth Sciences (L1)","time":"12:00-15:00"},
+  {"day":"Thursday","subject":"Physical Education","time":"15:00-16:00"},
+  {"day":"Thursday","subject":"Arabic (S1)","time":"17:00-18:00"},
+
+  {"day":"Friday","subject":"Social Studies (S8)","time":"15:00-16:00"},
+  {"day":"Friday","subject":"Mathematics (S1)","time":"16:00-17:00"},
+  {"day":"Friday","subject":"French (S7)","time":"17:00-18:00"},
+
+  {"day":"Saturday","subject":"Life and Earth Sciences (L1)","time":"08:00-10:00"},
+  {"day":"Saturday","subject":"Mathematics (S1)","time":"10:00-12:00"}
+] 
